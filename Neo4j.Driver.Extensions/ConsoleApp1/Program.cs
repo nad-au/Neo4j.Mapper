@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata;
 using Neo4j.Driver.V1;
 using ServiceStack;
 
@@ -11,8 +13,11 @@ namespace ConsoleApp1
             var driver = GraphDatabase.Driver("bolt://localhost:7687");
             using(var session = driver.Session())
             {
-                var result = session.Run("MATCH (p:barnardos_Person) RETURN p LIMIT 10");
+                //var result = session.Run("MATCH (p:barnardos_Person) RETURN p LIMIT 10");
+                var result = session.Run("MATCH (a:Agency {Key: 'barnardos'}) RETURN a AS agency");
                 var record = result.First();
+                var col = record[0] as IReadOnlyDictionary<string, object>;
+                var agency = col.FromObjectDictionary<Agency>();
                 var processor = new ResultProcessor(record);
                 processor.Define(p => p);
                 var recordResult = processor.ExecuteAsNode<Person>();

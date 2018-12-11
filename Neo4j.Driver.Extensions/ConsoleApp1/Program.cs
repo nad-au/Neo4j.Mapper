@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Neo4j.Driver.V1;
+using ServiceStack;
 
 namespace ConsoleApp1
 {
@@ -10,9 +11,19 @@ namespace ConsoleApp1
             var driver = GraphDatabase.Driver("bolt://localhost:7687");
             using(var session = driver.Session())
             {
-                var result = session.Run("MATCH (p:barnardos_Person) RETURN p as person, p.GivenName AS givenName LIMIT 10");
+                var result = session.Run("MATCH (p:barnardos_Person) RETURN p LIMIT 10");
+                var record = result.First();
+                var processor = new ResultProcessor(record);
+                processor.Define(p => p);
+                var recordResult = processor.ExecuteAsNode<Person>();
+
+
+                //var col = result.First()[0] as INode;
+                //var p = col.Properties.FromObjectDictionary<Person>();
+                //var persons = result.Select(record => (record.Values["person"].As<string>()).ToList();
+
                 //var persons = result.Select(record => record.AsNode<Person>("p")).ToList();
-                var persons = result.Project(person => person.AsNode<Person>()).ToList();
+                //var persons = result.Project(person => person.AsNode<Person>()).ToList();
                 //var names = result.Project(givenName => givenName.As<string>()).ToList();
                 //var items = result.Project((person, givenName) => new
                 //{

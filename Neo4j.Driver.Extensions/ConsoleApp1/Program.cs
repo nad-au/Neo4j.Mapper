@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Reflection.Metadata;
 using Neo4j.Driver.V1;
-using ServiceStack;
+using ServiceStack.Text;
 
 namespace ConsoleApp1
 {
@@ -10,33 +9,28 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var driver = GraphDatabase.Driver("bolt://localhost:7687");
-            using(var session = driver.Session())
+            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
             {
-                //var result = session.Run("MATCH (p:barnardos_Person) RETURN p LIMIT 10");
-                var result = session.Run("MATCH (a:Agency {Key: 'barnardos'}) RETURN a AS agency");
-                var record = result.First();
-                var col = record[0] as IReadOnlyDictionary<string, object>;
-                var agency = col.FromObjectDictionary<Agency>();
-                var processor = new ResultProcessor(record);
-                processor.Define(p => p);
-                var recordResult = processor.ExecuteAsNode<Person>();
+                using(var session = driver.Session())
+                {
+                    var result = session.Run(@"
+                        MATCH (p:barnardos_Person {UniqueId: 10233})-[:PERSON_IS_CLIENT]->(c) 
+                        RETURN c.StateJurisdiction, p");
 
+                    var record = result.First();
 
-                //var col = result.First()[0] as INode;
-                //var p = col.Properties.FromObjectDictionary<Person>();
-                //var persons = result.Select(record => (record.Values["person"].As<string>()).ToList();
+                    var client = record.Map<string, Person, Client>((s, p) => new Client
+                    {
+                        StateJurisdiction = s,
+                        Person = p
+                    });
 
-                //var persons = result.Select(record => record.AsNode<Person>("p")).ToList();
-                //var persons = result.Project(person => person.AsNode<Person>()).ToList();
-                //var names = result.Project(givenName => givenName.As<string>()).ToList();
-                //var items = result.Project((person, givenName) => new
-                //{
-                //    Person = person.AsNode<Person>(),
-                //    GivenName = givenName.As<string>()
-                //}).ToList();
+                    Console.WriteLine(client.Dump());
+                }
             }
-            driver.Dispose();
+
+            Console.WriteLine("Done. Press <Enter> to end");
+            Console.ReadLine();
         }
     }
 }

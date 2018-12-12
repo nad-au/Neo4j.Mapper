@@ -1,29 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using Neo4j.Driver.V1;
+using ServiceStack;
 
 namespace ConsoleApp1
 {
     public static class RecordExtensions
     {
-        public static IEnumerable<T> Project<T>(this IStatementResult records, Expression<Func<IField, T>> expression)
+        public static TReturn Map<TReturn>(
+            this IRecord record)
         {
-            var key = expression.Parameters.First().Name;
-            var func = expression.Compile();
-
-            return records.Select(r => func(new Field(r, key)));
+            return record[0].MapValue<TReturn>();
         }
 
-        public static IEnumerable<T> Project<T>(this IStatementResult records, Expression<Func<IField, IField, T>> expression)
+        public static TReturn Map<T1, T2, TReturn>(
+            this IRecord record,
+            Func<T1, T2, TReturn> map)
         {
-            var key = expression.Parameters.First().Name;
-            throw new NotImplementedException();
-            var func = expression.Compile();
-            foreach (var record in records)
+            return map(
+                record[0].MapValue<T1>(), 
+                record[1].MapValue<T2>());
+        }
+
+        public static TReturn Map<T1, T2, T3, TReturn>(
+            this IRecord record,
+            Func<T1, T2, T3, TReturn> map)
+        {
+            return map(
+                record[0].MapValue<T1>(), 
+                record[1].MapValue<T2>(),
+                record[2].MapValue<T3>());
+        }
+
+        private static T MapValue<T>(this object value)
+        {
+            if (value is INode node)
             {
+                return node.Properties.FromObjectDictionary<T>();
             }
+
+            if (value is IReadOnlyDictionary<string, object> map)
+            {
+                return map.FromObjectDictionary<T>();
+            }
+
+            return value.As<T>();
         }
     }
 }

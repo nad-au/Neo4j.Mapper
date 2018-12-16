@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Neo4j.Driver.V1;
 using ServiceStack.Text;
 
@@ -14,18 +13,20 @@ namespace ConsoleApp1
                 using(var session = driver.Session())
                 {
                     var result = session.Run(@"
-                        MATCH (p:barnardos_Person {UniqueId: 10233})-[:PERSON_IS_CLIENT]->(c) 
-                        RETURN c.StateJurisdiction, p");
+                        MATCH (p:barnardos_Person)-[:PERSON_IS_CLIENT]->(c) 
+                        RETURN c, p
+                        LIMIT 10");
 
-                    var record = result.First();
-
-                    var client = record.Map<string, Person, Client>((s, p) => new Client
+                    var clients = result.Return<Client, Person, Client>((c, p) =>
                     {
-                        StateJurisdiction = s,
-                        Person = p
+                        c.Person = p;
+                        return c;
                     });
 
-                    Console.WriteLine(client.Dump());
+                    foreach (var client in clients)
+                    {
+                        Console.WriteLine(client.Dump());
+                    }
                 }
             }
 

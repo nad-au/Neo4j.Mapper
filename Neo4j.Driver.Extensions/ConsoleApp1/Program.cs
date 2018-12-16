@@ -14,14 +14,14 @@ namespace ConsoleApp1
                 using(var session = driver.Session())
                 {
                     var result = session.Run(@"
-                        MATCH (p:barnardos_Person)-[:PERSON_IS_CLIENT]->(c) 
-                        RETURN c, p
+                        MATCH (person:barnardos_Person)-[:PERSON_IS_CLIENT]->(client) 
+                        RETURN client, person
                         LIMIT 10");
 
-                    var clients = result.Return<Client, Person, Client>((c, p) =>
+                    var clients = result.Return<Client, Person, Client>((client, person) =>
                     {
-                        c.Person = p;
-                        return c;
+                        client.Person = person;
+                        return client;
                     });
 
                     foreach (var client in clients)

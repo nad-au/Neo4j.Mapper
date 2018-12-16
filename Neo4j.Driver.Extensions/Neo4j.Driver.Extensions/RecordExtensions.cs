@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Neo4j.Driver.V1;
 using ServiceStack;
 
-namespace ConsoleApp1
+namespace Neo4j.Driver.Extensions
 {
     public static class RecordExtensions
     {

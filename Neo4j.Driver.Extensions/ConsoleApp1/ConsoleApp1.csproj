@@ -11,4 +11,8 @@
     <PackageReference Include="ServiceStack.Text" Version="5.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Neo4j.Driver.Extensions\Neo4j.Driver.Extensions.csproj" />
+  </ItemGroup>
+
 </Project>

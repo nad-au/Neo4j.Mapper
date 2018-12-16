@@ -1,4 +1,5 @@
 ﻿using System;
+using Neo4j.Driver.Extensions;
 using Neo4j.Driver.V1;
 using ServiceStack.Text;
 

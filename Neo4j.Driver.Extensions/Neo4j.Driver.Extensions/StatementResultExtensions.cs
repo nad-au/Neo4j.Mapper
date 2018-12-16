@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Neo4j.Driver.V1;
 
-namespace ConsoleApp1
+namespace Neo4j.Driver.Extensions
 {
     public static class StatementResultExtensions
     {

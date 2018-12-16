@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ConsoleApp1
+namespace Neo4j.Driver.Extensions.Tests.Models
 {
     public enum Gender
     {

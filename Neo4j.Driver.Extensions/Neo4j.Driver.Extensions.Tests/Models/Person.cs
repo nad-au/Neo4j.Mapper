@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace ConsoleApp1
+namespace Neo4j.Driver.Extensions.Tests.Models
 {
     public class Person
     {

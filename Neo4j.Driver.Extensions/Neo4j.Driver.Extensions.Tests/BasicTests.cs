@@ -1,13 +1,15 @@
-﻿using System;
-using Neo4j.Driver.Extensions;
+﻿using System.Linq;
+using Neo4j.Driver.Extensions.Tests.Models;
 using Neo4j.Driver.V1;
-using ServiceStack.Text;
+using NUnit.Framework;
 
-namespace ConsoleApp1
+namespace Neo4j.Driver.Extensions.Tests
 {
-    class Program
+    [TestFixture]
+    public class BasicTests
     {
-        static void Main(string[] args)
+        [Test]
+        public void ShouldWorkAsExpected()
         {
             using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
             {
@@ -22,17 +24,12 @@ namespace ConsoleApp1
                     {
                         client.Person = person;
                         return client;
-                    });
+                    }).ToList();
 
-                    foreach (var client in clients)
-                    {
-                        Console.WriteLine(client.Dump());
-                    }
+                    Assert.AreEqual(10, clients.Count);
                 }
             }
 
-            Console.WriteLine("Done. Press <Enter> to end");
-            Console.ReadLine();
         }
     }
 }

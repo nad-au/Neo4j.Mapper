@@ -32,8 +32,11 @@ namespace Neo4j.Driver.Extensions
                 record[2].MapValue<T3>());
         }
 
-        private static T MapValue<T>(this object value)
+        public static T MapValue<T>(this object value)
         {
+            if (value is IEnumerable<INode> enumerable)
+            {
+            }
             if (value is INode node)
             {
                 return node.Properties.FromObjectDictionary<T>();

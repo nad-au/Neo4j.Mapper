@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Neo4j.Driver.Extensions.Tests.Models;
 using Neo4j.Driver.Extensions.Tests.Queries;
 using Neo4j.Driver.V1;
@@ -49,6 +51,29 @@ namespace Neo4j.Driver.Extensions.Tests
             var movies = result.Return<Movie>().ToList();
 
             Assert.AreEqual(10, movies.Count);
+        }
+
+        [Test]
+        public void AndAnotherTest()
+        {
+            var result = session.Run(@"
+                MATCH (person:Person)-[:ACTED_IN]->(movie:Movie)
+                WITH person, COLLECT(movie) AS movies
+                WHERE SIZE(movies) > 1
+                RETURN person, movies
+                LIMIT 10");
+
+            var movies = result.Return<Person, IEnumerable<Movie>, Person>(((p, m) => p)).ToList();
+
+            Assert.AreEqual(10, movies.Count);
+        }
+
+        public void AndYetAnotherTest()
+        {
+            if (typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+            {
+
+            var specificListType = genericListType.MakeGenericType(typeof(double));
         }
     }
 }

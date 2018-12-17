@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Neo4j.Driver.Extensions.Tests.Models;
 using Neo4j.Driver.Extensions.Tests.Queries;
 using Neo4j.Driver.V1;
@@ -47,6 +48,19 @@ namespace Neo4j.Driver.Extensions.Tests
                 LIMIT 10");
 
             var movies = result.Return<Movie>().ToList();
+
+            Assert.AreEqual(10, movies.Count);
+        }
+
+        [Test]
+        public void YetAnotherTest()
+        {
+            var result = session.Run(@"
+                MATCH (movie:Movie)
+                RETURN COLLECT(movie) AS movies
+                LIMIT 10");
+
+            var movies = result.Return<IEnumerable<Movie>>().ToList();
 
             Assert.AreEqual(10, movies.Count);
         }

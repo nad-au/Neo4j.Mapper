@@ -67,7 +67,7 @@ namespace IntegrationTests
         }
 
         [Test]
-        public void ActorWithListOfMoves()
+        public void ActorWithListOfMovies()
         {
             var result = session.Run(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
@@ -78,6 +78,24 @@ namespace IntegrationTests
             {
                 person.MovesActedIn = movies;
                 return person;
+            }).SingleOrDefault();
+
+            Assert.IsNotNull(actor);
+            Assert.AreEqual(4, actor.MovesActedIn.Count());
+        }
+
+        [Test]
+        public void ActorNameWithListOfMovies()
+        {
+            var result = session.Run(@"
+                MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
+                WITH person, COLLECT(movie) AS movies
+                RETURN person.name, movies");
+
+            var actor = result.Return<string, IEnumerable<Movie>, ActorName>((name, movies) => new ActorName
+            {
+                Name = name,
+                MovesActedIn = movies
             }).SingleOrDefault();
 
             Assert.IsNotNull(actor);

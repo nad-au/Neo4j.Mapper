@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Neo4j.Driver.V1;
 using ServiceStack;
@@ -10,30 +9,32 @@ namespace Neo4j.Driver.Extensions
     {
         public static T MapValue<T>(object value)
         {
-            return (T) MapValue(value, typeof(T));
-        }
+            var targetType = typeof(T);
 
-        public static object MapValue(object value, Type type)
-        {
-            if (typeof(IEnumerable).IsAssignableFrom(type))
+            if (typeof(IEnumerable).IsAssignableFrom(targetType))
             {
-                var elementType = type.GetGenericArguments()[0];
+                if (targetType == typeof(string))
+                {
+                    return value.As<T>();
+                }
+
+                var elementType = targetType.GetGenericArguments()[0];
                 var genericType = typeof(CollectionMapper<>).MakeGenericType(elementType);
                 var collectionMapper = (ICollectionMapper)genericType.CreateInstance();
-                return collectionMapper.MapValues((IEnumerable)value, type);
+                return (T)collectionMapper.MapValues((IEnumerable)value, targetType);
             }
 
             if (value is INode node)
             {
-                return node.Properties.FromObjectDictionary(type);
+                return node.Properties.FromObjectDictionary<T>();
             }
 
             if (value is IReadOnlyDictionary<string, object> map)
             {
-                return map.FromObjectDictionary(type);
+                return map.FromObjectDictionary<T>();
             }
 
-            throw new ArgumentException("Cannot deserialize value");
+            return value.As<T>();
         }
     }
 }

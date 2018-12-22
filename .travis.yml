@@ -7,4 +7,4 @@ install:
 
 script:
   - dotnet build Neo4j.Driver.Extensions/Neo4j.Driver.Extensions.sln
-  - dotnet test Neo4j.Driver.Extensions/Neo4j.Driver.Extensions.Tests/Neo4j.Driver.Extensions.Tests.csproj
+  - dotnet test Neo4j.Driver.Extensions/UnitTests/UnitTests.csproj

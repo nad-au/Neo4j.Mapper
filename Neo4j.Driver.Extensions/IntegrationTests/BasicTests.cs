@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Neo4j.Driver.Extensions.Tests.Models;
-using Neo4j.Driver.Extensions.Tests.Queries;
+using IntegrationTests.Models;
+using IntegrationTests.Queries;
+using Neo4j.Driver.Extensions;
 using Neo4j.Driver.V1;
 using NUnit.Framework;
 
-namespace Neo4j.Driver.Extensions.Tests
+namespace IntegrationTests
 {
     [TestFixture]
     public class BasicTests : TestFixtureBase

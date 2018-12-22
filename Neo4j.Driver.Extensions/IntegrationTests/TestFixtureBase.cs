@@ -1,7 +1,7 @@
 ﻿using Neo4j.Driver.V1;
 using NUnit.Framework;
 
-namespace Neo4j.Driver.Extensions.Tests
+namespace IntegrationTests
 {
     public abstract class TestFixtureBase
     {

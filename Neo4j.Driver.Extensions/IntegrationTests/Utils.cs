@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace Neo4j.Driver.Extensions.Tests
+namespace IntegrationTests
 {
     public static class Utils
     {

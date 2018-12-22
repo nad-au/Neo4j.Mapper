@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Neo4j.Driver.Extensions.Tests.Models
+namespace UnitTests.Models
 {
     public class Person
     {

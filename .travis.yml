@@ -2,11 +2,9 @@ language: csharp
 mono: none
 dotnet: 2.1.0
 
-solution: ./Neo4j.Driver.Extensions/Neo4j.Driver.Extensions.sln
-
 install:
   - dotnet restore
 
 script:
   - dotnet build
-  - dotnet test ./Neo4j.Driver.Extensions/Neo4j.Driver.Extensions.Tests/Neo4j.Driver.Extensions.Tests.csproj
+  - dotnet test Neo4j.Driver.Extensions/Neo4j.Driver.Extensions.Tests/Neo4j.Driver.Extensions.Tests.csproj

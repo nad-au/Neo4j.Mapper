@@ -92,9 +92,9 @@ namespace IntegrationTests
                 WITH person, COLLECT(movie) AS movies
                 RETURN person.name, movies");
 
-            var actor = result.Return<string, IEnumerable<Movie>, ActorName>((name, movies) => new ActorName
+            var actor = result.Return<string, IEnumerable<Movie>, ActorName>((actorName, movies) => new ActorName
             {
-                Name = name,
+                name = actorName,
                 MovesActedIn = movies
             }).SingleOrDefault();
 

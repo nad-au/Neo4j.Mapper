@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Neo4j.Driver.Extensions.Tests.Models;
 using Neo4j.Driver.Extensions.Tests.Queries;
@@ -28,7 +27,7 @@ namespace Neo4j.Driver.Extensions.Tests
         }
 
         [Test]
-        public void BasicTest()
+        public void PersonsTest()
         {
             var result = session.Run(@"
                 MATCH (person:Person)
@@ -41,7 +40,7 @@ namespace Neo4j.Driver.Extensions.Tests
         }
 
         [Test]
-        public void AnotherTest()
+        public void MoviesTest()
         {
             var result = session.Run(@"
                 MATCH (movie:Movie)
@@ -54,26 +53,34 @@ namespace Neo4j.Driver.Extensions.Tests
         }
 
         [Test]
-        public void AndAnotherTest()
+        public void ListOfMoviesTest()
         {
             var result = session.Run(@"
-                MATCH (person:Person)-[:ACTED_IN]->(movie:Movie)
-                WITH person, COLLECT(movie) AS movies
-                WHERE SIZE(movies) > 1
-                RETURN person, movies
-                LIMIT 10");
+                MATCH (movie:Movie)
+                RETURN COLLECT(movie)");
 
-            var movies = result.Return<Person, IEnumerable<Movie>, Person>(((p, m) => p)).ToList();
+            var movies = result.Return<List<Movie>>().SingleOrDefault();
 
-            Assert.AreEqual(10, movies.Count);
+            Assert.IsNotNull(movies);
+            Assert.AreEqual(38, movies.Count);
         }
 
-        public void AndYetAnotherTest()
+        [Test]
+        public void ActorWithListOfMoves()
         {
-            if (typeof(IEnumerable).IsAssignableFrom(typeof(T)))
-            {
+            var result = session.Run(@"
+                MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
+                WITH person, COLLECT(movie) AS movies
+                RETURN person, movies");
 
-            var specificListType = genericListType.MakeGenericType(typeof(double));
+            var actor = result.Return<Person, IEnumerable<Movie>, Person>((person, movies) =>
+            {
+                person.MovesActedIn = movies;
+                return person;
+            }).SingleOrDefault();
+
+            Assert.IsNotNull(actor);
+            Assert.AreEqual(4, actor.MovesActedIn.Count());
         }
     }
 }

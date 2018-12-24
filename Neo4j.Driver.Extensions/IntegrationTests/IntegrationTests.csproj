@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>IntegrationTests</AssemblyName>
+    <RootNamespace>IntegrationTests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Queries\create_movies.cypher" />
+    <None Remove="Queries\delete_movies.cypher" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Queries\delete_movies.cypher" />
+    <EmbeddedResource Include="Queries\create_movies.cypher" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="nunit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.11.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Neo4j.Driver.Extensions\Neo4j.Driver.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>

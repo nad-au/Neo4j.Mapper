@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.1.0-beta</Version>
+    <Authors>Neil Dobson</Authors>
+    <Company>Barnardos Australia</Company>
+    <Description>A library to simplify mapping of cypher results onto your models</Description>
+    <PackageProjectUrl>https://github.com/barnardos-au/Neo4jMapper</PackageProjectUrl>
+    <PackageTags>neo4j cypher mapping</PackageTags>
+    <Copyright>Copyright ©2018 Barnardos Australia</Copyright>
+    <PackageIconUrl>https://avatars3.githubusercontent.com/u/29527012</PackageIconUrl>
+    <RepositoryUrl>https://github.com/barnardos-au/Neo4jMapper</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>

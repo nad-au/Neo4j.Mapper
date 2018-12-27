@@ -10,26 +10,26 @@ namespace IntegrationTests.V35Tests
     [TestFixture]
     public class TemporalTests : TestFixtureBase
     {
-        private ISession session;
+        protected ISession Session;
 
         [SetUp]
         public void SetUp()
         {
-            session = Driver.Session();
-            session.Run("CREATE (t:TimeStamp {name: 'Worker', when: dateTime()})");
+            Session = Driver.Session();
+            Session.Run("CREATE (t:TimeStamp {name: 'Worker', when: dateTime()})");
         }
 
         [TearDown]
         public void TearDown()
         {
-            session.Run("MATCH (t:TimeStamp) DELETE (t)");
-            session.Dispose();
+            Session.Run("MATCH (t:TimeStamp) DELETE (t)");
+            Session.Dispose();
         }
 
         [Test]
         public void DateTest()
         {
-            var result = session.Run(@"
+            var result = Session.Run(@"
                 MATCH (timestamp:TimeStamp)
                 RETURN timestamp
                 LIMIT 10");

@@ -3,8 +3,8 @@ mono: none
 dotnet: 2.1.300
 
 install:
-  - dotnet restore Neo4j.Driver.Extensions/Neo4j.Driver.Extensions.sln
+  - dotnet restore src/Neo4jMapper.sln
 
 script:
-  - dotnet build Neo4j.Driver.Extensions/Neo4j.Driver.Extensions.sln
-  - dotnet test Neo4j.Driver.Extensions/UnitTests/UnitTests.csproj
+  - dotnet build src/Neo4jMapper.sln
+  - dotnet test src/UnitTests/UnitTests.csproj

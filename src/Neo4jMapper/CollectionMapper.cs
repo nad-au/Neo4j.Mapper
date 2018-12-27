@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ServiceStack.Text;
 
-namespace Neo4j.Driver.Extensions
+namespace Neo4jMapper
 {
     public interface ICollectionMapper
     {

@@ -2,8 +2,8 @@
 using System.Linq;
 using IntegrationTests.Models;
 using IntegrationTests.Queries;
-using Neo4j.Driver.Extensions;
 using Neo4j.Driver.V1;
+using Neo4jMapper;
 using NUnit.Framework;
 
 namespace IntegrationTests

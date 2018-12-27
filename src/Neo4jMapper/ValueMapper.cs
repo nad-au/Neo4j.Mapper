@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Neo4j.Driver.V1;
 using ServiceStack;
 
-namespace Neo4j.Driver.Extensions
+namespace Neo4jMapper
 {
     public static class ValueMapper
     {

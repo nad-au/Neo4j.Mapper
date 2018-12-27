@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4j.Driver.Extensions", "Neo4j.Driver.Extensions\Neo4j.Driver.Extensions.csproj", "{0FD19E45-1527-48BE-A3B0-E2602B640C44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper", "Neo4jMapper\Neo4jMapper.csproj", "{0FD19E45-1527-48BE-A3B0-E2602B640C44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{5037BE8D-851D-436F-800B-A23EF66EA9D5}"
 EndProject

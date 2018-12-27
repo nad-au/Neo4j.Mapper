@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Neo4j.Driver.Extensions\Neo4j.Driver.Extensions.csproj" />
+    <ProjectReference Include="..\Neo4jMapper\Neo4jMapper.csproj" />
   </ItemGroup>
 
 </Project>

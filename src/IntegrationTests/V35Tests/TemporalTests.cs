@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using IntegrationTests.Models;
-using Neo4j.Driver.Extensions;
 using Neo4j.Driver.V1;
+using Neo4jMapper;
 using NUnit.Framework;
 
 namespace IntegrationTests.V35Tests

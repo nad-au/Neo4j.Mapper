@@ -1,31 +1,13 @@
 ﻿using System.Linq;
 using IntegrationTests.Models;
-using IntegrationTests.Queries;
-using Neo4j.Driver.V1;
 using Neo4jMapper;
 using NUnit.Framework;
 
-namespace IntegrationTests
+namespace IntegrationTests.Tests
 {
     [TestFixture]
-    public class SessionExtensionsTests : TestFixtureBase
+    public class SessionExtensionsTests : MoviesFixtureBase
     {
-        private ISession session;
-
-        [SetUp]
-        public void SetUp()
-        {
-            session = Driver.Session();
-            session.Run(Query.CreateMovies);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            session.Run(Query.DeleteMovies);
-            session.Dispose();
-        }
-
         [Test]
         public void RunnerTest()
         {
@@ -33,7 +15,7 @@ namespace IntegrationTests
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})
                 RETURN person";
 
-            var result = session.Run(query);
+            var result = Session.Run(query);
 
             var person = result.Return<Person>().SingleOrDefault();
 
@@ -45,9 +27,9 @@ namespace IntegrationTests
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})
                 SET person = $p1";
 
-            session.Run<Person>(updateQuery, p1 => person);
+            Session.Run<Person>(updateQuery, p1 => person);
 
-            result = session.Run(query);
+            result = Session.Run(query);
 
             person = result.Return<Person>().SingleOrDefault();
 

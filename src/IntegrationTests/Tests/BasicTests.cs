@@ -1,36 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using IntegrationTests.Models;
-using IntegrationTests.Queries;
-using Neo4j.Driver.V1;
 using Neo4jMapper;
 using NUnit.Framework;
 
-namespace IntegrationTests
+namespace IntegrationTests.Tests
 {
     [TestFixture]
-    public class BasicTests : TestFixtureBase
+    public class BasicTests : MoviesFixtureBase
     {
-        private ISession session;
-
-        [SetUp]
-        public void SetUp()
-        {
-            session = Driver.Session();
-            session.Run(Query.CreateMovies);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            session.Run(Query.DeleteMovies);
-            session.Dispose();
-        }
-
         [Test]
         public void PersonsTest()
         {
-            var result = session.Run(@"
+            var result = Session.Run(@"
                 MATCH (person:Person)
                 RETURN person
                 LIMIT 10");
@@ -43,7 +25,7 @@ namespace IntegrationTests
         [Test]
         public void MoviesTest()
         {
-            var result = session.Run(@"
+            var result = Session.Run(@"
                 MATCH (movie:Movie)
                 RETURN movie
                 LIMIT 10");
@@ -56,7 +38,7 @@ namespace IntegrationTests
         [Test]
         public void ListOfMoviesTest()
         {
-            var result = session.Run(@"
+            var result = Session.Run(@"
                 MATCH (movie:Movie)
                 RETURN COLLECT(movie)");
 
@@ -69,7 +51,7 @@ namespace IntegrationTests
         [Test]
         public void ActorWithListOfMovies()
         {
-            var result = session.Run(@"
+            var result = Session.Run(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 WITH person, COLLECT(movie) AS movies
                 RETURN person, movies");
@@ -87,7 +69,7 @@ namespace IntegrationTests
         [Test]
         public void ActorNameWithListOfMovies()
         {
-            var result = session.Run(@"
+            var result = Session.Run(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 WITH person, COLLECT(movie) AS movies
                 RETURN person.name, movies");

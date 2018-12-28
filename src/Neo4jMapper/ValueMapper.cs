@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Neo4j.Driver.V1;
 using ServiceStack;
@@ -13,6 +14,9 @@ namespace Neo4jMapper
 
             if (typeof(IEnumerable).IsAssignableFrom(targetType))
             {
+                if (!(value is IEnumerable))
+                    throw new ArgumentException("Expecting a collection but the cypher value is not a list");
+
                 if (targetType == typeof(string))
                 {
                     return value.As<T>();
@@ -33,6 +37,9 @@ namespace Neo4jMapper
             {
                 return map.FromObjectDictionary<T>();
             }
+
+            if (value is IEnumerable)
+                throw new ArgumentException("Not expecting a collection but the cypher value is a list");
 
             return value.As<T>();
         }

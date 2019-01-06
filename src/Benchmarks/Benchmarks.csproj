@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.3" />
+    <PackageReference Include="Neo4j.Driver" Version="1.7.0" />
+    <PackageReference Include="Neo4jClient" Version="3.0.1.26" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Neo4jMapper\Neo4jMapper.csproj" />
+    <ProjectReference Include="..\Queries\Queries.csproj" />
+  </ItemGroup>
+
+</Project>

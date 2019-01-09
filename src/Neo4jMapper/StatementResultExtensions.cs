@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Neo4j.Driver.V1;
 
 namespace Neo4jMapper
@@ -9,30 +10,21 @@ namespace Neo4jMapper
         public static IEnumerable<TReturn> Return<TReturn>(
             this IStatementResult statementResult)
         {
-            foreach (var record in statementResult)
-            {
-                yield return record.Map<TReturn>();
-            }
+            return statementResult.Select(record => record.Map<TReturn>());
         }
 
         public static IEnumerable<TReturn> Return<T1, T2, TReturn>(
             this IStatementResult statementResult,
             Func<T1, T2, TReturn> mapFunc)
         {
-            foreach (var record in statementResult)
-            {
-                yield return record.Map(mapFunc);
-            }
+            return statementResult.Select(record => record.Map(mapFunc));
         }
 
         public static IEnumerable<TReturn> Return<T1, T2, T3, TReturn>(
             this IStatementResult statementResult,
             Func<T1, T2, T3, TReturn> mapFunc)
         {
-            foreach (var record in statementResult)
-            {
-                yield return record.Map(mapFunc);
-            }
+            return statementResult.Select(record => record.Map(mapFunc));
         }
     }
 }

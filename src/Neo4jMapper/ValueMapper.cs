@@ -14,18 +14,19 @@ namespace Neo4jMapper
 
             if (typeof(IEnumerable).IsAssignableFrom(targetType))
             {
-                if (!(value is IEnumerable))
+                if (!(value is IEnumerable enumerable))
                     throw new ArgumentException("Expecting a collection but the cypher value is not a list");
 
                 if (targetType == typeof(string))
                 {
-                    return value.As<T>();
+                    return enumerable.As<T>();
                 }
 
                 var elementType = targetType.GetGenericArguments()[0];
                 var genericType = typeof(CollectionMapper<>).MakeGenericType(elementType);
                 var collectionMapper = (ICollectionMapper)genericType.CreateInstance();
-                return (T)collectionMapper.MapValues((IEnumerable)value, targetType);
+                
+                return (T)collectionMapper.MapValues(enumerable, targetType);
             }
 
             if (value is INode node)

@@ -30,7 +30,10 @@ namespace Neo4jMapper
 
             if (value is INode node)
             {
-                return node.Properties.FromObjectDictionary<T>();
+                var entity = node.Properties.FromObjectDictionary<T>();
+                entity.SetNodeId(node.Id);
+
+                return entity;
             }
 
             if (value is IReadOnlyDictionary<string, object> map)

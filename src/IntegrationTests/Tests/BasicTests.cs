@@ -62,6 +62,7 @@ namespace IntegrationTests.Tests
             var movies = result.Return<Movie>().ToList();
 
             Assert.AreEqual(10, movies.Count);
+            Assert.IsTrue(movies.All(p => p.Id != default(long)));
         }
 
         [Test]
@@ -133,6 +134,7 @@ namespace IntegrationTests.Tests
 
             Assert.IsNotNull(actor);
             Assert.AreEqual(4, actor.MovesActedIn.Count());
+            Assert.IsTrue(actor.MovesActedIn.All(p => p.Id != default(long)));
         }
 
         [Test]

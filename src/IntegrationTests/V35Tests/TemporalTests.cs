@@ -34,7 +34,7 @@ namespace IntegrationTests.V35Tests
                 RETURN timestamp
                 LIMIT 10");
 
-            var timeStamps = result.Return<TimeStamp>().ToList();
+            var timeStamps = result.Map<TimeStamp>().ToList();
 
             Assert.AreEqual(1, timeStamps.Count);
 

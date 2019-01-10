@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
+using System.Threading.Tasks;
 using Neo4j.Driver.V1;
 using ServiceStack;
 
@@ -9,66 +8,76 @@ namespace Neo4jMapper
 {
     public static class SessionExtensions
     {
-        public static IStatementResult Run<T>(
-            this ISession session,
-            string statement,
-            Expression<Func<T, object>> expression)
-        {
-            var memberSelector = (MemberExpression)expression.Body;
-            var constantSelector = (ConstantExpression)memberSelector.Expression;
+        private const string GetNodeStatement = @"
+                MATCH (node)
+                WHERE id(node) = $p1
+                RETURN node";
+        
+        private const string SetNodeStatement = @"
+                MATCH (node)
+                WHERE id(node) = $p1
+                SET node = $p2";
 
-            var paramName = expression.Parameters[0].Name;
-            var value = ((FieldInfo)memberSelector.Member)
-                .GetValue(constantSelector.Value);
-
-            var parameters = new Neo4jParameters
-            {
-                {paramName, value.ToObjectDictionary()}
-            };
-
-            return session.Run(statement, parameters);
-        }
+        private const string NodeIdUnspecifiedMessage = "NodeIdAttribute not specified or the Node Id is null";
 
         public static TEntity GetNode<TEntity>(
             this ISession session,
             long nodeId) where TEntity : class
         {
-            const string statement = @"
-                MATCH (node)
-                WHERE id(node) = $p1
-                RETURN node";
-
-            var parameters = new Neo4jParameters(new
-            {
+            var parameters = new {
                 p1 = nodeId
-            });
+            };
 
             return session
-                .Run(statement, parameters)
-                .Return<TEntity>()
+                .Run(GetNodeStatement, parameters)
+                .Map<TEntity>()
                 .SingleOrDefault();
         }
 
-        public static IStatementResult UpdateNode<TEntity>(
+        public static async Task<TEntity> GetNodeAsync<TEntity>(
+            this ISession session,
+            long nodeId) where TEntity : class
+        {
+            var parameters = new {
+                p1 = nodeId
+            };
+
+            var statementResultCursor = await session.RunAsync(GetNodeStatement, parameters);
+            await statementResultCursor.FetchAsync();
+
+            return statementResultCursor.Current.Map<TEntity>();
+        }
+
+        public static IStatementResult SetNode<TEntity>(
             this ISession session,
             TEntity entity) where TEntity : class
         {
-            const string statement = @"
-                MATCH (node)
-                WHERE id(node) = $p1
-                SET node = $p2";
-
             var nodeId = EntityAccessor.GetNodeId(entity);
             if (nodeId == null)
-                throw new Exception("NodeIdAttribute not specified or the Node Id is null");
+                throw new Exception(NodeIdUnspecifiedMessage);
 
-            var parameters = new Neo4jParameters(new
-            {
+            var parameters = new {
                 p1 = nodeId,
                 p2 = entity.ToObjectDictionary()
-            });
+            };
 
-            return session.Run(statement, parameters);
+            return session.Run(SetNodeStatement, parameters);
+        }
+
+        public static async Task<IStatementResultCursor> SetNodeAsync<TEntity>(
+            this ISession session,
+            TEntity entity) where TEntity : class
+        {
+            var nodeId = EntityAccessor.GetNodeId(entity);
+            if (nodeId == null)
+                throw new Exception(NodeIdUnspecifiedMessage);
+
+            var parameters = new {
+                p1 = nodeId,
+                p2 = entity.ToObjectDictionary()
+            };
+
+            return await session.RunAsync(SetNodeStatement, parameters);
         }
     }
 }

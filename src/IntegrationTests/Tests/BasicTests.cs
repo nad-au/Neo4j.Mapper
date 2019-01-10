@@ -15,7 +15,7 @@ namespace IntegrationTests.Tests
             var result = Session.Run(@"
                 RETURN { key: 'Value', inner: { item: 'Map1'}}");
 
-            var map = result.Return<MapModel>().SingleOrDefault();
+            var map = result.Map<MapModel>().SingleOrDefault();
 
             Assert.IsNotNull(map);
             Assert.AreEqual("Value", map.Key);
@@ -29,7 +29,7 @@ namespace IntegrationTests.Tests
             var result = Session.Run(@"
                 RETURN { key: 'Value', listKey: [{ item: 'Map1' }, { item: 'Map2' }]}");
 
-            var map = result.Return<MapWithListModel>().SingleOrDefault();
+            var map = result.Map<MapWithListModel>().SingleOrDefault();
 
             Assert.IsNotNull(map);
             Assert.AreEqual("Value", map.Key);
@@ -46,7 +46,7 @@ namespace IntegrationTests.Tests
                 RETURN person
                 LIMIT 10");
 
-            var persons = result.Return<Person>().ToList();
+            var persons = result.Map<Person>().ToList();
 
             Assert.AreEqual(10, persons.Count);
         }
@@ -59,7 +59,7 @@ namespace IntegrationTests.Tests
                 RETURN movie
                 LIMIT 10");
 
-            var movies = result.Return<Movie>().ToList();
+            var movies = result.Map<Movie>().ToList();
 
             Assert.AreEqual(10, movies.Count);
             Assert.IsTrue(movies.All(p => p.Id != default(long)));
@@ -73,7 +73,7 @@ namespace IntegrationTests.Tests
                 RETURN movie { .* }
                 LIMIT 10");
 
-            var movies = result.Return<Movie>().ToList();
+            var movies = result.Map<Movie>().ToList();
 
             Assert.AreEqual(10, movies.Count);
         }
@@ -84,7 +84,7 @@ namespace IntegrationTests.Tests
             var result = Session.Run(@"
                 RETURN range(0, 10)[..4]");
 
-            var sequence = result.Return<List<byte>>().SingleOrDefault();
+            var sequence = result.Map<List<byte>>().SingleOrDefault();
 
             Assert.IsNotNull(sequence);
             Assert.AreEqual(4, sequence.Count);
@@ -99,7 +99,7 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie)
                 RETURN COLLECT(movie)");
 
-            var movies = result.Return<List<Movie>>().SingleOrDefault();
+            var movies = result.Map<List<Movie>>().SingleOrDefault();
 
             Assert.IsNotNull(movies);
             Assert.AreEqual(38, movies.Count);
@@ -112,7 +112,7 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie)
                 RETURN COLLECT(movie { .* })");
 
-            var movies = result.Return<List<Movie>>().SingleOrDefault();
+            var movies = result.Map<List<Movie>>().SingleOrDefault();
 
             Assert.IsNotNull(movies);
             Assert.AreEqual(38, movies.Count);
@@ -126,7 +126,7 @@ namespace IntegrationTests.Tests
                 WITH person, COLLECT(movie) AS movies
                 RETURN person, movies");
 
-            var actor = result.Return<Person, IEnumerable<Movie>, Person>((person, movies) =>
+            var actor = result.Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
             {
                 person.MovesActedIn = movies;
                 return person;
@@ -145,7 +145,7 @@ namespace IntegrationTests.Tests
                 WITH person, COLLECT(movie) AS movies
                 RETURN person, movies");
 
-            var anonType = result.Return((Person person, IEnumerable<Movie> movies) => new
+            var anonType = result.Map((Person person, IEnumerable<Movie> movies) => new
             {
                 Person = person,
                 Movies = movies
@@ -164,7 +164,7 @@ namespace IntegrationTests.Tests
                 WITH person, COLLECT(movie) AS movies
                 RETURN person.name, movies");
 
-            var actor = result.Return<string, IEnumerable<Movie>, ActorName>((actorName, movies) => new ActorName
+            var actor = result.Map<string, IEnumerable<Movie>, ActorName>((actorName, movies) => new ActorName
             {
                 name = actorName,
                 MovesActedIn = movies
@@ -181,7 +181,7 @@ namespace IntegrationTests.Tests
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 RETURN person { .name, movesActedIn: COLLECT(movie { .title, .released })}");
 
-            var actorWithMovies = result.Return<Person>().SingleOrDefault();
+            var actorWithMovies = result.Map<Person>().SingleOrDefault();
 
             Assert.IsNotNull(actorWithMovies);
             Assert.AreEqual(4, actorWithMovies.MovesActedIn.Count());

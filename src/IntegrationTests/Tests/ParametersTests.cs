@@ -44,7 +44,7 @@ namespace IntegrationTests.Tests
                     MATCH (actor:Actor)
                     RETURN actor");
 
-                var actors = result.Return<Person>().ToList();
+                var actors = result.Map<Person>().ToList();
 
                 Assert.AreEqual(1, actors.Count);
 

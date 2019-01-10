@@ -1,10 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Neo4j.Driver.V1;
 
 namespace Neo4jMapper
 {
     public static class RecordExtensions
     {
+        public static IEnumerable<TReturn> Map<TReturn>(
+            this IEnumerable<IRecord> records)
+        {
+            return records.Select(record => record.Map<TReturn>());
+        }
+
+        public static IEnumerable<TReturn> Map<T1, T2, TReturn>(
+            this IEnumerable<IRecord> records,
+            Func<T1, T2, TReturn> mapFunc)
+        {
+            return records.Select(record => record.Map(mapFunc));
+        }
+
+        public static IEnumerable<TReturn> Map<T1, T2, T3, TReturn>(
+            this IEnumerable<IRecord> records,
+            Func<T1, T2, T3, TReturn> mapFunc)
+        {
+            return records.Select(record => record.Map(mapFunc));
+        }
+
         public static TReturn Map<TReturn>(
             this IRecord record)
         {

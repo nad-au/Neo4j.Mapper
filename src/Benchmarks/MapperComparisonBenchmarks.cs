@@ -21,7 +21,7 @@ namespace Benchmarks
                     MATCH (movie:Movie)
                     RETURN movie");
 
-                return result.Return<Movie>().ToList();
+                return result.Map<Movie>().ToList();
             }
         }
 
@@ -60,7 +60,7 @@ namespace Benchmarks
                     MATCH (person)-[:ACTED_IN]->(movie:Movie)
                     RETURN person, COLLECT(movie) AS movies");
 
-                return result.Return<Person, IEnumerable<Movie>, Person>((person, movies) =>
+                return result.Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
                 {
                     person.MovesActedIn = movies;
                     return person;

@@ -138,6 +138,25 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
+        public void AnonymousTypeWithActorAndListOfMovies()
+        {
+            var result = Session.Run(@"
+                MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
+                WITH person, COLLECT(movie) AS movies
+                RETURN person, movies");
+
+            var anonType = result.Return((Person person, IEnumerable<Movie> movies) => new
+            {
+                Person = person,
+                Movies = movies
+            }).SingleOrDefault();
+
+            Assert.IsNotNull(anonType);
+            Assert.IsNotNull(anonType.Person);
+            Assert.AreEqual(4, anonType.Movies.Count());
+        }
+
+        [Test]
         public void ActorNameWithListOfMovies()
         {
             var result = Session.Run(@"

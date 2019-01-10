@@ -7,6 +7,15 @@ namespace Neo4jMapper
     // ReSharper disable once InconsistentNaming
     public class Neo4jParameters : Dictionary<string, object>
     {
+        public Neo4jParameters(object parameters)
+        {
+            AddParams(parameters);
+        }
+
+        public Neo4jParameters()
+        {
+        }
+
         public void Add<T>(string key, T value)
         {
             var dictionary = value.ToObjectDictionary();

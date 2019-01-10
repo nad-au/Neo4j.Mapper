@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -21,29 +20,55 @@ namespace Neo4jMapper
             var paramName = expression.Parameters[0].Name;
             var value = ((FieldInfo)memberSelector.Member)
                 .GetValue(constantSelector.Value);
-            
-            var parameters = new Dictionary<string, object>
+
+            var parameters = new Neo4jParameters
             {
-                { paramName, value.ToObjectDictionary() }
+                {paramName, value.ToObjectDictionary()}
             };
 
             return session.Run(statement, parameters);
         }
 
-        public static IStatementResult UpdateNode<T>(
+        public static TEntity GetNode<TEntity>(
             this ISession session,
-            T entity) where T : class
+            long nodeId) where TEntity : class
+        {
+            const string statement = @"
+                MATCH (node)
+                WHERE id(node) = $p1
+                RETURN node";
+
+            var parameters = new Neo4jParameters(new
+            {
+                p1 = nodeId
+            });
+
+            return session
+                .Run(statement, parameters)
+                .Return<TEntity>()
+                .SingleOrDefault();
+        }
+
+        public static IStatementResult UpdateNode<TEntity>(
+            this ISession session,
+            TEntity entity) where TEntity : class
         {
             const string statement = @"
                 MATCH (node)
                 WHERE id(node) = $p1
                 SET node = $p2";
 
-            var nodeId = entity.GetNodeId();
+            var nodeId = EntityAccessor.GetNodeId(entity);
             if (nodeId == null)
                 throw new Exception("NodeIdAttribute not specified or the Node Id is null");
 
-            return session.Run(statement, nodeId.Value);
+            var parameters = new Neo4jParameters(new
+            {
+                p1 = nodeId,
+                p2 = entity.ToObjectDictionary()
+            });
+
+            return session.Run(statement, parameters);
         }
     }
 }

@@ -8,14 +8,14 @@ namespace Neo4jMapper
 {
     public static class ValueMapper
     {
-        public static T MapValue<T>(object value)
+        public static T MapValue<T>(object cypherValue)
         {
             var targetType = typeof(T);
 
             if (typeof(IEnumerable).IsAssignableFrom(targetType))
             {
-                if (!(value is IEnumerable enumerable))
-                    throw new ArgumentException("Expecting a collection but the cypher value is not a list");
+                if (!(cypherValue is IEnumerable enumerable))
+                    throw new ArgumentException($"The cypher value is not a list and cannot be mapped to target type: {targetType.FullName}");
 
                 if (targetType == typeof(string))
                 {
@@ -29,23 +29,23 @@ namespace Neo4jMapper
                 return (T)collectionMapper.MapValues(enumerable, targetType);
             }
 
-            if (value is INode node)
+            if (cypherValue is INode node)
             {
                 var entity = node.Properties.FromObjectDictionary<T>();
-                entity.SetNodeId(node.Id);
+                EntityAccessor.SetNodeId(entity, node.Id);
 
                 return entity;
             }
 
-            if (value is IReadOnlyDictionary<string, object> map)
+            if (cypherValue is IReadOnlyDictionary<string, object> map)
             {
                 return map.FromObjectDictionary<T>();
             }
 
-            if (value is IEnumerable)
-                throw new ArgumentException("Not expecting a collection but the cypher value is a list");
+            if (cypherValue is IEnumerable)
+                throw new ArgumentException($"The cypher value is a list and cannot be mapped to target type: {targetType.FullName}");
 
-            return value.As<T>();
+            return cypherValue.As<T>();
         }
     }
 }

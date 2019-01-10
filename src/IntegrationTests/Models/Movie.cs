@@ -1,10 +1,12 @@
-﻿using Neo4jMapper;
+﻿using System.Runtime.Serialization;
+using Neo4jMapper;
 
 namespace IntegrationTests.Models
 {
     public class Movie
     {
         [NodeId]
+        [IgnoreDataMember]
         public long Id { get; set; }
 
         public string title { get; set; }

@@ -31,11 +31,11 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task GetNodeAsyncShouldPopulateNodeId()
         {
-            var result = Session.Run(@"
+            var result = await Session.RunAsync(@"
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = result.Map<Movie>().SingleOrDefault();
+            var movie = (await result.MapAsync<Movie>()).SingleOrDefault();
 
             Assert.IsNotNull(movie);
             Assert.AreNotEqual(movie.Id, default(long));
@@ -71,11 +71,11 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task SetNodeAsyncShouldUpdateValues()
         {
-            var result = Session.Run(@"
+            var result = await Session.RunAsync(@"
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = result.Map<Movie>().SingleOrDefault();
+            var movie = (await result.MapAsync<Movie>()).SingleOrDefault();
 
             Assert.IsNotNull(movie);
             Assert.AreNotEqual(movie.Id, default(long));
@@ -85,7 +85,7 @@ namespace IntegrationTests.Tests
             // Act
             await Session.SetNodeAsync(movie);
 
-            var node = Session.GetNode<Movie>(movie.Id);
+            var node = await Session.GetNodeAsync<Movie>(movie.Id);
 
             node.Should().BeEquivalentTo(movie);
         }

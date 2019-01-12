@@ -54,7 +54,7 @@ namespace Neo4jMapper
         {
             var nodeId = EntityAccessor.GetNodeId(entity);
             if (nodeId == null)
-                throw new Exception(NodeIdUnspecifiedMessage);
+                throw new InvalidOperationException(NodeIdUnspecifiedMessage);
 
             var parameters = new {
                 p1 = nodeId,
@@ -70,7 +70,7 @@ namespace Neo4jMapper
         {
             var nodeId = EntityAccessor.GetNodeId(entity);
             if (nodeId == null)
-                throw new Exception(NodeIdUnspecifiedMessage);
+                throw new InvalidOperationException(NodeIdUnspecifiedMessage);
 
             var parameters = new {
                 p1 = nodeId,

@@ -1,39 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using ServiceStack;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("UnitTests")]
 namespace Neo4jMapper
 {
     internal static class EntityAccessor
     {
-        private static readonly Dictionary<Type, IEntityPropertyAccessor> CachedPropertyAccessors = new Dictionary<Type, IEntityPropertyAccessor>();
+        private static readonly ConcurrentDictionary<Type, IEntityPropertyAccessor> CachedPropertyAccessors = new ConcurrentDictionary<Type, IEntityPropertyAccessor>();
 
         public static long? GetNodeId<T>(T entity)
         {
-            while (true)
-            {
-                if (CachedPropertyAccessors.TryGetValue(typeof(T), out var entityPropertyAccessor))
-                {
-                    return entityPropertyAccessor.GetNodeId(entity);
-                }
-
-                CachedPropertyAccessors.Add(typeof(T), new EntityPropertyAccessor<T>());
-            }
+            return CachedPropertyAccessors
+                .GetOrAdd(typeof(T), new EntityPropertyAccessor<T>())
+                .GetNodeId(entity);
         }
 
         public static void SetNodeId<T>(T entity, long id)
         {
-            while (true)
-            {
-                if (CachedPropertyAccessors.TryGetValue(typeof(T), out var entityPropertyAccessor))
-                {
-                    entityPropertyAccessor.SetNodeId(entity, id);
-                    return;
-                }
-
-                CachedPropertyAccessors.Add(typeof(T), new EntityPropertyAccessor<T>());
-            }
+            CachedPropertyAccessors
+                .GetOrAdd(typeof(T), new EntityPropertyAccessor<T>())
+                .SetNodeId(entity, id);
         }
     }
 

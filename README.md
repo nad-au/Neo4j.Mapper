@@ -21,5 +21,5 @@ var actor = (await cursor.SingleAsync())
 Assert.IsNotNull(actor);
 Assert.AreEqual("Cuba Gooding Jr.", actor.name);
 Assert.AreEqual(1968, actor.born);
-Assert.AreEqual(4, actor.MovesActedIn);
+Assert.AreEqual(4, actor.MovesActedIn.Count());
 ```

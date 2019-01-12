@@ -18,7 +18,7 @@ namespace Neo4jMapper
                 WHERE id(node) = $p1
                 SET node = $p2";
 
-        private const string NodeIdUnspecifiedMessage = "NodeIdAttribute not specified or the Node Id is null";
+        private static readonly string NodeIdUnspecifiedMessage = $"{nameof(NodeIdAttribute)} not specified or the Node Id is null";
 
         public static TEntity GetNode<TEntity>(
             this ISession session,

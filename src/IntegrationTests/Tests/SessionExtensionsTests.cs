@@ -69,7 +69,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task SetNodeAsyncShouldUpdateValues()
+        public async Task SetNodeAsync_Should_Update_Values()
         {
             var result = await Session.RunAsync(@"
                 MATCH (movie:Movie {title: 'Top Gun'})

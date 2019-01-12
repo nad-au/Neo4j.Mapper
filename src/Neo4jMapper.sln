@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C54B33B9-3D99-4DD7-B8B7-5855346C0005}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceStack.Text", "..\..\..\servicestack\ServiceStack.Text\src\ServiceStack.Text\ServiceStack.Text.csproj", "{02638E38-72A0-449A-B2F2-DD34C6F0EECF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{802D01C4-3362-41C2-86EB-1012A1B3C2F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queries", "Queries\Queries.csproj", "{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{96956351-A485-4619-AA5A-1B05A6528FD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceStack.Text.Core", "..\..\..\servicestack\ServiceStack.Text\src\ServiceStack.Text\ServiceStack.Text.Core.csproj", "{057B45D8-7B98-4E7C-B8CC-E74903B72A54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,6 @@ Global
 		{72217327-B6DC-49AF-8CF1-80A7F8093081}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72217327-B6DC-49AF-8CF1-80A7F8093081}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72217327-B6DC-49AF-8CF1-80A7F8093081}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02638E38-72A0-449A-B2F2-DD34C6F0EECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02638E38-72A0-449A-B2F2-DD34C6F0EECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02638E38-72A0-449A-B2F2-DD34C6F0EECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02638E38-72A0-449A-B2F2-DD34C6F0EECF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +45,10 @@ Global
 		{96956351-A485-4619-AA5A-1B05A6528FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96956351-A485-4619-AA5A-1B05A6528FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96956351-A485-4619-AA5A-1B05A6528FD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{057B45D8-7B98-4E7C-B8CC-E74903B72A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{057B45D8-7B98-4E7C-B8CC-E74903B72A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{057B45D8-7B98-4E7C-B8CC-E74903B72A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{057B45D8-7B98-4E7C-B8CC-E74903B72A54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

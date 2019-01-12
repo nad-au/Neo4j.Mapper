@@ -11,8 +11,7 @@ var result = Session.Run(@"
   WITH person, COLLECT(movie) AS movies
   RETURN person, movies");
 
-var actor = result.Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
-{
+var actor = result.Map((Person person, IEnumerable<Movie> movies) => {
   person.MovesActedIn = movies;
   return person;
 }).SingleOrDefault();

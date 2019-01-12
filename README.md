@@ -14,11 +14,11 @@ var cursor = await Session.RunAsync(@"
 var actor = (await cursor.SingleAsync())
     .Map((Person person, IEnumerable<Movie> movies) =>
 {
-    person.MovesActedIn = movies;
+    person.MoviesActedIn = movies;
     return person;
 });
 
 Assert.AreEqual("Cuba Gooding Jr.", actor.name);
 Assert.AreEqual(1968, actor.born);
-Assert.AreEqual(4, actor.MovesActedIn.Count());
+Assert.AreEqual(4, actor.MoviesActedIn.Count());
 ```

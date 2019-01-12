@@ -18,8 +18,12 @@ namespace Neo4jMapper
 
         public void Add<T>(string key, T value)
         {
-            var dictionary = value.ToObjectDictionary();
-            base.Add(key, dictionary);
+            base.Add(key, value.ToObjectDictionary());
+        }
+
+        public void Add(string key, IReadOnlyDictionary<string, object> values)
+        {
+            base.Add(key, values);
         }
 
         public void AddParams(object parameters)

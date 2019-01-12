@@ -15,7 +15,7 @@ namespace Neo4jMapper
             if (typeof(IEnumerable).IsAssignableFrom(targetType))
             {
                 if (!(cypherValue is IEnumerable enumerable))
-                    throw new ArgumentException($"The cypher value is not a list and cannot be mapped to target type: {targetType.FullName}");
+                    throw new InvalidOperationException($"The cypher value is not a list and cannot be mapped to target type: {targetType.UnderlyingSystemType}");
 
                 if (targetType == typeof(string))
                 {
@@ -43,7 +43,7 @@ namespace Neo4jMapper
             }
 
             if (cypherValue is IEnumerable)
-                throw new ArgumentException($"The cypher value is a list and cannot be mapped to target type: {targetType.FullName}");
+                throw new InvalidOperationException($"The cypher value is a list and cannot be mapped to target type: {targetType.UnderlyingSystemType}");
 
             return cypherValue.As<T>();
         }

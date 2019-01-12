@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using IntegrationTests.Models;
+using Neo4j.Driver.V1;
 using Neo4jMapper;
 using NUnit.Framework;
 
@@ -15,67 +17,11 @@ namespace IntegrationTests.Tests
             var result = Session.Run(@"
                 RETURN { key: 'Value', inner: { item: 'Map1'}}");
 
-            var map = result.Map<MapModel>().SingleOrDefault();
+            var map = result.Single().Map<MapModel>();
 
-            Assert.IsNotNull(map);
             Assert.AreEqual("Value", map.Key);
             Assert.IsNotNull(map.Inner);
             Assert.AreEqual("Map1", map.Inner.Item);
-        }
-
-        [Test]
-        public void MapWithListTest()
-        {
-            var result = Session.Run(@"
-                RETURN { key: 'Value', listKey: [{ item: 'Map1' }, { item: 'Map2' }]}");
-
-            var map = result.Map<MapWithListModel>().SingleOrDefault();
-
-            Assert.IsNotNull(map);
-            Assert.AreEqual("Value", map.Key);
-            Assert.AreEqual(2, map.ListKey.Count);
-            Assert.AreEqual("Map1", map.ListKey.First().Item);
-            Assert.AreEqual("Map2", map.ListKey.Last().Item);
-        }
-
-        [Test]
-        public void PersonsTest()
-        {
-            var result = Session.Run(@"
-                MATCH (person:Person)
-                RETURN person
-                LIMIT 10");
-
-            var persons = result.Map<Person>().ToList();
-
-            Assert.AreEqual(10, persons.Count);
-        }
-
-        [Test]
-        public void MoviesTest()
-        {
-            var result = Session.Run(@"
-                MATCH (movie:Movie)
-                RETURN movie
-                LIMIT 10");
-
-            var movies = result.Map<Movie>().ToList();
-
-            Assert.AreEqual(10, movies.Count);
-            Assert.IsTrue(movies.All(p => p.Id != default(long)));
-        }
-
-        [Test]
-        public void MoviesMapTest()
-        {
-            var result = Session.Run(@"
-                MATCH (movie:Movie)
-                RETURN movie { .* }
-                LIMIT 10");
-
-            var movies = result.Map<Movie>().ToList();
-
-            Assert.AreEqual(10, movies.Count);
         }
 
         [Test]
@@ -84,107 +30,162 @@ namespace IntegrationTests.Tests
             var result = Session.Run(@"
                 RETURN range(0, 10)[..4]");
 
-            var sequence = result.Map<List<byte>>().SingleOrDefault();
+            var sequence = result.Single().Map<List<byte>>();
 
-            Assert.IsNotNull(sequence);
             Assert.AreEqual(4, sequence.Count);
             Assert.AreEqual(0, sequence.First());
             Assert.AreEqual(3, sequence.Last());
         }
 
         [Test]
-        public void ListOfMoviesTest()
+        public void MapWithListTest()
         {
             var result = Session.Run(@"
+                RETURN { key: 'Value', listKey: [{ item: 'Map1' }, { item: 'Map2' }]}");
+
+            var map = result.Single().Map<MapWithListModel>();
+
+            Assert.AreEqual("Value", map.Key);
+            Assert.AreEqual(2, map.ListKey.Count);
+            Assert.AreEqual("Map1", map.ListKey.First().Item);
+            Assert.AreEqual("Map2", map.ListKey.Last().Item);
+        }
+
+        [Test]
+        public async Task PersonsTest()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (person:Person)
+                RETURN person
+                LIMIT 10");
+
+            var persons = await cursor.ToListAsync(record => record.Map<Person>());
+
+            Assert.AreEqual(10, persons.Count);
+        }
+
+        [Test]
+        public async Task MoviesTest()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (movie:Movie)
+                RETURN movie
+                LIMIT 10");
+
+            var movies = await cursor.ToListAsync(record => record.Map<Movie>());
+
+            Assert.AreEqual(10, movies.Count);
+            Assert.IsTrue(movies.All(p => p.Id != default(long)));
+        }
+
+        [Test]
+        public async Task MoviesMapTest()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (movie:Movie)
+                RETURN movie { .* }
+                LIMIT 10");
+
+            var movies = await cursor.ToListAsync(record => record.Map<Movie>());
+
+            Assert.AreEqual(10, movies.Count);
+        }
+
+        [Test]
+        public async Task ListOfMoviesTest()
+        {
+            var cursor = await Session.RunAsync(@"
                 MATCH (movie:Movie)
                 RETURN COLLECT(movie)");
 
-            var movies = result.Map<List<Movie>>().SingleOrDefault();
+            var movies = (await cursor.SingleAsync()).Map<List<Movie>>();
 
-            Assert.IsNotNull(movies);
             Assert.AreEqual(38, movies.Count);
         }
 
         [Test]
-        public void ListOfMoviesMapTest()
+        public async Task ListOfMoviesMapTest()
         {
-            var result = Session.Run(@"
+            var cursor = await Session.RunAsync(@"
                 MATCH (movie:Movie)
                 RETURN COLLECT(movie { .* })");
 
-            var movies = result.Map<List<Movie>>().SingleOrDefault();
+            var movies = (await cursor.SingleAsync()).Map<List<Movie>>();
 
             Assert.IsNotNull(movies);
             Assert.AreEqual(38, movies.Count);
         }
 
         [Test]
-        public void ActorWithListOfMovies()
+        public async Task ActorWithListOfMovies()
         {
-            var result = Session.Run(@"
+            var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 WITH person, COLLECT(movie) AS movies
                 RETURN person, movies");
 
-            var actor = result.Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
+            var actor = (await cursor.SingleAsync())
+                .Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
             {
-                person.MovesActedIn = movies;
+                person.MoviesActedIn = movies;
                 return person;
-            }).SingleOrDefault();
+            });
 
             Assert.IsNotNull(actor);
-            Assert.AreEqual(4, actor.MovesActedIn.Count());
-            Assert.IsTrue(actor.MovesActedIn.All(p => p.Id != default(long)));
+            Assert.AreEqual(4, actor.MoviesActedIn.Count());
+            Assert.IsTrue(actor.MoviesActedIn.All(p => p.Id != default(long)));
         }
 
         [Test]
-        public void AnonymousTypeWithActorAndListOfMovies()
+        public async Task AnonymousTypeWithActorAndListOfMovies()
         {
-            var result = Session.Run(@"
+            var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 WITH person, COLLECT(movie) AS movies
                 RETURN person, movies");
 
-            var anonType = result.Map((Person person, IEnumerable<Movie> movies) => new
+            var actor = (await cursor.SingleAsync())
+                .Map((Person person, IEnumerable<Movie> movies) => new
             {
                 Person = person,
                 Movies = movies
-            }).SingleOrDefault();
+            });
 
-            Assert.IsNotNull(anonType);
-            Assert.IsNotNull(anonType.Person);
-            Assert.AreEqual(4, anonType.Movies.Count());
+            Assert.AreEqual("Cuba Gooding Jr.", actor.Person.name);
+            Assert.AreEqual(1968, actor.Person.born);
+            Assert.AreEqual(4, actor.Movies.Count());
         }
 
         [Test]
-        public void ActorNameWithListOfMovies()
+        public async Task ActorNameWithListOfMovies()
         {
-            var result = Session.Run(@"
+            var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 WITH person, COLLECT(movie) AS movies
                 RETURN person.name, movies");
 
-            var actor = result.Map<string, IEnumerable<Movie>, ActorName>((actorName, movies) => new ActorName
+            var actor = (await cursor.SingleAsync())
+                .Map((string actorName, IEnumerable<Movie> movies) => new ActorName
             {
                 name = actorName,
-                MovesActedIn = movies
-            }).SingleOrDefault();
+                MoviesActedIn = movies
+            });
 
-            Assert.IsNotNull(actor);
-            Assert.AreEqual(4, actor.MovesActedIn.Count());
+            Assert.AreEqual("Cuba Gooding Jr.", actor.name);
+            Assert.AreEqual(4, actor.MoviesActedIn.Count());
         }
 
         [Test]
-        public void MapOfActorNameWithListOfMovies()
+        public async Task MapOfActorNameWithListOfMovies()
         {
-            var result = Session.Run(@"
+            var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                RETURN person { .name, movesActedIn: COLLECT(movie { .title, .released })}");
+                RETURN person { .name, moviesActedIn: COLLECT(movie { .title, .released })}");
 
-            var actorWithMovies = result.Map<Person>().SingleOrDefault();
+            var actorWithMovies = (await cursor.SingleAsync()).Map<Person>();
 
             Assert.IsNotNull(actorWithMovies);
-            Assert.AreEqual(4, actorWithMovies.MovesActedIn.Count());
+            Assert.AreEqual(4, actorWithMovies.MoviesActedIn.Count());
         }
     }
 }

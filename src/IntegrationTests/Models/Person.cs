@@ -13,6 +13,6 @@ namespace IntegrationTests.Models
         public string name { get; set; }
         public int born { get; set; }
 
-        public IEnumerable<Movie> MovesActedIn { get; set; }
+        public IEnumerable<Movie> MoviesActedIn { get; set; }
     }
 }

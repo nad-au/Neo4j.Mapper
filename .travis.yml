@@ -3,6 +3,7 @@ mono: none
 dotnet: 2.1.300
 
 install:
+  - nuget sources Add -Name "ServiceStack" -Source https://www.myget.org/F/servicestack
   - dotnet restore src/Neo4jMapper.sln
 
 script:

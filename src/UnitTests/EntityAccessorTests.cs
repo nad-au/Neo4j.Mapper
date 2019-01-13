@@ -12,6 +12,12 @@ namespace UnitTests
             public long Id { get; set; }
         }
 
+        public class EntityWithNullableId
+        {
+            [NodeId]
+            public long? Id { get; set; }
+        }
+
         public class NonEntity
         {
             public long Id { get; set; }
@@ -21,6 +27,15 @@ namespace UnitTests
         public void Should_Return_Entity_Node_Id()
         {
             var entity = new Entity {Id = 1};
+            var id = EntityAccessor.GetNodeId(entity);
+
+            Assert.AreEqual(1, id);
+        }
+
+        [Test]
+        public void Should_Return_Entity_Node_Id_For_Nullable_Id()
+        {
+            var entity = new EntityWithNullableId {Id = 1};
             var id = EntityAccessor.GetNodeId(entity);
 
             Assert.AreEqual(1, id);

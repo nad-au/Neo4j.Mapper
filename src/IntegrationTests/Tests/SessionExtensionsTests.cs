@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using IntegrationTests.Models;
+using Neo4j.Driver.V1;
 using Neo4jMapper;
 using NUnit.Framework;
 
@@ -17,9 +18,8 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = result.Map<Movie>().SingleOrDefault();
+            var movie = result.Single().Map<Movie>();
 
-            Assert.IsNotNull(movie);
             Assert.AreNotEqual(movie.Id, default(long));
 
             // Act
@@ -35,9 +35,8 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = (await result.MapAsync<Movie>()).SingleOrDefault();
+            var movie = (await result.SingleAsync()).Map<Movie>();
 
-            Assert.IsNotNull(movie);
             Assert.AreNotEqual(movie.Id, default(long));
 
             // Act
@@ -75,9 +74,8 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = (await result.MapAsync<Movie>()).SingleOrDefault();
+            var movie = (await result.SingleAsync()).Map<Movie>();
 
-            Assert.IsNotNull(movie);
             Assert.AreNotEqual(movie.Id, default(long));
 
             movie.title = "Top Gun 2";

@@ -112,7 +112,6 @@ namespace IntegrationTests.Tests
 
             var movies = (await cursor.SingleAsync()).Map<List<Movie>>();
 
-            Assert.IsNotNull(movies);
             Assert.AreEqual(38, movies.Count);
         }
 
@@ -184,7 +183,6 @@ namespace IntegrationTests.Tests
 
             var actorWithMovies = (await cursor.SingleAsync()).Map<Person>();
 
-            Assert.IsNotNull(actorWithMovies);
             Assert.AreEqual(4, actorWithMovies.MoviesActedIn.Count());
         }
     }

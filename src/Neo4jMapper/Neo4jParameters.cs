@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
-using ServiceStack;
 
 namespace Neo4jMapper
 {
@@ -9,27 +7,11 @@ namespace Neo4jMapper
     {
         public Neo4jParameters(object parameters)
         {
-            AddParams(parameters);
+            this.AddParams(parameters);
         }
 
         public Neo4jParameters()
         {
-        }
-
-        public void Add<T>(string key, T value) where  T : class
-        {
-            base.Add(key, value.ToObjectDictionary());
-        }
-
-        public void AddParams(object parameters)
-        {
-            if (parameters == null) return;
-            foreach (var propertyInfo in (parameters.GetType().GetTypeInfo().DeclaredProperties))
-            {
-                var key = propertyInfo.Name;
-                var value = propertyInfo.GetValue(parameters);
-                base.Add(key, value);
-            }
         }
     }
 }

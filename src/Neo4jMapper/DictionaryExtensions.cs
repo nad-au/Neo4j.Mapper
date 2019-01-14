@@ -7,12 +7,12 @@ namespace Neo4jMapper
     {
         public static IDictionary<string, object> AddEntity<T>(this IDictionary<string, object> dictionary, string key, T entity) where  T : class
         {
-            dictionary.Add(entity.ToParameter(key));
+            dictionary.AddMap(entity.ToParameter(key));
 
             return dictionary;
         }
 
-        public static IDictionary<string, object> Add(this IDictionary<string, object> dictionary, KeyValuePair<string, IReadOnlyDictionary<string, object>> kvp)
+        public static IDictionary<string, object> AddMap(this IDictionary<string, object> dictionary, KeyValuePair<string, IReadOnlyDictionary<string, object>> kvp)
         {
             dictionary.Add(kvp.Key, kvp.Value);
 

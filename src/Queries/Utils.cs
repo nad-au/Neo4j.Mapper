@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace IntegrationTests
+namespace Queries
 {
     public static class Utils
     {

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Cypher\create_movies.cypher" />
+    <None Remove="Cypher\delete_movies.cypher" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Cypher\create_movies.cypher" />
+    <EmbeddedResource Include="Cypher\delete_movies.cypher" />
+  </ItemGroup>
+
+</Project>

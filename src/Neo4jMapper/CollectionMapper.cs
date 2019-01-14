@@ -7,12 +7,12 @@ namespace Neo4jMapper
 {
     public interface ICollectionMapper
     {
-        object MapValues(IEnumerable fromList, Type toInstanceOfType);
+        IEnumerable MapValues(IEnumerable fromList, Type toInstanceOfType);
     }
 
     public class CollectionMapper<T> : ICollectionMapper
     {
-        public object MapValues(IEnumerable fromList, Type toInstanceOfType)
+        public IEnumerable MapValues(IEnumerable fromList, Type toInstanceOfType)
         {
             var to = (ICollection<T>)TranslateListWithElements<T>.CreateInstance(toInstanceOfType);
             foreach (var item in fromList)

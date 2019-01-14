@@ -24,10 +24,10 @@ Assert.AreEqual(4, actor.MoviesActedIn.Count());
 ```
 ### Features
 
- - Simple Map API which extends Neo4j Driver's [IRecord](neo4j-dotnet-driver/Neo4j.Driver/Neo4j.Driver/V1/IRecord.cs) to greatly simplify the extraction and projection of cypher values onto your models or entities.
- - Works asynchronously via [IStatementResultCursor](neo4j-dotnet-driver/Neo4j.Driver/Neo4j.Driver/V1/IStatementResultCursor.cs) methods or synchronously via [IStatementResult](neo4j-dotnet-driver/Neo4j.Driver/Neo4j.Driver/V1/IStatementResult.cs).
+ - Simple Map API which extends Neo4j Driver's [IRecord](https://github.com/neo4j/neo4j-dotnet-driver/blob/1.7/Neo4j.Driver/Neo4j.Driver/V1/IRecord.cs) to greatly simplify the extraction and projection of cypher values onto your models or entities.
+ - Works asynchronously via [IStatementResultCursor](https://github.com/neo4j/neo4j-dotnet-driver/blob/1.7/Neo4j.Driver/Neo4j.Driver/V1/IStatementResultCursor.cs) methods or synchronously via [IStatementResult](https://github.com/neo4j/neo4j-dotnet-driver/blob/1.7/Neo4j.Driver/Neo4j.Driver/V1/IStatementResult.cs).
  - GetNode & SetNode helper methods to simplify writing CRUD methods.
- - Custom converters to facilitate conversion between Neo4j Driver's temporal data types such as [ZonedDateTime](neo4j-dotnet-driver/Neo4j.Driver/Neo4j.Driver/V1/Types/ZonedDateTime.cs) and .NET CLR types such as DateTimeOffset.
+ - Custom converters to facilitate conversion between Neo4j Driver's temporal data types such as [ZonedDateTime](https://github.com/neo4j/neo4j-dotnet-driver/blob/1.7/Neo4j.Driver/Neo4j.Driver/V1/Types/ZonedDateTime.cs) and .NET CLR types such as DateTimeOffset.
  - Neo4jParameters wrapper to assist in creating parameter dictionaries when performing cypher updates.
  - Superior performance due to the use of best-in-class mapper [ServiceStack.Text](https://github.com/ServiceStack/ServiceStack.Text). Benchmarks show queries in excess of 4x quicker than [Neo4jClient](https://github.com/Readify/Neo4jClient).
  - Targets .NET Standard 2.0 for use in full .NET Framework or cross-platform .NET Core projects.

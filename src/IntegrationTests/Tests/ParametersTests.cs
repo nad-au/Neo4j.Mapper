@@ -34,7 +34,7 @@ namespace IntegrationTests.Tests
                 name = "Tom Cruise"
             };
 
-            parameters.Add("actor", person);
+            parameters.AddEntity("actor", person);
 
             try
             {

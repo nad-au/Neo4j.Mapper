@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Neo4j.Driver.V1;
 using Neo4jMapper;
 using NUnit.Framework;
@@ -83,7 +84,7 @@ namespace UnitTests
             // ReSharper disable once UseObjectOrCollectionInitializer
             var parameters = new Neo4jParameters();
 
-            parameters.Add("p1", entity);
+            parameters.AddEntity("p1", entity);
 
             Assert.AreEqual(1, parameters.Count);
             Assert.IsInstanceOf<IReadOnlyDictionary<string, object>>(parameters["p1"]);
@@ -120,6 +121,38 @@ namespace UnitTests
             var second = (IReadOnlyDictionary<string, object>) parameters["Second"];
             Assert.AreEqual(13, second["Inner1"]);
             Assert.AreEqual(true, second["Inner2"]);
+        }
+
+        public class EntityWithIgnoredProperties
+        {
+            public int First { get; set; }
+
+            [IgnoreDataMember]
+            public string Second { get; set; }
+            
+            public int Third { get; set; }
+
+            [IgnoreDataMember]
+            public string Fourth { get; set; }
+        }
+
+        [Test]
+        public void Should_Not_Populate_Ignored_Properties()
+        {
+            var entity = new EntityWithIgnoredProperties
+            {
+                First = 1,
+                Second = "2",
+                Third = 3,
+                Fourth = "4"
+            };
+
+            var parameter = entity.ToParameter("entity");
+
+            Assert.AreEqual("entity", parameter.Key);
+            Assert.AreEqual(2, parameter.Value.Count);
+            Assert.AreEqual(1, parameter.Value["First"]);
+            Assert.AreEqual(3, parameter.Value["Third"]);
         }
     }
 }

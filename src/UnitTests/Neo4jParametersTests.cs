@@ -71,7 +71,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void AddT_Should_Convert_Entity_To_Dictionary()
+        public void Should_Convert_Entity_To_Dictionary()
         {
             var entity = new Entity
             {

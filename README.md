@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/barnardos-au/Neo4jMapper.svg?branch=master)](https://travis-ci.org/barnardos-au/Neo4jMapper)
 [![Build status](https://ci.appveyor.com/api/projects/status/lm9w5ro0735kyi45/branch/master?svg=true)](https://ci.appveyor.com/project/neildobson-au/neo4jmapper/branch/master)
 ### What is Neo4jMapper?
-A .NET Standard 2.0 library to simplify mapping of cypher values onto your models
+A .NET Standard 2.0 library to simplify mapping of cypher values onto your models.
 ### Minimum Viable Snippet
 ```csharp
 var cursor = await Session.RunAsync(@"

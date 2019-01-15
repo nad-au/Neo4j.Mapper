@@ -31,9 +31,9 @@ Assert.AreEqual(4, actor.MoviesActedIn.Count());
  - Neo4jParameters wrapper and Dictionary extension methods to assist in creating parameter maps when performing cypher updates.
  - Superior performance due to the use of best-in-class mapper [ServiceStack.Text](https://github.com/ServiceStack/ServiceStack.Text). Benchmarks show queries in excess of 4x quicker than [Neo4jClient](https://github.com/Readify/Neo4jClient).
  - Targets .NET Standard 2.0 for use in full .NET Framework or cross-platform .NET Core projects.
- - 100% Code Coverage
- - Benchmarks
- - Examples
+ - 100% Code Coverage.
+ - Benchmarks.
+ - Examples.
 ### Getting Started
 The easiest way to add Neo4jMapper to your .NET project is to use the NuGet Package Manager.
 #### With Visual Studio IDE

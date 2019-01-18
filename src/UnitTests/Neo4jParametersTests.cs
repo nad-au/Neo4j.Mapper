@@ -35,7 +35,7 @@ namespace UnitTests
         {
             var parameters = new Neo4jParameters();
 
-            parameters.AddParams(new
+            parameters.WithParams(new
             {
                 First = "Foo",
                 Second = "Bar",
@@ -57,7 +57,7 @@ namespace UnitTests
         {
             var parameters = new Neo4jParameters();
 
-            parameters.AddParams(null);
+            parameters.WithParams(null);
 
             Assert.AreEqual(0, parameters.Count);
         }
@@ -84,7 +84,7 @@ namespace UnitTests
             // ReSharper disable once UseObjectOrCollectionInitializer
             var parameters = new Neo4jParameters();
 
-            parameters.AddEntity("p1", entity);
+            parameters.WithEntity("p1", entity);
 
             Assert.AreEqual(1, parameters.Count);
             Assert.IsInstanceOf<IReadOnlyDictionary<string, object>>(parameters["p1"]);

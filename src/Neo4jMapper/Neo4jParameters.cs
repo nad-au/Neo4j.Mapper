@@ -7,7 +7,7 @@ namespace Neo4jMapper
     {
         public Neo4jParameters(object parameters)
         {
-            this.AddParams(parameters);
+            this.WithParams(parameters);
         }
 
         public Neo4jParameters()

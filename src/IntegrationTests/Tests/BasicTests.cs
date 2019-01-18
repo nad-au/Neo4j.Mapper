@@ -120,8 +120,7 @@ namespace IntegrationTests.Tests
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                WITH person, COLLECT(movie) AS movies
-                RETURN person, movies");
+                RETURN person, COLLECT(movie) AS movies");
 
             var actor = (await cursor.SingleAsync())
                 .Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
@@ -130,8 +129,8 @@ namespace IntegrationTests.Tests
                 return person;
             });
 
-            Assert.IsNotNull(actor);
             Assert.AreEqual(4, actor.MoviesActedIn.Count());
+            Assert.AreEqual(1968, actor.born);
             Assert.IsTrue(actor.MoviesActedIn.All(p => p.Id != default(long)));
         }
 
@@ -140,8 +139,7 @@ namespace IntegrationTests.Tests
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                WITH person, COLLECT(movie) AS movies
-                RETURN person, movies");
+                RETURN person, COLLECT(movie) AS movies");
 
             var actor = (await cursor.SingleAsync())
                 .Map((Person person, IEnumerable<Movie> movies) => new
@@ -160,8 +158,7 @@ namespace IntegrationTests.Tests
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                WITH person, COLLECT(movie) AS movies
-                RETURN person.name, movies");
+                RETURN person.name, COLLECT(movie) AS movies");
 
             var actor = (await cursor.SingleAsync())
                 .Map((string actorName, IEnumerable<Movie> movies) => new ActorName

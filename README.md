@@ -7,15 +7,15 @@ A library to simplify mapping of cypher values onto your models
 ### Minimum Viable Snippet
 ```csharp
 var cursor = await Session.RunAsync(@"
-    MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-    RETURN person, COLLECT(movie) AS movies
+  MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
+  RETURN person, COLLECT(movie) AS movies");
 
 var actor = (await cursor.SingleAsync())
-    .Map((Person person, IEnumerable movies) =>
-{
+  .Map((Person person, IEnumerable<Movie> movies) =>
+  {
     person.MoviesActedIn = movies;
     return person;
-});
+  });
 
 Assert.AreEqual("Cuba Gooding Jr.", actor.name);
 Assert.AreEqual(1968, actor.born);

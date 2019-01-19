@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Threading.Tasks;
 using IntegrationTests.Models;
 using Neo4j.Driver.V1;
 using Neo4jMapper;
@@ -24,38 +25,36 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public void AddTest()
+        public async Task AddTest()
         {
-            var parameters = new Neo4jParameters();
-
             var person = new Person
             {
                 born = 1962,
                 name = "Tom Cruise"
             };
 
-            parameters.WithEntity("actor", person);
+            var parameters = new Neo4jParameters().WithEntity("actor", person);
 
             try
             {
-                Session.Run(@"CREATE (:Actor $actor)", parameters);
+                await Session.RunAsync(@"CREATE (:Actor $actor)", parameters);
 
-                var result = Session.Run(@"
+                var cursor = await Session.RunAsync(@"
                     MATCH (actor:Actor)
                     RETURN actor");
 
-                var actors = result.Map<Person>().ToList();
-
-                Assert.AreEqual(1, actors.Count);
-
-                var tomCruise = actors.Single();
+                var tomCruise = (await cursor.SingleAsync()).Map<Person>();
 
                 Assert.AreEqual(1962, tomCruise.born);
                 Assert.AreEqual("Tom Cruise", tomCruise.name);
             }
+            catch (Exception exception)
+            {
+                Assert.Fail(exception.Message);
+            }
             finally
             {
-                Session.Run(@"
+                await Session.RunAsync(@"
                     MATCH (a:Actor)
                     DELETE a");
             }

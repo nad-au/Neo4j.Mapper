@@ -8,11 +8,10 @@ A library to simplify mapping of cypher values onto your models
 ```csharp
 var cursor = await Session.RunAsync(@"
     MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-    WITH person, COLLECT(movie) AS movies
-    RETURN person, movies");
+    RETURN person, COLLECT(movie) AS movies
 
 var actor = (await cursor.SingleAsync())
-    .Map((Person person, IEnumerable<Movie> movies) =>
+    .Map((Person person, IEnumerable movies) =>
 {
     person.MoviesActedIn = movies;
     return person;
@@ -37,7 +36,7 @@ Assert.AreEqual(4, actor.MoviesActedIn.Count());
 ### Getting Started
 The easiest way to add Neo4jMapper to your .NET project is to use the NuGet Package Manager.
 #### With Visual Studio IDE
-From Visual Studio use the Nuget Package Manager to browse to the Neo4jMapper package and install it to your project. Alternatively you can use the Package Manager Console: 
+From Visual Studio use the Nuget Package Manager to browse to the Neo4jMapper package and install it to your project. Alternatively, you can use the Package Manager Console: 
 ````powershell
 Install-Package Neo4jMapper
 ````
@@ -47,6 +46,6 @@ If you are developing .NET Core projects and you are using the command line tool
 dotnet add package Neo4jMapper
 ````
 ### Working with Neo4jMapper
-See WIKI for comprehensive usage information.
+See https://www.neo4jmapper.tk/ for comprehensive usage information.
 ### Obtaining Help & Support
 For general usage help please ask a question on [StackOverflow](https://stackoverflow.com/questions/tagged/neo4jmapper). To report a bug, please raise an issue. To help make this software even better, please fork the repository, add your changes and raise a pull request.

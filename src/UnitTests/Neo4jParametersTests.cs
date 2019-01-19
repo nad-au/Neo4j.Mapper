@@ -33,9 +33,7 @@ namespace UnitTests
         [Test]
         public void AddParams_Should_Add_Dictionary_Values_From_Anonymous_Type_Key_Value_Pairs()
         {
-            var parameters = new Neo4jParameters();
-
-            parameters.WithParams(new
+            var parameters = new Neo4jParameters().WithParams(new
             {
                 First = "Foo",
                 Second = "Bar",
@@ -55,9 +53,7 @@ namespace UnitTests
         [Test]
         public void AddParams_Should_Do_Nothing_With_Null_Argument()
         {
-            var parameters = new Neo4jParameters();
-
-            parameters.WithParams(null);
+            var parameters = new Neo4jParameters().WithParams(null);
 
             Assert.AreEqual(0, parameters.Count);
         }
@@ -82,9 +78,7 @@ namespace UnitTests
             };
 
             // ReSharper disable once UseObjectOrCollectionInitializer
-            var parameters = new Neo4jParameters();
-
-            parameters.WithEntity("p1", entity);
+            var parameters = new Neo4jParameters().WithEntity("p1", entity);
 
             Assert.AreEqual(1, parameters.Count);
             Assert.IsInstanceOf<IReadOnlyDictionary<string, object>>(parameters["p1"]);

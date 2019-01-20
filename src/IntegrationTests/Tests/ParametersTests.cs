@@ -25,7 +25,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task AddTest()
+        public async Task WithEntityTest()
         {
             var person = new Person
             {
@@ -33,7 +33,7 @@ namespace IntegrationTests.Tests
                 name = "Tom Cruise"
             };
 
-            var parameters = new Neo4jParameters().WithEntity("actor", person);
+            var parameters = new Neo4jParameters().WithEntity(person, "actor");
 
             try
             {

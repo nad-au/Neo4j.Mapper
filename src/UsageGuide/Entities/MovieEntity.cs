@@ -7,10 +7,12 @@ namespace UsageGuide.Entities
     {
         [NodeId]
         [IgnoreDataMember]
-        public long Id { get; set; }
+        public long id { get; set; }
 
         public string title { get; set; }
         public string tagline { get; set; }
         public int released { get; set; }
+
+        public string imdb { get; set; }
     }
 }

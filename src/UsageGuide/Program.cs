@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Neo4j.Driver.V1;
 using Neo4jMapper;
 using ServiceStack.Text;
+using UsageGuide.Entities;
 using UsageGuide.Models;
 
 namespace UsageGuide
@@ -14,7 +15,7 @@ namespace UsageGuide
         static void Main(string[] args)
         {
             //Example11();
-            Task.Run(Example13).Wait();
+            Task.Run(Example15).Wait();
 
             Console.WriteLine("Done. Press <Enter> to end.");
             Console.ReadLine();
@@ -300,7 +301,7 @@ namespace UsageGuide
                     };
 
                     var parameters = new Neo4jParameters()
-                        .WithEntity(movie, "newMovie");
+                        .WithEntity("newMovie", movie);
 
                     var cursor = await session.RunAsync(@"
                         CREATE (movie:Movie $newMovie)
@@ -351,8 +352,8 @@ namespace UsageGuide
                     };
 
                     var parameters = new Neo4jParameters()
-                        .WithEntity(actorWithMovies, "newActor")
-                        .WithEntities(actorWithMovies.MoviesActedIn, "newMovies");
+                        .WithEntity("newActor", actorWithMovies)
+                        .WithEntities("newMovies", actorWithMovies.MoviesActedIn);
 
                     await session.RunAsync(@"
                         CREATE (person:Person $newActor)
@@ -360,6 +361,64 @@ namespace UsageGuide
                         UNWIND $newMovies AS newMovie
                         CREATE (person)-[:ACTED_IN]->(movie:Movie)
                         SET movie = newMovie", parameters);
+                }
+            }
+        }
+
+        static async Task Example14()
+        {
+            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
+            {
+                using (var session = driver.Session())
+                {
+                    var cursor = await session.RunAsync(@"
+                        MATCH (movie:Movie {released: $year})
+                        RETURN movie", new { year = 1999 });
+
+                    var movies = (await cursor.ToListAsync()).Map<MovieEntity>();
+
+                    var matrix = movies.Single(p => p.title == "The Matrix");
+                    matrix.imdb = "tt0133093";
+
+                    var updateParams = new Neo4jParameters()
+                        .WithEntity("updatedMovie", matrix)
+                        .WithValue("nodeId", matrix.id);
+
+                    cursor = await session.RunAsync(@"
+                        MATCH (movie)
+                        WHERE id(movie) = $nodeId
+                        SET movie = $updatedMovie
+                        RETURN movie", updateParams);
+
+                    var updatedMovie = (await cursor.SingleAsync()).Map<MovieEntity>();
+
+                    var output = updatedMovie.Dump();
+                    Console.WriteLine(output);
+                }
+            }
+        }
+
+        static async Task Example15()
+        {
+            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
+            {
+                using (var session = driver.Session())
+                {
+                    var cursor = await session.RunAsync(@"
+                        MATCH (movie:Movie {released: $year})
+                        RETURN movie", new { year = 1999 });
+
+                    var movies = (await cursor.ToListAsync()).Map<MovieEntity>();
+
+                    var matrix = movies.Single(p => p.title == "The Matrix");
+                    matrix.imdb = "tt0133093";
+
+                    await session.SetNodeAsync(matrix);
+
+                    var updatedMovie = await session.GetNodeAsync<MovieEntity>(matrix.id);
+
+                    var output = updatedMovie.Dump();
+                    Console.WriteLine(output);
                 }
             }
         }

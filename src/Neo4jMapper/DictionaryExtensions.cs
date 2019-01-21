@@ -48,5 +48,12 @@ namespace Neo4jMapper
 
             return dictionary;
         }
+
+        public static IDictionary<string, object> WithValue(this IDictionary<string, object> dictionary, string key, object value)
+        {
+            dictionary.Add(key, value);
+
+            return dictionary;
+        }
     }
 }

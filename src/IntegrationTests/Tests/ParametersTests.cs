@@ -33,7 +33,7 @@ namespace IntegrationTests.Tests
                 name = "Tom Cruise"
             };
 
-            var parameters = new Neo4jParameters().WithEntity(person, "actor");
+            var parameters = new Neo4jParameters().WithEntity("actor", person);
 
             try
             {

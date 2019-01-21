@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using ServiceStack;
 
 namespace Neo4jMapper
 {
     public static class DictionaryExtensions
     {
-        public static IDictionary<string, object> WithEntity<T>(this IDictionary<string, object> dictionary, T entity, string key) where  T : class
+        public static IDictionary<string, object> WithEntity<T>(this IDictionary<string, object> dictionary, string key, T entity) where  T : class
         {
             dictionary.WithMap(entity.ToParameterMap(key));
 
             return dictionary;
         }
 
-        public static IDictionary<string, object> WithEntities<T>(this IDictionary<string, object> dictionary, IEnumerable<T> entities, string key) where  T : class
+        public static IDictionary<string, object> WithEntities<T>(this IDictionary<string, object> dictionary, string key, IEnumerable<T> entities) where  T : class
         {
             dictionary.WithMaps(entities.ToParameterMaps(key));
 

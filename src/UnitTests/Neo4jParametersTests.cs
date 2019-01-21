@@ -78,7 +78,7 @@ namespace UnitTests
             };
 
             // ReSharper disable once UseObjectOrCollectionInitializer
-            var parameters = new Neo4jParameters().WithEntity(entity, "p1");
+            var parameters = new Neo4jParameters().WithEntity("p1", entity);
 
             Assert.AreEqual(1, parameters.Count);
             Assert.IsInstanceOf<IReadOnlyDictionary<string, object>>(parameters["p1"]);

@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Cypher\create_bond.cypher" />
     <None Remove="Cypher\create_movies.cypher" />
+    <None Remove="Cypher\delete_bond.cypher" />
     <None Remove="Cypher\delete_movies.cypher" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Cypher\create_bond.cypher" />
     <EmbeddedResource Include="Cypher\create_movies.cypher" />
+    <EmbeddedResource Include="Cypher\delete_bond.cypher" />
     <EmbeddedResource Include="Cypher\delete_movies.cypher" />
   </ItemGroup>
 

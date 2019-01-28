@@ -10,130 +10,200 @@ using ServiceStack.Text;
 
 namespace Examples
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static async Task Main()
         {
-            Task.Run(MichelleYeohMovie).Wait();
+            while (true)
+            {
+                ShowMenu();
+                var input = Console.ReadLine()?.ToUpper();
+                if (input == null) continue;
 
-            Console.WriteLine("Done. Press <Enter> to end.");
-            Console.ReadLine();
+                string output = null;
+
+                switch (input)
+                {
+                    case "A":
+                        await LoadBondMovies();
+                        break;
+                    case "B":
+                        await DeleteBondMovies();
+                        break;
+
+                    case "1":
+                        output = await Top3BoxOfficeMovies();
+                        break;
+                    case "2":
+                        output = await MoviesByActor();
+                        break;
+                    case "3":
+                        output = await MichelleYeohMovie();
+                        break;
+                    case "4":
+                        output = await VehicleBrands();
+                        break;
+                    case "5":
+                        output = await Directors();
+                        break;
+                }
+
+                if (input != "Q")
+                {
+                    Console.WriteLine(output);
+                    Console.WriteLine("Done. Press <Enter>");
+                    Console.ReadLine();
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+        private static void ShowMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("GraphGist: Know more about James Bond Movie");
+            Console.WriteLine("by Eric Lee - https://neo4j.com/graphgist/know-more-about-james-bond-movie");
+            Console.WriteLine("===");
+            Console.WriteLine("Please select an option:");
+            Console.WriteLine("A. Load Bond Movies");
+            Console.WriteLine("B. Delete Bond Movies");
+            Console.WriteLine();
+            Console.WriteLine("1. Top 3 Box Office Movies");
+            Console.WriteLine("2. Movies By Actor");
+            Console.WriteLine("3. Michelle Yeoh Movie");
+            Console.WriteLine("4. Vehicle Brands");
+            Console.WriteLine("5. Directors");
+            Console.WriteLine();
+            Console.WriteLine("Select an option or Q to Quit...");
         }
 
         private static async Task LoadBondMovies()
         {
-            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
+            await Bolt.NewSession(async session =>
             {
-                using (var session = driver.Session())
+                var queryParts = Query.CreateBond.Split(';');
+                foreach (var queryPart in queryParts)
                 {
-                    var queryParts = Query.CreateBond.Split(';');
-                    foreach (var queryPart in queryParts)
-                    {
-                        await session.RunAsync(queryPart);
-                    }
+                    await session.RunAsync(queryPart);
                 }
-            }
+            });
         }
 
         private static async Task DeleteBondMovies()
         {
-            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
+            await Bolt.NewSession(async session =>
             {
-                using (var session = driver.Session())
-                {
-                    await session.RunAsync(Query.DeleteBond);
-                }
-            }
+                await session.RunAsync(Query.DeleteBond);
+            });
         }
 
-        private static async Task Top3BoxOfficeMovies()
+        private static async Task<string> Top3BoxOfficeMovies()
         {
-            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
+            return await Bolt.NewSession(async session =>
             {
-                using (var session = driver.Session())
-                {
-                    var cursor = await session.RunAsync(@"
-                        MATCH (film:Film) 
-                        WITH film ORDER BY film.Box DESC 
-                        RETURN film 
-                        LIMIT 3");
+                var cursor = await session.RunAsync(@"
+                    MATCH (film:Film) 
+                    WITH film ORDER BY film.Box DESC 
+                    RETURN film 
+                    LIMIT 3");
 
-                    var films = (await cursor.ToListAsync()).Map<Film>();
-
-                    var boxOfficeFilms = films.Select(f => new
+                var boxOfficeFilms = (await cursor.ToListAsync())
+                    .Map<Film>()
+                    .Select(f => new
                     {
                         f.Name,
                         f.Year,
                         BoxOffice = f.Box
                     });
 
-                    var output = boxOfficeFilms.Dump();
-                    Console.WriteLine(output);
-                }
-            }
+                return boxOfficeFilms.Dump();
+            });
         }
 
-        private static async Task MoviesByActor()
+        private static async Task<string> MoviesByActor()
         {
-            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
+            return await Bolt.NewSession(async session =>
             {
-                using (var session = driver.Session())
-                {
-                    var cursor = await session.RunAsync(@"
-                        MATCH (people:People)-[:AS_BOND_IN]->(film:Film)
-                        RETURN people, COLLECT(film)");
+                var cursor = await session.RunAsync(@"
+                    MATCH (people:People)-[:AS_BOND_IN]->(film:Film)
+                    RETURN people, COLLECT(film)");
 
-                    var actors = (await cursor.ToListAsync())
-                        .Map((People people, IEnumerable<Film> films) =>
+                var moviesByActor = (await cursor.ToListAsync())
+                    .Map((People people, IEnumerable<Film> films) => new
                     {
-                        people.Films = films;
-                        return people;
+                        Actor = people.Name,
+                        BondMovies = films.Count()
                     });
 
-                    var moviesByActor = actors.Select(a => new
-                    {
-                        Actor = a.Name,
-                        BondMovies = a.Films.Count()
-                    });
-
-                    var output = moviesByActor.Dump();
-                    Console.WriteLine(output);
-                }
-            }
+                return moviesByActor.Dump();
+            });
         }
 
-        private static async Task MichelleYeohMovie()
+        private static async Task<string> MichelleYeohMovie()
         {
-            using (var driver = GraphDatabase.Driver("bolt://localhost:7687"))
+            return await Bolt.NewSession(async session =>
             {
-                using (var session = driver.Session())
+                var cursor = await session.RunAsync(@"
+                    MATCH (people:People)-[:IS_BOND_GIRL_IN]->(film:Film) 
+                    WHERE people.Name=$Name
+                    RETURN people, film", new
                 {
-                    var cursor = await session.RunAsync(@"
-                        MATCH (people:People)-[:IS_BOND_GIRL_IN]->(film:Film) 
-                        WHERE people.Name=$Name
-                        RETURN people, COLLECT(film)", new
+                    Name = "Michelle Yeoh"
+                });
+
+                var michelleFilms = (await cursor.SingleAsync())
+                    .Map((People people, Film film) => new
                     {
-                        Name = "Michelle Yeoh"
+                        film.Year,
+                        Title = film.Name,
+                        people.Role
                     });
 
-                    var actor = (await cursor.SingleAsync())
-                        .Map((People people, IEnumerable<Film> films) =>
-                        {
-                            people.Films = films;
-                            return people;
-                        });
+                return michelleFilms.Dump();
+            });
+        }
 
-                    var michelleFilms = actor.Films.Select(f => new
+        private static async Task<string> VehicleBrands()
+        {
+            return await Bolt.NewSession(async session =>
+            {
+                var cursor = await session.RunAsync(@"
+                    MATCH (film:Film)-[:HAS_VEHICLE]->(vehicle:Vehicle)
+                    RETURN DISTINCT vehicle.Brand AS Brand, 
+                    count(vehicle.Model) AS Models, 
+                    collect(DISTINCT film) AS Films");
+
+                var vehicleBrands = (await cursor.ToListAsync())
+                    .Map((string brand, int modelCount, IEnumerable<Film> films) => new
                     {
-                        f.Year,
-                        Title = f.Name,
-                        actor.Role
-                    });
+                        Brand = brand,
+                        Models = modelCount,
+                        Movies = films.Select(f => f.Name)
+                    }).OrderByDescending(o => o.Models);
 
-                    var output = michelleFilms.Dump();
-                    Console.WriteLine(output);
-                }
-            }
+                return vehicleBrands.Dump();
+            });
+        }
+
+        private static async Task<string> Directors()
+        {
+            return await Bolt.NewSession(async session =>
+            {
+                var cursor = await session.RunAsync(@"
+                    MATCH (people:People)-[r:DIRECTOR_OF]->(film:Film)
+                    RETURN people, COLLECT(film)");
+
+                var directedMovies = (await cursor.ToListAsync())
+                    .Map((People people, IEnumerable<Film> films) => new
+                    {
+                        Director = people.Name,
+                        Time = films.Count()
+                    }).OrderByDescending(o => o.Time);
+
+                return directedMovies.Dump();
+            });
         }
     }
 }

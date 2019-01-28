@@ -18,4 +18,8 @@
     <EmbeddedResource Include="Cypher\delete_movies.cypher" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Neo4j.Driver" Version="1.7.0" />
+  </ItemGroup>
+
 </Project>

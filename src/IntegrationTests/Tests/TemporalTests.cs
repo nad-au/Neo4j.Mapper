@@ -5,7 +5,7 @@ using Neo4j.Driver.V1;
 using Neo4jMapper;
 using NUnit.Framework;
 
-namespace IntegrationTests.V35Tests
+namespace IntegrationTests.Tests
 {
     [TestFixture]
     public class TemporalTests : TestFixtureBase
@@ -27,12 +27,13 @@ namespace IntegrationTests.V35Tests
         }
 
         [Test]
-        public void DateTest()
+        public void Should_Map_Temporal_Value()
         {
+            var now = DateTime.UtcNow;
+
             var result = Session.Run(@"
                 MATCH (timestamp:TimeStamp)
-                RETURN timestamp
-                LIMIT 10");
+                RETURN timestamp");
 
             var timeStamps = result.Map<TimeStamp>().ToList();
 
@@ -40,7 +41,6 @@ namespace IntegrationTests.V35Tests
 
             var timeStamp = timeStamps.Single();
 
-            var now = DateTime.UtcNow;
             Assert.AreEqual(now.Year, timeStamp.When.Year);
             Assert.AreEqual(now.Month, timeStamp.When.Month);
             Assert.AreEqual(now.Day, timeStamp.When.Day);

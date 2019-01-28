@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationTests.Models;
@@ -12,7 +13,7 @@ namespace IntegrationTests.Tests
     public class BasicTests : MoviesFixtureBase
     {
         [Test]
-        public void MapTest()
+        public void Should_Map_Cypher_Map_With_Inner_Item()
         {
             var result = Session.Run(@"
                 RETURN { key: 'Value', inner: { item: 'Map1'}}");
@@ -25,7 +26,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public void LiteralListTest()
+        public void Should_Map_Literal_List()
         {
             var result = Session.Run(@"
                 RETURN range(0, 10)[..4]");
@@ -38,7 +39,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public void MapWithListTest()
+        public void Should_Map_Cypher_Map_With_Inner_List()
         {
             var result = Session.Run(@"
                 RETURN { key: 'Value', listKey: [{ item: 'Map1' }, { item: 'Map2' }]}");
@@ -52,7 +53,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task PersonsTest()
+        public async Task Should_Map_Person_Nodes()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person)
@@ -65,7 +66,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task MoviesTest()
+        public async Task Should_Map_Movie_Nodes()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (movie:Movie)
@@ -79,7 +80,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task MoviesMapTest()
+        public async Task Should_Map_Cypher_Maps()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (movie:Movie)
@@ -92,7 +93,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task ListOfMoviesTest()
+        public async Task Should_Map_List_Of_Movies()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (movie:Movie)
@@ -104,7 +105,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task ListOfMoviesMapTest()
+        public async Task Should_Map_List_Of_Cypher_Maps()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (movie:Movie)
@@ -116,7 +117,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task ActorWithListOfMovies()
+        public async Task Should_Map_Person_With_List_Of_Movie_Nodes()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
@@ -135,7 +136,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task AnonymousTypeWithActorAndListOfMovies()
+        public async Task Should_Return_Anonymous_Type()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
@@ -154,7 +155,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task ActorNameWithListOfMovies()
+        public async Task Should_Return_Projection()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
@@ -172,7 +173,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task MapOfActorNameWithListOfMovies()
+        public async Task Should_Map_Cypher_Map_Containing_List_Of_Maps()
         {
             var cursor = await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
@@ -181,6 +182,31 @@ namespace IntegrationTests.Tests
             var actorWithMovies = (await cursor.SingleAsync()).Map<Person>();
 
             Assert.AreEqual(4, actorWithMovies.MoviesActedIn.Count());
+        }
+
+        [Test]
+        public async Task SingleAsync_Throws_InvalidOperationException_With_No_Result()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (person:Person {name: 'Mickey Mouse'})
+                RETURN person");
+
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => (await cursor.SingleAsync()).Map<Person>());
+
+            Assert.AreEqual("The result is empty.", exception.Message);
+        }
+
+        [Test]
+        public async Task ToListAsync_Should_Not_Throw_With_Empty_Results()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (person:Person {name: 'Mickey Mouse'})
+                RETURN person");
+
+            var persons = (await cursor.ToListAsync()).Map<Person>();
+
+            Assert.IsEmpty(persons);
         }
     }
 }

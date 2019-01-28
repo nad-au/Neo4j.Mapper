@@ -25,7 +25,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task WithEntityTest()
+        public async Task Should_Create_New_Actor_From_Entity_Parameter()
         {
             var person = new Person
             {

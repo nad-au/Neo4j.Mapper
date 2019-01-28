@@ -135,7 +135,7 @@ namespace Examples
                     {
                         Actor = people.Name,
                         BondMovies = films.Count()
-                    });
+                    }).OrderByDescending(o => o.BondMovies);
 
                 return moviesByActor.Dump();
             });
@@ -153,7 +153,7 @@ namespace Examples
                     Name = "Michelle Yeoh"
                 });
 
-                var michelleFilms = (await cursor.SingleAsync())
+                var michelleFilms = (await cursor.ToListAsync())
                     .Map((People people, Film film) => new
                     {
                         film.Year,

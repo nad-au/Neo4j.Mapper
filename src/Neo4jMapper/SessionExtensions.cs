@@ -42,7 +42,7 @@ namespace Neo4jMapper
 
             var statementResultCursor = await session.RunAsync(GetNodeStatement, parameters);
 
-            return (await statementResultCursor.SingleAsync()).Map<TEntity>();
+            return await statementResultCursor.MapSingleAsync<TEntity>();
         }
 
         public static IStatementResult SetNode<TEntity>(

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Examples.Entities;
-using Neo4j.Driver.V1;
 using Neo4jMapper;
 using Queries;
 using ServiceStack.Text;
@@ -109,8 +108,8 @@ namespace Examples
                     RETURN film 
                     LIMIT 3");
 
-                var boxOfficeFilms = (await cursor.ToListAsync())
-                    .Map<Film>()
+                var boxOfficeFilms = (await cursor
+                    .MapAsync<Film>())
                     .Select(f => new
                     {
                         f.Name,
@@ -130,12 +129,12 @@ namespace Examples
                     MATCH (people:People)-[:AS_BOND_IN]->(film:Film)
                     RETURN people, COLLECT(film)");
 
-                var moviesByActor = (await cursor.ToListAsync())
-                    .Map((People people, IEnumerable<Film> films) => new
+                var moviesByActor = (await cursor
+                    .MapAsync((People people, IEnumerable<Film> films) => new
                     {
                         Actor = people.Name,
                         BondMovies = films.Count()
-                    }).OrderByDescending(o => o.BondMovies);
+                    })).OrderByDescending(o => o.BondMovies);
 
                 return moviesByActor.Dump();
             });
@@ -153,8 +152,8 @@ namespace Examples
                     Name = "Michelle Yeoh"
                 });
 
-                var michelleFilms = (await cursor.ToListAsync())
-                    .Map((People people, Film film) => new
+                var michelleFilms = await cursor
+                    .MapAsync((People people, Film film) => new
                     {
                         film.Year,
                         Title = film.Name,
@@ -175,13 +174,13 @@ namespace Examples
                     count(vehicle.Model) AS Models, 
                     collect(DISTINCT film) AS Films");
 
-                var vehicleBrands = (await cursor.ToListAsync())
-                    .Map((string brand, int modelCount, IEnumerable<Film> films) => new
+                var vehicleBrands = (await cursor
+                    .MapAsync((string brand, int modelCount, IEnumerable<Film> films) => new
                     {
                         Brand = brand,
                         Models = modelCount,
                         Movies = films.Select(f => f.Name)
-                    }).OrderByDescending(o => o.Models);
+                    })).OrderByDescending(o => o.Models);
 
                 return vehicleBrands.Dump();
             });
@@ -195,12 +194,12 @@ namespace Examples
                     MATCH (people:People)-[r:DIRECTOR_OF]->(film:Film)
                     RETURN people, COLLECT(film)");
 
-                var directedMovies = (await cursor.ToListAsync())
-                    .Map((People people, IEnumerable<Film> films) => new
+                var directedMovies = (await cursor
+                    .MapAsync((People people, IEnumerable<Film> films) => new
                     {
                         Director = people.Name,
                         Time = films.Count()
-                    }).OrderByDescending(o => o.Time);
+                    })).OrderByDescending(o => o.Time);
 
                 return directedMovies.Dump();
             });

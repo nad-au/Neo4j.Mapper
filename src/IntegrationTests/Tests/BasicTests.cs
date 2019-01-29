@@ -60,7 +60,7 @@ namespace IntegrationTests.Tests
                 RETURN person
                 LIMIT 10");
 
-            var persons = await cursor.ToListAsync(record => record.Map<Person>());
+            var persons = await cursor.MapAsync<Person>();
 
             Assert.AreEqual(10, persons.Count);
         }
@@ -73,7 +73,7 @@ namespace IntegrationTests.Tests
                 RETURN movie
                 LIMIT 10");
 
-            var movies = await cursor.ToListAsync(record => record.Map<Movie>());
+            var movies = await cursor.MapAsync<Movie>();
 
             Assert.AreEqual(10, movies.Count);
             Assert.IsTrue(movies.All(p => p.Id != default(long)));
@@ -87,7 +87,7 @@ namespace IntegrationTests.Tests
                 RETURN movie { .* }
                 LIMIT 10");
 
-            var movies = await cursor.ToListAsync(record => record.Map<Movie>());
+            var movies = await cursor.MapAsync<Movie>();
 
             Assert.AreEqual(10, movies.Count);
         }
@@ -99,7 +99,7 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie)
                 RETURN COLLECT(movie)");
 
-            var movies = (await cursor.SingleAsync()).Map<List<Movie>>();
+            var movies = await cursor.MapSingleAsync<List<Movie>>();
 
             Assert.AreEqual(38, movies.Count);
         }
@@ -111,7 +111,7 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie)
                 RETURN COLLECT(movie { .* })");
 
-            var movies = (await cursor.SingleAsync()).Map<List<Movie>>();
+            var movies = await cursor.MapSingleAsync<List<Movie>>();
 
             Assert.AreEqual(38, movies.Count);
         }
@@ -123,8 +123,8 @@ namespace IntegrationTests.Tests
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 RETURN person, COLLECT(movie) AS movies");
 
-            var actor = (await cursor.SingleAsync())
-                .Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
+            var actor = await cursor
+                .MapSingleAsync<Person, IEnumerable<Movie>, Person>((person, movies) =>
             {
                 person.MoviesActedIn = movies;
                 return person;
@@ -142,8 +142,8 @@ namespace IntegrationTests.Tests
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 RETURN person, COLLECT(movie) AS movies");
 
-            var actor = (await cursor.SingleAsync())
-                .Map((Person person, IEnumerable<Movie> movies) => new
+            var actor = await cursor
+                .MapSingleAsync((Person person, IEnumerable<Movie> movies) => new
             {
                 Person = person,
                 Movies = movies
@@ -161,8 +161,8 @@ namespace IntegrationTests.Tests
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 RETURN person.name, COLLECT(movie) AS movies");
 
-            var actor = (await cursor.SingleAsync())
-                .Map((string actorName, IEnumerable<Movie> movies) => new ActorName
+            var actor = await cursor
+                .MapSingleAsync((string actorName, IEnumerable<Movie> movies) => new ActorName
             {
                 name = actorName,
                 MoviesActedIn = movies
@@ -179,7 +179,7 @@ namespace IntegrationTests.Tests
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
                 RETURN person { .name, moviesActedIn: COLLECT(movie { .title, .released })}");
 
-            var actorWithMovies = (await cursor.SingleAsync()).Map<Person>();
+            var actorWithMovies = await cursor.MapSingleAsync<Person>();
 
             Assert.AreEqual(4, actorWithMovies.MoviesActedIn.Count());
         }
@@ -192,7 +192,7 @@ namespace IntegrationTests.Tests
                 RETURN person");
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(
-                async () => (await cursor.SingleAsync()).Map<Person>());
+                async () => await cursor.MapSingleAsync<Person>());
 
             Assert.AreEqual("The result is empty.", exception.Message);
         }
@@ -204,7 +204,7 @@ namespace IntegrationTests.Tests
                 MATCH (person:Person {name: 'Mickey Mouse'})
                 RETURN person");
 
-            var persons = (await cursor.ToListAsync()).Map<Person>();
+            var persons = await cursor.MapAsync<Person>();
 
             Assert.IsEmpty(persons);
         }

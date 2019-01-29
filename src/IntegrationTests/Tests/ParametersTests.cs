@@ -43,7 +43,7 @@ namespace IntegrationTests.Tests
                     MATCH (actor:Actor)
                     RETURN actor");
 
-                var tomCruise = (await cursor.SingleAsync()).Map<Person>();
+                var tomCruise = await cursor.MapSingleAsync<Person>();
 
                 Assert.AreEqual(1962, tomCruise.born);
                 Assert.AreEqual("Tom Cruise", tomCruise.name);

@@ -35,7 +35,7 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = (await result.SingleAsync()).Map<Movie>();
+            var movie = await result.MapSingleAsync<Movie>();
 
             Assert.AreNotEqual(movie.Id, default(long));
 
@@ -74,7 +74,7 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = (await result.SingleAsync()).Map<Movie>();
+            var movie = await result.MapSingleAsync<Movie>();
 
             Assert.AreNotEqual(movie.Id, default(long));
 

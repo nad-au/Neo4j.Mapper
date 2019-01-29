@@ -10,8 +10,8 @@ var cursor = await Session.RunAsync(@"
   MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
   RETURN person, COLLECT(movie) AS movies");
 
-var actor = (await cursor.SingleAsync())
-  .Map((Person person, IEnumerable<Movie> movies) =>
+var actor = await cursor
+  .MapSingleAsync((Person person, IEnumerable<Movie> movies) =>
   {
     person.MoviesActedIn = movies;
     return person;

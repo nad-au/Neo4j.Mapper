@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Neo4j.Driver.V1;
-using ServiceStack;
 
 namespace Neo4jMapper
 {
@@ -33,6 +32,19 @@ namespace Neo4jMapper
                 .SingleOrDefault();
         }
 
+        public static TEntity GetNode<TEntity>(
+            this ITransaction transaction,
+            long nodeId) where TEntity : class
+        {
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId);
+
+            return transaction
+                .Run(GetNodeStatement, parameters)
+                .Map<TEntity>()
+                .SingleOrDefault();
+        }
+
         public static async Task<TEntity> GetNodeAsync<TEntity>(
             this ISession session,
             long nodeId) where TEntity : class
@@ -41,6 +53,18 @@ namespace Neo4jMapper
                 .WithValue("p1", nodeId);
 
             var statementResultCursor = await session.RunAsync(GetNodeStatement, parameters);
+
+            return await statementResultCursor.MapSingleAsync<TEntity>();
+        }
+
+        public static async Task<TEntity> GetNodeAsync<TEntity>(
+            this ITransaction transaction,
+            long nodeId) where TEntity : class
+        {
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId);
+
+            var statementResultCursor = await transaction.RunAsync(GetNodeStatement, parameters);
 
             return await statementResultCursor.MapSingleAsync<TEntity>();
         }
@@ -60,6 +84,21 @@ namespace Neo4jMapper
             return session.Run(SetNodeStatement, parameters);
         }
 
+        public static IStatementResult SetNode<TEntity>(
+            this ITransaction transaction,
+            TEntity entity) where TEntity : class
+        {
+            var nodeId = EntityAccessor.GetNodeId(entity);
+            if (nodeId == null)
+                throw new InvalidOperationException(NodeIdUnspecifiedMessage);
+
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId)
+                .WithEntity("p2", entity);
+
+            return transaction.Run(SetNodeStatement, parameters);
+        }
+
         public static async Task<IStatementResultCursor> SetNodeAsync<TEntity>(
             this ISession session,
             TEntity entity) where TEntity : class
@@ -73,6 +112,21 @@ namespace Neo4jMapper
                 .WithEntity("p2", entity);
 
             return await session.RunAsync(SetNodeStatement, parameters);
+        }
+
+        public static async Task<IStatementResultCursor> SetNodeAsync<TEntity>(
+            this ITransaction transaction,
+            TEntity entity) where TEntity : class
+        {
+            var nodeId = EntityAccessor.GetNodeId(entity);
+            if (nodeId == null)
+                throw new InvalidOperationException(NodeIdUnspecifiedMessage);
+
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId)
+                .WithEntity("p2", entity);
+
+            return await transaction.RunAsync(SetNodeStatement, parameters);
         }
     }
 }

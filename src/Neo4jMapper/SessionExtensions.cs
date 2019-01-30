@@ -24,9 +24,8 @@ namespace Neo4jMapper
             this ISession session,
             long nodeId) where TEntity : class
         {
-            var parameters = new {
-                p1 = nodeId
-            };
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId);
 
             return session
                 .Run(GetNodeStatement, parameters)
@@ -38,13 +37,12 @@ namespace Neo4jMapper
             this ISession session,
             long nodeId) where TEntity : class
         {
-            var parameters = new {
-                p1 = nodeId
-            };
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId);
 
             var statementResultCursor = await session.RunAsync(GetNodeStatement, parameters);
 
-            return (await statementResultCursor.SingleAsync()).Map<TEntity>();
+            return await statementResultCursor.MapSingleAsync<TEntity>();
         }
 
         public static IStatementResult SetNode<TEntity>(
@@ -55,10 +53,9 @@ namespace Neo4jMapper
             if (nodeId == null)
                 throw new InvalidOperationException(NodeIdUnspecifiedMessage);
 
-            var parameters = new {
-                p1 = nodeId,
-                p2 = entity.ToObjectDictionary()
-            };
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId)
+                .WithEntity("p2", entity);
 
             return session.Run(SetNodeStatement, parameters);
         }
@@ -71,10 +68,9 @@ namespace Neo4jMapper
             if (nodeId == null)
                 throw new InvalidOperationException(NodeIdUnspecifiedMessage);
 
-            var parameters = new {
-                p1 = nodeId,
-                p2 = entity.ToObjectDictionary()
-            };
+            var parameters = new Neo4jParameters()
+                .WithValue("p1", nodeId)
+                .WithEntity("p2", entity);
 
             return await session.RunAsync(SetNodeStatement, parameters);
         }

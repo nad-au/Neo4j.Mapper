@@ -3,15 +3,15 @@
 [![Build Status](https://travis-ci.org/barnardos-au/Neo4jMapper.svg?branch=master)](https://travis-ci.org/barnardos-au/Neo4jMapper)
 [![Build status](https://ci.appveyor.com/api/projects/status/lm9w5ro0735kyi45/branch/master?svg=true)](https://ci.appveyor.com/project/neildobson-au/neo4jmapper/branch/master)
 ### What is Neo4jMapper?
-A library to simplify mapping of cypher values onto your models
+A .NET Standard 2.0 library to simplify mapping of cypher values onto your models.
 ### Minimum Viable Snippet
 ```csharp
 var cursor = await Session.RunAsync(@"
   MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
   RETURN person, COLLECT(movie) AS movies");
 
-var actor = (await cursor.SingleAsync())
-  .Map((Person person, IEnumerable<Movie> movies) =>
+var actor = await cursor
+  .MapSingleAsync((Person person, IEnumerable<Movie> movies) =>
   {
     person.MoviesActedIn = movies;
     return person;
@@ -30,9 +30,9 @@ Assert.AreEqual(4, actor.MoviesActedIn.Count());
  - Neo4jParameters wrapper and Dictionary extension methods to assist in creating parameter maps when performing cypher updates.
  - Superior performance due to the use of best-in-class mapper [ServiceStack.Text](https://github.com/ServiceStack/ServiceStack.Text). Benchmarks show queries in excess of 4x quicker than [Neo4jClient](https://github.com/Readify/Neo4jClient).
  - Targets .NET Standard 2.0 for use in full .NET Framework or cross-platform .NET Core projects.
- - 100% Code Coverage
- - Benchmarks
- - Examples
+ - 100% Code Coverage.
+ - Benchmarks.
+ - Examples.
 ### Getting Started
 The easiest way to add Neo4jMapper to your .NET project is to use the NuGet Package Manager.
 #### With Visual Studio IDE

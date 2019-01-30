@@ -12,7 +12,7 @@ namespace IntegrationTests.Tests
     public class SessionExtensionsTests : MoviesFixtureBase
     {
         [Test]
-        public void GetNodeShouldPopulateNodeId()
+        public void GetNode_Should_Populate_Node_Id()
         {
             var result = Session.Run(@"
                 MATCH (movie:Movie {title: 'Top Gun'})
@@ -29,13 +29,13 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public async Task GetNodeAsyncShouldPopulateNodeId()
+        public async Task GetNodeAsync_Should_Populate_Node_Id()
         {
             var result = await Session.RunAsync(@"
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = (await result.SingleAsync()).Map<Movie>();
+            var movie = await result.MapSingleAsync<Movie>();
 
             Assert.AreNotEqual(movie.Id, default(long));
 
@@ -46,7 +46,7 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public void SetNodeShouldUpdateValues()
+        public void SetNode_Should_Update_Values()
         {
             var result = Session.Run(@"
                 MATCH (movie:Movie {title: 'Top Gun'})
@@ -74,7 +74,7 @@ namespace IntegrationTests.Tests
                 MATCH (movie:Movie {title: 'Top Gun'})
                 RETURN movie");
 
-            var movie = (await result.SingleAsync()).Map<Movie>();
+            var movie = await result.MapSingleAsync<Movie>();
 
             Assert.AreNotEqual(movie.Id, default(long));
 

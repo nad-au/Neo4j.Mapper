@@ -28,8 +28,8 @@ namespace Neo4jMapper
 
     internal class EntityPropertyAccessor<T> : IEntityPropertyAccessor
     {
-        private readonly SetMemberDelegate _nodeIdPropertySetter;
-        private readonly GetMemberDelegate _nodeIdPropertyGetter;
+        private readonly SetMemberDelegate nodeIdPropertySetter;
+        private readonly GetMemberDelegate nodeIdPropertyGetter;
 
         public EntityPropertyAccessor()
         {
@@ -37,18 +37,18 @@ namespace Neo4jMapper
             var nodeIdProperty = allProperties.SingleOrDefault(p => p.HasAttributeNamed(nameof(NodeIdAttribute)));
             if (nodeIdProperty == null) return;
 
-            _nodeIdPropertySetter = nodeIdProperty.CreateSetter();
-            _nodeIdPropertyGetter = nodeIdProperty.CreateGetter();
+            nodeIdPropertySetter = nodeIdProperty.CreateSetter();
+            nodeIdPropertyGetter = nodeIdProperty.CreateGetter();
         }
 
         public long? GetNodeId(object instance)
         {
-            return (long?) _nodeIdPropertyGetter?.Invoke(instance);
+            return (long?) nodeIdPropertyGetter?.Invoke(instance);
         }
 
         public void SetNodeId(object instance, long id)
         {
-            _nodeIdPropertySetter?.Invoke(instance, id);
+            nodeIdPropertySetter?.Invoke(instance, id);
         }
     }
 

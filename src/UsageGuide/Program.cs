@@ -152,7 +152,7 @@ namespace UsageGuide
                     LIMIT 1");
 
                 var output = new StringBuilder();
-                foreach (var record in (await cursor.ToListAsync()))
+                foreach (var record in await cursor.ToListAsync())
                 {
                     output.AppendLine(record.Values.Dump());
                 }
@@ -214,11 +214,12 @@ namespace UsageGuide
                     WITH actor, collect(movie) AS movies
                     RETURN actor, head(movies) AS newestMovie");
 
-                var actorWithMovies = (await cursor.ToListAsync()).Map((Person actor, Movie newestMovie) => new
-                {
-                    Actor = actor,
-                    NewestMovie = newestMovie
-                }).ToList();
+                var actorWithMovies = (await cursor.ToListAsync())
+                    .Map((Person actor, Movie newestMovie) => new
+                    {
+                        Actor = actor,
+                        NewestMovie = newestMovie
+                    }).ToList();
 
                 return actorWithMovies.Dump();
             });
@@ -242,8 +243,8 @@ namespace UsageGuide
                     WITH count(movie) as countOfMovies, actor.name as actorName, actor, COLLECT(movie) as movies
                     RETURN countOfMovies, actorName, actor, size(movies) > 0 as hasMovies, movies");
 
-                var actorWithMovies =
-                    (await cursor.SingleAsync()).Map<int, string, Person, bool, List<Movie>, Example6Projection>(
+                var actorWithMovies = (await cursor.SingleAsync())
+                    .Map<int, string, Person, bool, List<Movie>, Example6Projection>(
                         (numOfMovies, actorName, person, hasMovies, movies) => new Example6Projection
                         {
                             NumberOfMovies = numOfMovies,
@@ -269,7 +270,8 @@ namespace UsageGuide
             {
                 var cursor = await session.RunAsync(@"RETURN { temporalValue: datetime() } as map");
 
-                var customType = (await cursor.SingleAsync()).Map<Example7CustomType>();
+                var customType = (await cursor.SingleAsync())
+                    .Map<Example7CustomType>();
 
                 return customType.Dump();
             });
@@ -286,7 +288,8 @@ namespace UsageGuide
             {
                 var cursor = await session.RunAsync(@"RETURN { temporalValue: datetime() } as map");
 
-                var customType = (await cursor.SingleAsync()).Map<Example8CustomType>();
+                var customType = (await cursor.SingleAsync())
+                    .Map<Example8CustomType>();
 
                 return customType.Dump();
             });
@@ -311,7 +314,7 @@ namespace UsageGuide
                     SET movie.imdb = $imdb
                     RETURN movie", parameters);
 
-                var updatedMovie = (await cursor.SingleAsync()).Map<IMDBMovie>();
+                var updatedMovie = await cursor.MapSingleAsync<IMDBMovie>();
 
                 return updatedMovie.Dump();
             });
@@ -332,7 +335,7 @@ namespace UsageGuide
                     SET movie.imdb = $imdb
                     RETURN movie", parameters);
 
-                var updatedMovie = (await cursor.SingleAsync()).Map<IMDBMovie>();
+                var updatedMovie = await cursor.MapSingleAsync<IMDBMovie>();
 
                 return updatedMovie.Dump();
             });
@@ -374,7 +377,7 @@ namespace UsageGuide
                     CREATE (movie:Movie $newMovie)
                     RETURN movie", parameters);
 
-                var createdMovie = (await cursor.SingleAsync()).Map<IMDBMovie>();
+                var createdMovie = await cursor.MapSingleAsync<IMDBMovie>();
 
                 return createdMovie.Dump();
             });
@@ -437,7 +440,7 @@ namespace UsageGuide
                     MATCH (movie:Movie {released: $year})
                     RETURN movie", new {year = 1999});
 
-                var movies = (await cursor.ToListAsync()).Map<MovieEntity>();
+                var movies = await cursor.MapAsync<MovieEntity>();
 
                 var matrix = movies.Single(p => p.title == "The Matrix");
                 matrix.imdb = "tt0133093";
@@ -452,7 +455,7 @@ namespace UsageGuide
                     SET movie = $updatedMovie
                     RETURN movie", updateParams);
 
-                var updatedMovie = (await cursor.SingleAsync()).Map<MovieEntity>();
+                var updatedMovie = await cursor.MapSingleAsync<MovieEntity>();
 
                 return updatedMovie.Dump();
             });
@@ -466,7 +469,7 @@ namespace UsageGuide
                     MATCH (movie:Movie {released: $year})
                     RETURN movie", new {year = 1999});
 
-                var movies = (await cursor.ToListAsync()).Map<MovieEntity>();
+                var movies = await cursor.MapAsync<MovieEntity>();
 
                 var matrix = movies.Single(p => p.title == "The Matrix");
                 matrix.imdb = "tt0133093";

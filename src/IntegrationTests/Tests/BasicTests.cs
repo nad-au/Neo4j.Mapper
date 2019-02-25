@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationTests.Models;
-using Neo4j.Driver.V1;
 using Neo4jMapper;
 using NUnit.Framework;
 
@@ -16,13 +15,13 @@ namespace IntegrationTests.Tests
         public void Should_Map_Cypher_Map_With_Inner_Item()
         {
             var result = Session.Run(@"
-                RETURN { key: 'Value', inner: { item: 'Map1'}}");
+                RETURN { name: 'Foo', otherName: { name: 'Fu'}}");
 
-            var map = result.Single().Map<MapModel>();
+            var map = result.Single().Map<PersonIdentity>();
 
-            Assert.AreEqual("Value", map.Key);
-            Assert.IsNotNull(map.Inner);
-            Assert.AreEqual("Map1", map.Inner.Item);
+            Assert.AreEqual("Foo", map.Name);
+            Assert.IsNotNull(map.OtherName);
+            Assert.AreEqual("Fu", map.OtherName.Name);
         }
 
         [Test]
@@ -42,14 +41,14 @@ namespace IntegrationTests.Tests
         public void Should_Map_Cypher_Map_With_Inner_List()
         {
             var result = Session.Run(@"
-                RETURN { key: 'Value', listKey: [{ item: 'Map1' }, { item: 'Map2' }]}");
+                RETURN { name: 'Foo', otherNames: [{ name: 'Fu' }, { name: 'Fuey' }]}");
 
-            var map = result.Single().Map<MapWithListModel>();
+            var map = result.Single().Map<PersonWithIdentities>();
 
-            Assert.AreEqual("Value", map.Key);
-            Assert.AreEqual(2, map.ListKey.Count);
-            Assert.AreEqual("Map1", map.ListKey.First().Item);
-            Assert.AreEqual("Map2", map.ListKey.Last().Item);
+            Assert.AreEqual("Foo", map.Name);
+            Assert.AreEqual(2, map.OtherNames.Count);
+            Assert.AreEqual("Fu", map.OtherNames.First().Name);
+            Assert.AreEqual("Fuey", map.OtherNames.Last().Name);
         }
 
         [Test]

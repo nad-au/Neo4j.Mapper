@@ -6,9 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver" Version="1.7.0" />
     <PackageReference Include="BenchmarkDotNet" Version="0.11.4" />
-    <PackageReference Include="Neo4jClient" Version="3.1.0.6" />
+    <PackageReference Include="Neo4jClient" Version="3.0.1.28" />
   </ItemGroup>
 
   <ItemGroup>

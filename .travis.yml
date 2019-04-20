@@ -1,10 +1,24 @@
+dist: bionic
+sudo: required
 language: csharp
 mono: none
 dotnet: 2.1.300
+env:
+  global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+    - DOTNET_CLI_TELEMETRY_OPTOUT=true
+
+before_install:
+  # install Neo4j locally:
+  - wget -O neo4j.tar.gz  https://dls2gnud23o1w.cloudfront.net/artifact.php?name=neo4j-community-3.5.4-unix.tar.gz
+  - tar -xzf neo4j.tar.gz
+  - sed -i.bak s/#dbms.security.auth_enabled=false/dbms.security.auth_enabled=false/g neo4j-community-3.5.4/conf/neo4j.conf
+  - neo4j-community-3.5.4/bin/neo4j start
 
 install:
-  - dotnet restore src/Neo4jMapper.sln --source https://api.nuget.org/v3/index.json --source https://www.myget.org/F/servicestack
+  - dotnet restore src/Neo4jMapper.sln --source https://api.nuget.org/v3/index.json
 
 script:
   - dotnet build src/Neo4jMapper.sln
   - dotnet test src/UnitTests/UnitTests.csproj
+  - dotnet test src/IntegrationTests/IntegrationTests.csproj

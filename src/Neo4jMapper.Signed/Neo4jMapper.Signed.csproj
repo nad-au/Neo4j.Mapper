@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.4</Version>
+    <Title>Neo4jMapper</Title>
+    <Authors>Neil Dobson</Authors>
+    <Company>Barnardos Australia</Company>
+    <Description>A library to simplify mapping of cypher results onto your models</Description>
+    <PackageProjectUrl>https://github.com/barnardos-au/Neo4jMapper</PackageProjectUrl>
+    <PackageTags>neo4j cypher mapping</PackageTags>
+    <Copyright>Copyright ©2019 Barnardos Australia</Copyright>
+    <PackageIconUrl>https://avatars3.githubusercontent.com/u/29527012</PackageIconUrl>
+    <RepositoryUrl>https://github.com/barnardos-au/Neo4jMapper</RepositoryUrl>
+    <AssemblyName>Neo4jMapper</AssemblyName>
+    <PackageId>Neo4jMapper.Signed</PackageId>
+    <RootNamespace>Neo4jMapper</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Neo4jMapper\CollectionMapper.cs" Link="CollectionMapper.cs" />
+    <Compile Include="..\Neo4jMapper\DictionaryExtensions.cs" Link="DictionaryExtensions.cs" />
+    <Compile Include="..\Neo4jMapper\EntityAccessor.cs" Link="EntityAccessor.cs" />
+    <Compile Include="..\Neo4jMapper\EntityExtensions.cs" Link="EntityExtensions.cs" />
+    <Compile Include="..\Neo4jMapper\Neo4jMapperConfig.cs" Link="Neo4jMapperConfig.cs" />
+    <Compile Include="..\Neo4jMapper\Neo4jParameters.cs" Link="Neo4jParameters.cs" />
+    <Compile Include="..\Neo4jMapper\NodeIdAttribute.cs" Link="NodeIdAttribute.cs" />
+    <Compile Include="..\Neo4jMapper\RecordExtensions.cs" Link="RecordExtensions.cs" />
+    <Compile Include="..\Neo4jMapper\SessionExtensions.cs" Link="SessionExtensions.cs" />
+    <Compile Include="..\Neo4jMapper\StatementResultCursorExtensions.cs" Link="StatementResultCursorExtensions.cs" />
+    <Compile Include="..\Neo4jMapper\ValueMapper.cs" Link="ValueMapper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Neo4j.Driver.Signed" Version="1.7.0" />
+    <PackageReference Include="ServiceStack.Text.Core" Version="5.5.0" />
+  </ItemGroup>
+
+</Project>

@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace IntegrationTests.Tests
 {
     [TestFixture]
+    [NonParallelizable]
     public class SessionExtensionsTests : MoviesFixtureBase
     {
         [Test]
@@ -19,7 +20,7 @@ namespace IntegrationTests.Tests
 
             var movie = result.Single().Map<Movie>();
 
-            Assert.AreNotEqual(movie.Id, default(long));
+            Assert.Greater(movie.Id, default);
 
             // Act
             var node = Session.GetNode<Movie>(movie.Id);
@@ -38,7 +39,7 @@ namespace IntegrationTests.Tests
 
                 var movie = result.Single().Map<Movie>();
 
-                Assert.AreNotEqual(movie.Id, default(long));
+                Assert.Greater(movie.Id, default);
 
                 // Act
                 var node = tx.GetNode<Movie>(movie.Id);
@@ -56,7 +57,7 @@ namespace IntegrationTests.Tests
 
             var movie = await result.MapSingleAsync<Movie>();
 
-            Assert.AreNotEqual(movie.Id, default(long));
+            Assert.Greater(movie.Id, default);
 
             // Act
             var node = await Session.GetNodeAsync<Movie>(movie.Id);
@@ -91,7 +92,7 @@ namespace IntegrationTests.Tests
             var movie = result.Map<Movie>().SingleOrDefault();
 
             Assert.IsNotNull(movie);
-            Assert.AreNotEqual(movie.Id, default(long));
+            Assert.Greater(movie.Id, default);
 
             movie.title = "Top Gun 2";
 
@@ -115,7 +116,7 @@ namespace IntegrationTests.Tests
                 var movie = result.Map<Movie>().SingleOrDefault();
 
                 Assert.IsNotNull(movie);
-                Assert.AreNotEqual(movie.Id, default(long));
+                Assert.Greater(movie.Id, default);
 
                 movie.title = "Top Gun 2";
 
@@ -137,7 +138,7 @@ namespace IntegrationTests.Tests
 
             var movie = await result.MapSingleAsync<Movie>();
 
-            Assert.AreNotEqual(movie.Id, default(long));
+            Assert.Greater(movie.Id, default);
 
             movie.title = "Top Gun 2";
 
@@ -160,7 +161,7 @@ namespace IntegrationTests.Tests
 
                 var movie = await result.MapSingleAsync<Movie>();
 
-                Assert.AreNotEqual(movie.Id, default(long));
+                Assert.Greater(movie.Id, default);
 
                 movie.title = "Top Gun 2";
 

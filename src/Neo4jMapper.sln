@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper", "Neo4jMapper\Neo4jMapper.csproj", "{0FD19E45-1527-48BE-A3B0-E2602B640C44}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queries", "Queries\Queries.csproj", "{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DB6FFD41-A536-42FC-95EB-F5026FAD1382}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neo4jMapper.Signed", "Neo4jMapper.Signed\Neo4jMapper.Signed.csproj", "{AB821832-D8EA-4D50-BC78-4AF0F3D28E25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB821832-D8EA-4D50-BC78-4AF0F3D28E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB821832-D8EA-4D50-BC78-4AF0F3D28E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB821832-D8EA-4D50-BC78-4AF0F3D28E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB821832-D8EA-4D50-BC78-4AF0F3D28E25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

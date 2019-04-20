@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace IntegrationTests.Tests
 {
     [TestFixture]
+    [NonParallelizable]
     public class SessionExtensionsTests : MoviesFixtureBase
     {
         [Test]

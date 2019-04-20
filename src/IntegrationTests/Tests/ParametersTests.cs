@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace IntegrationTests.Tests
 {
     [TestFixture]
+    [NonParallelizable]
     public class ParametersTests : TestFixtureBase
     {
         protected ISession Session;

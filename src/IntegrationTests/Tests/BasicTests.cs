@@ -9,6 +9,7 @@ using NUnit.Framework;
 namespace IntegrationTests.Tests
 {
     [TestFixture]
+    [NonParallelizable]
     public class BasicTests : MoviesFixtureBase
     {
         [Test]

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Neo4jMapper
 {
@@ -13,5 +14,7 @@ namespace Neo4jMapper
         public Neo4jParameters()
         {
         }
+
+        public static Func<object, object> ValueConvert = o => o;
     }
 }

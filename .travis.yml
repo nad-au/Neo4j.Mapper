@@ -10,7 +10,7 @@ env:
 
 before_install:
   # install Neo4j locally:
-  - wget -O neo4j.tar.gz  https://dls2gnud23o1w.cloudfront.net/artifact.php?name=neo4j-community-3.5.4-unix.tar.gz
+  - wget -O neo4j.tar.gz  https://neo4j.com/artifact.php?name=neo4j-community-3.5.4-unix.tar.gz
   - tar -xzf neo4j.tar.gz
   - sed -i.bak s/#dbms.security.auth_enabled=false/dbms.security.auth_enabled=false/g neo4j-community-3.5.4/conf/neo4j.conf
   - neo4j-community-3.5.4/bin/neo4j start

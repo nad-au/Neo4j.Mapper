@@ -49,7 +49,7 @@ namespace Neo4jMapper
 
         public static IDictionary<string, object> WithValue(this IDictionary<string, object> dictionary, string key, object value)
         {
-            dictionary.Add(key, Neo4jParameters.ValueConvert(value));
+            dictionary.Add(key, Neo4jParameters.ValueConvert((key, value)));
 
             return dictionary;
         }

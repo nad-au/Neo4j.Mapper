@@ -15,6 +15,6 @@ namespace Neo4jMapper
         {
         }
 
-        public static Func<object, object> ValueConvert = o => o;
+        public static Func<(string key, object value), object> ValueConvert = o => o.value;
     }
 }

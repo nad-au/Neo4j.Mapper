@@ -12,7 +12,7 @@ namespace UnitTests
         [Test]
         public void Should_Not_Convert_Value_If_ValueConvert_Is_Not_Implemented()
         {
-            Neo4jParameters.ValueConvert = o => o;
+            Neo4jParameters.ValueConvert = o => o.value;
 
             var parameters = new Neo4jParameters()
                 .WithValue("1", DateTime.Now)
@@ -54,29 +54,31 @@ namespace UnitTests
                 Int2 = 456
             };
 
-            Neo4jParameters.ValueConvert = o =>
+            Neo4jParameters.ValueConvert = kv =>
             {
-                if (o is DateTime dateTime)
+                var (key, value) = kv;
+
+                if (value is DateTime dateTime)
                 {
                     return dateTime.ToString("s");
                 }
 
-                if (o is bool b)
+                if (value is bool b)
                 {
                     return b.ToString().ToUpper();
                 }
 
-                if (o.GetType().IsEnum)
+                if (value.GetType().IsEnum)
                 {
-                    return o.ToString();
+                    return value.ToString();
                 }
 
-                if (o is int i)
+                if (value is int i)
                 {
                     return i.ToString();
                 }
 
-                return o;
+                return value;
             };
 
             var parameters = new Neo4jParameters()

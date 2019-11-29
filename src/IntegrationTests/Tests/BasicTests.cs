@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationTests.Models;
@@ -50,6 +51,65 @@ namespace IntegrationTests.Tests
             Assert.AreEqual(2, map.OtherNames.Count);
             Assert.AreEqual("Fu", map.OtherNames.First().Name);
             Assert.AreEqual("Fuey", map.OtherNames.Last().Name);
+        }
+
+        [Test]
+        public async Task Should_AsyncMap_Iterate_Person_Nodes()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (person:Person)
+                RETURN person
+                LIMIT 10").ConfigureAwait(false);
+
+            // more efficient than MapAsync because it don't fetch and convert the next 6 people
+            await foreach (Person person in cursor.AsyncMap<Person>())
+            {
+                Trace.WriteLine($"Person {person.name} had fetched and materialized");
+            }
+        }
+
+
+        [Test]
+        public async Task Should_AsyncMap_Person_Nodes()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (person:Person)
+                RETURN person
+                LIMIT 10").ConfigureAwait(false);
+
+            // more efficient than MapAsync because it don't fetch and convert the next 6 people
+            var persons = await cursor.AsyncMap<Person>().Take(4).ToListAsync().ConfigureAwait(false);
+
+            Assert.AreEqual(4, persons.Count);
+        }
+
+        [Test]
+        public async Task Should_AsyncMap_Movie_Nodes()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (movie:Movie)
+                RETURN movie
+                LIMIT 10").ConfigureAwait(false);
+
+            // more efficient than MapAsync because it don't fetch and convert the next 6 movies
+            var movies = await cursor.AsyncMap<Movie>().Take(4).ToListAsync().ConfigureAwait(false);
+
+            Assert.AreEqual(4, movies.Count);
+            Assert.IsTrue(movies.All(p => p.Id != default(long)));
+        }
+
+        [Test]
+        public async Task Should_AsyncMap_Cypher_Maps()
+        {
+            var cursor = await Session.RunAsync(@"
+                MATCH (movie:Movie)
+                RETURN movie { .* }
+                LIMIT 10").ConfigureAwait(false);
+
+            // more efficient than MapAsync because it don't fetch and convert the next 6 movies
+            var movies = await cursor.AsyncMap<Movie>().Take(4).ToListAsync().ConfigureAwait(false); 
+
+            Assert.AreEqual(4, movies.Count);
         }
 
         [Test]

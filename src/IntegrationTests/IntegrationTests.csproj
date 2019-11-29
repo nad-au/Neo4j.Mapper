@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>IntegrationTests</AssemblyName>
     <RootNamespace>IntegrationTests</RootNamespace>
     <LangVersion>latest</LangVersion>
@@ -12,10 +12,11 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Include="System.Linq.Async" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Neo4jMapper\Neo4jMapper.csproj" />
+    <ProjectReference Include="..\Neo4jMapperCore\Neo4jMapperCore.csproj" />
     <ProjectReference Include="..\Queries\Queries.csproj" />
   </ItemGroup>
 

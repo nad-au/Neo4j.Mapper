@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationTests.Models;
@@ -50,6 +51,21 @@ namespace IntegrationTests.Tests
             Assert.AreEqual(2, map.OtherNames.Count);
             Assert.AreEqual("Fu", map.OtherNames.First().Name);
             Assert.AreEqual("Fuey", map.OtherNames.Last().Name);
+        }
+
+        [Test]
+        public async Task Should_AsyncMap_Iterate_Person_Nodes()
+        {
+            var iterator = (await Session.RunAsync(@"
+                MATCH (person:Person)
+                RETURN person
+                LIMIT 10")).AsyncIterator();
+
+            // more efficient than MapAsync because it don't fetch and convert the next 6 people
+            await foreach (var person in iterator.Map<Person>())
+            {
+                Trace.WriteLine($"Person {person.name} had fetched and materialized");
+            }
         }
 
         [Test]

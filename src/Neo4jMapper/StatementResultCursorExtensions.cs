@@ -7,7 +7,7 @@ namespace Neo4jMapper
 {
     public static class StatementResultCursorExtensions
     {
-        public static async IAsyncEnumerable<IRecord> AsyncIterator(IStatementResultCursor result)
+        public static async IAsyncEnumerable<IRecord> AsyncIterator(this IStatementResultCursor result)
         {
             while (await result.FetchAsync())
             {

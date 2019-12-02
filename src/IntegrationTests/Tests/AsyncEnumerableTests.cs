@@ -10,15 +10,16 @@ namespace IntegrationTests.Tests
 {
     [TestFixture]
     [NonParallelizable]
-    public class BasicTests : MoviesFixtureBase
+    public class AsyncEnumerableTests : MoviesFixtureBase
     {
         [Test]
-        public void Should_Map_Cypher_Map_With_Inner_Item()
+        public async Task Should_Map_Cypher_Map_With_Inner_Item()
         {
-            var result = Session.Run(@"
-                RETURN { name: 'Foo', otherName: { name: 'Fu'}}");
+            var asyncResults = (await Session.RunAsync(@"
+                RETURN { name: 'Foo', otherName: { name: 'Fu'}}"))
+                .AsyncResults();
 
-            var map = result.Single().Map<PersonIdentity>();
+            var map = await asyncResults.Map<PersonIdentity>().SingleAsync();
 
             Assert.AreEqual("Foo", map.Name);
             Assert.IsNotNull(map.OtherName);
@@ -26,12 +27,13 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public void Should_Map_Literal_List()
+        public async Task Should_Map_Literal_List()
         {
-            var result = Session.Run(@"
-                RETURN range(0, 10)[..4]");
+            var asyncResults = (await Session.RunAsync(@"
+                RETURN range(0, 10)[..4]"))
+                .AsyncResults();
 
-            var sequence = result.Single().Map<List<byte>>();
+            var sequence = await asyncResults.Map<List<byte>>().SingleAsync();
 
             Assert.AreEqual(4, sequence.Count);
             Assert.AreEqual(0, sequence.First());
@@ -39,12 +41,13 @@ namespace IntegrationTests.Tests
         }
 
         [Test]
-        public void Should_Map_Cypher_Map_With_Inner_List()
+        public async Task Should_Map_Cypher_Map_With_Inner_List()
         {
-            var result = Session.Run(@"
-                RETURN { name: 'Foo', otherNames: [{ name: 'Fu' }, { name: 'Fuey' }]}");
+            var asyncResults = (await Session.RunAsync(@"
+                RETURN { name: 'Foo', otherNames: [{ name: 'Fu' }, { name: 'Fuey' }]}"))
+                .AsyncResults();
 
-            var map = result.Single().Map<PersonWithIdentities>();
+            var map = await asyncResults.Map<PersonWithIdentities>().SingleAsync();
 
             Assert.AreEqual("Foo", map.Name);
             Assert.AreEqual(2, map.OtherNames.Count);
@@ -55,12 +58,12 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task Should_Map_Person_Nodes()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (person:Person)
                 RETURN person
-                LIMIT 10");
+                LIMIT 10")).AsyncResults();
 
-            var persons = await cursor.MapAsync<Person>();
+            var persons = await asyncResults.Map<Person>().ToListAsync();
 
             Assert.AreEqual(10, persons.Count);
         }
@@ -68,38 +71,52 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task Should_Map_Movie_Nodes()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (movie:Movie)
                 RETURN movie
-                LIMIT 10");
+                LIMIT 10")).AsyncResults();
 
-            var movies = await cursor.MapAsync<Movie>();
+            var movies = await asyncResults.Map<Movie>().Take(4).ToListAsync();
 
-            Assert.AreEqual(10, movies.Count);
+            Assert.AreEqual(4, movies.Count);
             Assert.IsTrue(movies.All(p => p.Id != default));
+        }
+
+        [Test]
+        public async Task Should_Map_Movie_Nodes_With_Linq_TakeWhile()
+        {
+            var asyncResults = (await Session.RunAsync(@"
+                MATCH (movie:Movie)
+                RETURN movie
+                ORDER BY movie.released")).AsyncResults();
+
+            var movies = await asyncResults.Map<Movie>().TakeWhile(m => m.released < 2000).ToListAsync();
+
+            Assert.AreEqual(23, movies.Count);
+            Assert.IsTrue(movies.Last().released == 1999);
         }
 
         [Test]
         public async Task Should_Map_Cypher_Maps()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (movie:Movie)
                 RETURN movie { .* }
-                LIMIT 10");
+                LIMIT 10")).AsyncResults();
 
-            var movies = await cursor.MapAsync<Movie>();
+            var movies = await asyncResults.Map<Movie>().Take(4).ToListAsync(); 
 
-            Assert.AreEqual(10, movies.Count);
+            Assert.AreEqual(4, movies.Count);
         }
 
         [Test]
         public async Task Should_Map_List_Of_Movies()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (movie:Movie)
-                RETURN COLLECT(movie)");
+                RETURN COLLECT(movie)")).AsyncResults();
 
-            var movies = await cursor.MapSingleAsync<List<Movie>>();
+            var movies = await asyncResults.Map<List<Movie>>().SingleAsync();
 
             Assert.AreEqual(38, movies.Count);
         }
@@ -107,11 +124,11 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task Should_Map_List_Of_Cypher_Maps()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (movie:Movie)
-                RETURN COLLECT(movie { .* })");
+                RETURN COLLECT(movie { .* })")).AsyncResults();
 
-            var movies = await cursor.MapSingleAsync<List<Movie>>();
+            var movies = await asyncResults.Map<List<Movie>>().SingleAsync();
 
             Assert.AreEqual(38, movies.Count);
         }
@@ -119,16 +136,16 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task Should_Map_Person_With_List_Of_Movie_Nodes()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                RETURN person, COLLECT(movie) AS movies");
+                RETURN person, COLLECT(movie) AS movies")).AsyncResults();
 
-            var actor = await cursor
-                .MapSingleAsync<Person, IEnumerable<Movie>, Person>((person, movies) =>
+            var actor = await asyncResults
+                .Map<Person, IEnumerable<Movie>, Person>((person, movies) =>
             {
                 person.MoviesActedIn = movies;
                 return person;
-            });
+            }).SingleAsync();
 
             Assert.AreEqual(4, actor.MoviesActedIn.Count());
             Assert.AreEqual(1968, actor.born);
@@ -138,16 +155,16 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task Should_Return_Anonymous_Type()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                RETURN person, COLLECT(movie) AS movies");
+                RETURN person, COLLECT(movie) AS movies")).AsyncResults();
 
-            var actor = await cursor
-                .MapSingleAsync((Person person, IEnumerable<Movie> movies) => new
+            var actor = await asyncResults
+                .Map((Person person, IEnumerable<Movie> movies) => new
             {
                 Person = person,
                 Movies = movies
-            });
+            }).SingleAsync();
 
             Assert.AreEqual("Cuba Gooding Jr.", actor.Person.name);
             Assert.AreEqual(1968, actor.Person.born);
@@ -157,16 +174,16 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task Should_Return_Projection()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                RETURN person.name, COLLECT(movie) AS movies");
+                RETURN person.name, COLLECT(movie) AS movies")).AsyncResults();
 
-            var actor = await cursor
-                .MapSingleAsync((string actorName, IEnumerable<Movie> movies) => new ActorName
+            var actor = await asyncResults
+                .Map((string actorName, IEnumerable<Movie> movies) => new ActorName
             {
                 name = actorName,
                 MoviesActedIn = movies
-            });
+            }).SingleAsync();
 
             Assert.AreEqual("Cuba Gooding Jr.", actor.name);
             Assert.AreEqual(4, actor.MoviesActedIn.Count());
@@ -175,11 +192,12 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task Should_Map_Cypher_Map_Containing_List_Of_Maps()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
-                RETURN person { .name, moviesActedIn: COLLECT(movie { .title, .released })}");
+                RETURN person { .name, moviesActedIn: COLLECT(movie { .title, .released })}"))
+                .AsyncResults();
 
-            var actorWithMovies = await cursor.MapSingleAsync<Person>();
+            var actorWithMovies = await asyncResults.Map<Person>().SingleAsync();
 
             Assert.AreEqual(4, actorWithMovies.MoviesActedIn.Count());
         }
@@ -187,14 +205,14 @@ namespace IntegrationTests.Tests
         [Test]
         public async Task SingleAsync_Throws_InvalidOperationException_With_No_Result()
         {
-            var cursor = await Session.RunAsync(@"
+            var asyncResults = (await Session.RunAsync(@"
                 MATCH (person:Person {name: 'Mickey Mouse'})
-                RETURN person");
+                RETURN person")).AsyncResults();
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(
-                async () => await cursor.MapSingleAsync<Person>());
+                async () => await asyncResults.Map<Person>().SingleAsync());
 
-            Assert.AreEqual("The result is empty.", exception.Message);
+            Assert.AreEqual("Source sequence doesn't contain any elements.", exception.Message);
         }
 
         [Test]

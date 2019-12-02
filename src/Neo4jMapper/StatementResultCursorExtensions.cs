@@ -7,14 +7,6 @@ namespace Neo4jMapper
 {
     public static class StatementResultCursorExtensions
     {
-        public static async IAsyncEnumerable<IRecord> AsyncIterator(this IStatementResultCursor result)
-        {
-            while (await result.FetchAsync())
-            {
-                yield return result.Current;
-            }
-        }
-
         public static async Task<List<TReturn>> MapAsync<TReturn>(
             this IStatementResultCursor result)
         {
@@ -263,6 +255,14 @@ namespace Neo4jMapper
             Func<TValue1, TValue2, TValue3, TValue4, TValue5, TValue6, TValue7, TValue8, TValue9, TValue10, TValue11, TValue12, TValue13, TValue14, TValue15, TValue16, TReturn> mapFunc)
         {
             return (await result.SingleAsync()).Map(mapFunc);
+        }
+
+        public static async IAsyncEnumerable<IRecord> AsyncResults(this IStatementResultCursor result)
+        {
+            while (await result.FetchAsync())
+            {
+                yield return result.Current;
+            }
         }
     }
 }

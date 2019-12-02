@@ -225,5 +225,28 @@ namespace IntegrationTests.Tests
 
             Assert.IsEmpty(persons);
         }
+
+        [Test]
+        public async Task Should_Map_Relationship_Properties()
+        {
+            try
+            {
+                var cursor = await Session.RunAsync(@"
+                    CREATE (:Person)-[knows:KNOWS]->()
+                    SET knows = {relationship: 'Brother',current:true}
+                    RETURN knows").ConfigureAwait(false);
+
+                var knows = await cursor.AsyncResults().Map<Knows>().SingleAsync();
+
+                Assert.AreEqual("Brother", knows.relationship);
+                Assert.IsTrue(knows.current);
+            }
+            finally
+            {
+                await Session.RunAsync(@"
+                    MATCH (person:Person)-[knows:KNOWS]->()
+                    DELETE person, knows").ConfigureAwait(false);
+            }
+        }
     }
 }

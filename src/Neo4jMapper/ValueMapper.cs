@@ -37,6 +37,13 @@ namespace Neo4jMapper
                 return entity;
             }
 
+            if (cypherValue is IRelationship relationship)
+            {
+                var entity = relationship.Properties.FromObjectDictionary<T>();
+
+                return entity;
+            }
+
             if (cypherValue is IReadOnlyDictionary<string, object> map)
             {
                 return map.FromObjectDictionary<T>();

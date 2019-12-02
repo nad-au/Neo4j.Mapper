@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver" Version="1.7.2" />
+    <PackageReference Include="Neo4j.Driver.Signed" Version="1.7.2" />
     <PackageReference Include="ServiceStack.Text.Core" Version="5.7.0" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
   </ItemGroup>

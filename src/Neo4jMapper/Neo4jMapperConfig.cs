@@ -17,26 +17,34 @@ namespace Neo4jMapper
 
         public static void RegisterLocalDateToDateTimeConverter()
         {
-            AutoMapping.RegisterConverter((LocalDate localDate) => localDate.ToDateTime());
-            AutoMapping.RegisterConverter((DateTime dateTime) => new LocalDate(dateTime));
+            AutoMapping.RegisterConverter<LocalDate, DateTime>(localDate => localDate?.ToDateTime() ?? default);
+            AutoMapping.RegisterConverter<LocalDate, DateTime?>(localDateTime => localDateTime?.ToDateTime());
+            AutoMapping.RegisterConverter<DateTime, LocalDate>(dateTime => new LocalDate(dateTime));
+            AutoMapping.RegisterConverter<DateTime?, LocalDate>(dateTime => dateTime.HasValue ? new LocalDate(dateTime.Value) : null);
         }
 
         public static void RegisterLocalTimeToTimeSpanConverter()
         {
-            AutoMapping.RegisterConverter((LocalTime localTime) => localTime.ToTimeSpan());
-            AutoMapping.RegisterConverter((TimeSpan timeSpan) => new LocalTime(timeSpan));
+            AutoMapping.RegisterConverter<LocalTime, TimeSpan>(localTime => localTime?.ToTimeSpan() ?? default);
+            AutoMapping.RegisterConverter<LocalTime, TimeSpan?>(localTime => localTime?.ToTimeSpan());
+            AutoMapping.RegisterConverter<TimeSpan, LocalTime>(timeSpan => new LocalTime(timeSpan));
+            AutoMapping.RegisterConverter<TimeSpan?, LocalTime>(timeSpan => timeSpan.HasValue ? new LocalTime(timeSpan.Value) : null);
         }
 
         public static void RegisterZonedDateTimeToDateTimeOffsetConverter()
         {
-            AutoMapping.RegisterConverter((ZonedDateTime zonedDateTime) => zonedDateTime.ToDateTimeOffset());
-            AutoMapping.RegisterConverter((DateTimeOffset dateTimeOffset) => new ZonedDateTime(dateTimeOffset));
+            AutoMapping.RegisterConverter<ZonedDateTime, DateTimeOffset>(zonedDateTime => zonedDateTime?.ToDateTimeOffset() ?? default);
+            AutoMapping.RegisterConverter<ZonedDateTime, DateTimeOffset?>(zonedDateTime => zonedDateTime?.ToDateTimeOffset());
+            AutoMapping.RegisterConverter<DateTimeOffset, ZonedDateTime>(dateTimeOffset => new ZonedDateTime(dateTimeOffset));
+            AutoMapping.RegisterConverter<DateTimeOffset?, ZonedDateTime>(dateTimeOffset => dateTimeOffset.HasValue ? new ZonedDateTime(dateTimeOffset.Value) : null);
         }
 
         public static void RegisterLocalDateTimeToDateTimeConverter()
         {
-            AutoMapping.RegisterConverter((LocalDateTime localDateTime) => localDateTime.ToDateTime());
-            AutoMapping.RegisterConverter((DateTime dateTime) => new LocalDateTime(dateTime));
+            AutoMapping.RegisterConverter<LocalDateTime, DateTime>(localDateTime => localDateTime?.ToDateTime() ?? default);
+            AutoMapping.RegisterConverter<LocalDateTime, DateTime?>(localDateTime => localDateTime?.ToDateTime());
+            AutoMapping.RegisterConverter<DateTime, LocalDateTime>(dateTime => new LocalDateTime(dateTime));
+            AutoMapping.RegisterConverter<DateTime?, LocalDateTime>(dateTime => dateTime.HasValue ? new LocalDateTime(dateTime.Value) : null);
         }
     }
 }

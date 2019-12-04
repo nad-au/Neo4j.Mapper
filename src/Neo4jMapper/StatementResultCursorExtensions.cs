@@ -256,5 +256,13 @@ namespace Neo4jMapper
         {
             return (await result.SingleAsync()).Map(mapFunc);
         }
+
+        public static async IAsyncEnumerable<IRecord> AsyncResults(this IStatementResultCursor result)
+        {
+            while (await result.FetchAsync())
+            {
+                yield return result.Current;
+            }
+        }
     }
 }

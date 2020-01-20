@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
 using ServiceStack;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using IntegrationTests.Models;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
 
@@ -11,18 +11,18 @@ namespace IntegrationTests.Tests
     [NonParallelizable]
     public class ParametersTests : TestFixtureBase
     {
-        protected ISession Session;
+        protected IAsyncSession Session;
 
         [SetUp]
         public void SetUp()
         {
-            Session = Driver.Session();
+            Session = Driver.AsyncSession();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Session.Dispose();
+            Session.CloseAsync();
         }
 
         [Test]

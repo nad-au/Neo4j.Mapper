@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using NSubstitute;
 using NUnit.Framework;
@@ -16,7 +16,7 @@ namespace UnitTests
             var record = Substitute.For<IRecord>();
             record[0].Returns(1);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -32,7 +32,7 @@ namespace UnitTests
             record[0].Returns(1);
             record[1].Returns(2);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -54,7 +54,7 @@ namespace UnitTests
             record[1].Returns(2);
             record[2].Returns(3);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -79,7 +79,7 @@ namespace UnitTests
             record[2].Returns(3);
             record[3].Returns(4);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -107,7 +107,7 @@ namespace UnitTests
             record[3].Returns(4);
             record[4].Returns(5);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -138,7 +138,7 @@ namespace UnitTests
             record[4].Returns(5);
             record[5].Returns(6);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -173,7 +173,7 @@ namespace UnitTests
             record[5].Returns(6);
             record[6].Returns(7);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -211,7 +211,7 @@ namespace UnitTests
             record[6].Returns(7);
             record[7].Returns(8);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -252,7 +252,7 @@ namespace UnitTests
             record[7].Returns(8);
             record[8].Returns(9);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -296,7 +296,7 @@ namespace UnitTests
             record[8].Returns(9);
             record[9].Returns(10);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -343,7 +343,7 @@ namespace UnitTests
             record[9].Returns(10);
             record[10].Returns(11);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -393,7 +393,7 @@ namespace UnitTests
             record[10].Returns(11);
             record[11].Returns(12);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -447,7 +447,7 @@ namespace UnitTests
             record[11].Returns(12);
             record[12].Returns(13);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -504,7 +504,7 @@ namespace UnitTests
             record[12].Returns(13);
             record[13].Returns(14);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -564,7 +564,7 @@ namespace UnitTests
             record[13].Returns(14);
             record[14].Returns(15);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -627,7 +627,7 @@ namespace UnitTests
             record[14].Returns(15);
             record[15].Returns(16);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record);
 
@@ -677,7 +677,7 @@ namespace UnitTests
             var record = Substitute.For<IRecord>();
             record[0].Returns(1);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -695,7 +695,7 @@ namespace UnitTests
             record[0].Returns(1);
             record[1].Returns(2);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -719,7 +719,7 @@ namespace UnitTests
             record[1].Returns(2);
             record[2].Returns(3);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -746,7 +746,7 @@ namespace UnitTests
             record[2].Returns(3);
             record[3].Returns(4);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -776,7 +776,7 @@ namespace UnitTests
             record[3].Returns(4);
             record[4].Returns(5);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -809,7 +809,7 @@ namespace UnitTests
             record[4].Returns(5);
             record[5].Returns(6);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -846,7 +846,7 @@ namespace UnitTests
             record[5].Returns(6);
             record[6].Returns(7);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -886,7 +886,7 @@ namespace UnitTests
             record[6].Returns(7);
             record[7].Returns(8);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -929,7 +929,7 @@ namespace UnitTests
             record[7].Returns(8);
             record[8].Returns(9);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -975,7 +975,7 @@ namespace UnitTests
             record[8].Returns(9);
             record[9].Returns(10);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -1024,7 +1024,7 @@ namespace UnitTests
             record[9].Returns(10);
             record[10].Returns(11);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -1076,7 +1076,7 @@ namespace UnitTests
             record[10].Returns(11);
             record[11].Returns(12);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -1132,7 +1132,7 @@ namespace UnitTests
             record[11].Returns(12);
             record[12].Returns(13);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -1191,7 +1191,7 @@ namespace UnitTests
             record[12].Returns(13);
             record[13].Returns(14);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -1253,7 +1253,7 @@ namespace UnitTests
             record[13].Returns(14);
             record[14].Returns(15);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 
@@ -1318,7 +1318,7 @@ namespace UnitTests
             record[14].Returns(15);
             record[15].Returns(16);
 
-            var cursor = Substitute.For<IStatementResultCursor>();
+            var cursor = Substitute.For<IResultCursor>();
             cursor.FetchAsync().Returns(Task.FromResult(true), Task.FromResult(true), Task.FromResult(false));
             cursor.Current.Returns(record, record);
 

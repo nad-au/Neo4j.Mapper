@@ -1,4 +1,4 @@
-﻿using Neo4j.Driver.V1;
+﻿using Neo4j.Driver;
 using NUnit.Framework;
 
 namespace IntegrationTests
@@ -15,7 +15,7 @@ namespace IntegrationTests
             // Ensure node exists to avoid flaky test where node id = 0
             using (var session = Driver.Session())
             {
-                session.RunAsync("MERGE (:Neo4jMapperTest)");
+                session.Run("MERGE (:Neo4jMapperTest)");
             }
         }
 
@@ -24,7 +24,7 @@ namespace IntegrationTests
         {
             using (var session = Driver.Session())
             {
-                session.RunAsync("MATCH (n:Neo4jMapperTest) DELETE n");
+                session.Run("MATCH (n:Neo4jMapperTest) DELETE n");
             }
             Driver.Dispose();
         }

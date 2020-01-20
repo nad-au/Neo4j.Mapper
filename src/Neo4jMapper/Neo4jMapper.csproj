@@ -22,13 +22,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver" Version="1.7.2" />
-    <PackageReference Include="ServiceStack.Text.Core" Version="5.7.0" />
+    <PackageReference Include="Neo4j.Driver" Version="4.0.0" />
+    <PackageReference Include="Neo4j.Driver.Simple" Version="4.0.0" />
+    <PackageReference Include="ServiceStack.Text.Core" Version="5.8.0" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -36,7 +37,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="..\Images\barnardos.png" Pack="true" PackagePath="\"/>
+    <None Include="..\Images\barnardos.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

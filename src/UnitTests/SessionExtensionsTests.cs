@@ -1,5 +1,5 @@
 ﻿using System;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using NSubstitute;
 using NUnit.Framework;
@@ -67,7 +67,7 @@ namespace UnitTests
         [Test]
         public void SetNodeAsync_Should_Throw_Exception_If_NodeIdAttribute_Is_Not_Found()
         {
-            var session = Substitute.For<ISession>();
+            var session = Substitute.For<IAsyncSession>();
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await session.SetNodeAsync(new NonEntity()));
@@ -78,7 +78,7 @@ namespace UnitTests
         [Test]
         public void SetNodeAsync_Should_Throw_Exception_If_Node_Id_Value_Is_Null()
         {
-            var session = Substitute.For<ISession>();
+            var session = Substitute.For<IAsyncSession>();
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await session.SetNodeAsync(new EntityWithNullableId()));
@@ -89,7 +89,7 @@ namespace UnitTests
         [Test]
         public void SetNodeAsync_Tx_Should_Throw_Exception_If_NodeIdAttribute_Is_Not_Found()
         {
-            var transaction = Substitute.For<ITransaction>();
+            var transaction = Substitute.For<IAsyncTransaction>();
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await transaction.SetNodeAsync(new NonEntity()));
@@ -100,7 +100,7 @@ namespace UnitTests
         [Test]
         public void SetNodeAsync_Tx_Should_Throw_Exception_If_Node_Id_Value_Is_Null()
         {
-            var transaction = Substitute.For<ITransaction>();
+            var transaction = Substitute.For<IAsyncTransaction>();
 
             var exception = Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await transaction.SetNodeAsync(new EntityWithNullableId()));

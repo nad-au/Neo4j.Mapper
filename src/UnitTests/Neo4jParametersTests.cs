@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
+using UnitTests.Models;
 
 namespace UnitTests
 {
@@ -199,6 +200,38 @@ namespace UnitTests
             Assert.AreEqual(2, parameter.Value.Count);
             Assert.AreEqual(1, parameter.Value["First"]);
             Assert.AreEqual(3, parameter.Value["Third"]);
+        }
+
+        [Test]
+        public void Should_Convert_Enum_Type_To_String()
+        {
+            var entity = new MovieWithType
+            {
+                Title = "Top Gun",
+                Released = 1986,
+                Tagline = "As students at the United States Navy's elite fighter weapons school compete to be best in the class, one daring young pilot learns a few things from a civilian instructor that are not taught in the classroom.",
+                MovieType = MovieType.Action
+            };
+            
+            var parameter = entity.ToParameterMap("entity");
+
+            Assert.AreEqual("entity", parameter.Key);
+            Assert.AreEqual(4, parameter.Value.Count);
+            
+            Assert.IsTrue(parameter.Value.ContainsKey("Title"));
+            var titleValue = parameter.Value["Title"];
+            Assert.IsInstanceOf<string>(titleValue);
+            Assert.AreEqual("Top Gun", titleValue);
+            
+            Assert.IsTrue(parameter.Value.ContainsKey("Released"));
+            var releasedValue = parameter.Value["Released"];
+            Assert.IsInstanceOf<int>(releasedValue);
+            Assert.AreEqual(1986, releasedValue);
+            
+            Assert.IsTrue(parameter.Value.ContainsKey("MovieType"));
+            var movieTypeValue = parameter.Value["MovieType"];
+            Assert.IsInstanceOf<string>(movieTypeValue);
+            Assert.AreEqual("Action", movieTypeValue);
         }
     }
 }

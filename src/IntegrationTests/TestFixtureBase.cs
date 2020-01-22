@@ -10,7 +10,7 @@ namespace IntegrationTests
         [OneTimeSetUp]
         protected virtual void TestFixtureSetUp()
         {
-            Driver = GraphDatabase.Driver("bolt://localhost:7687");
+            Driver = GraphDatabase.Driver("bolt://localhost:7687", AuthTokens.Basic("neo4j", "123456"));
 
             // Ensure node exists to avoid flaky test where node id = 0
             using (var session = Driver.Session())

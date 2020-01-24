@@ -32,7 +32,6 @@
     <Compile Include="..\Neo4jMapper\Neo4jMapperConfig.cs" Link="Neo4jMapperConfig.cs" />
     <Compile Include="..\Neo4jMapper\Neo4jParameters.cs" Link="Neo4jParameters.cs" />
     <Compile Include="..\Neo4jMapper\NodeIdAttribute.cs" Link="NodeIdAttribute.cs" />
-    <Compile Include="..\Neo4jMapper\PlatformExtensions.cs" Link="NodeIdAttribute.cs" />
     <Compile Include="..\Neo4jMapper\RecordExtensions.cs" Link="RecordExtensions.cs" />
     <Compile Include="..\Neo4jMapper\ResultCursorExtensions.cs" Link="ResultCursorExtensions.cs" />
     <Compile Include="..\Neo4jMapper\SessionExtensions.cs" Link="SessionExtensions.cs" />

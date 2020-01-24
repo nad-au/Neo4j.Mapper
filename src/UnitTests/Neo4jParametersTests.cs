@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
+using ServiceStack;
 using UnitTests.Models;
 
 namespace UnitTests
@@ -212,26 +214,40 @@ namespace UnitTests
                 Tagline = "As students at the United States Navy's elite fighter weapons school compete to be best in the class, one daring young pilot learns a few things from a civilian instructor that are not taught in the classroom.",
                 MovieType = MovieType.Action
             };
-            
-            var parameter = entity.ToParameterMap("entity");
 
-            Assert.AreEqual("entity", parameter.Key);
-            Assert.AreEqual(4, parameter.Value.Count);
+            try
+            {
+                AutoMapping.RegisterConverter<MovieWithType, Dictionary<string, object>>(movieWithType =>
+                {
+                    var dictionary = movieWithType.ConvertTo<Dictionary<string, object>>(true);
+                    dictionary[nameof(movieWithType.MovieType)] = movieWithType.MovieType.ToString();
+                    return dictionary;
+                });
+                
+                var parameter = entity.ToParameterMap("entity");
+
+                Assert.AreEqual("entity", parameter.Key);
+                Assert.AreEqual(4, parameter.Value.Count);
             
-            Assert.IsTrue(parameter.Value.ContainsKey("Title"));
-            var titleValue = parameter.Value["Title"];
-            Assert.IsInstanceOf<string>(titleValue);
-            Assert.AreEqual("Top Gun", titleValue);
+                Assert.IsTrue(parameter.Value.ContainsKey("Title"));
+                var titleValue = parameter.Value["Title"];
+                Assert.IsInstanceOf<string>(titleValue);
+                Assert.AreEqual("Top Gun", titleValue);
             
-            Assert.IsTrue(parameter.Value.ContainsKey("Released"));
-            var releasedValue = parameter.Value["Released"];
-            Assert.IsInstanceOf<int>(releasedValue);
-            Assert.AreEqual(1986, releasedValue);
+                Assert.IsTrue(parameter.Value.ContainsKey("Released"));
+                var releasedValue = parameter.Value["Released"];
+                Assert.IsInstanceOf<int>(releasedValue);
+                Assert.AreEqual(1986, releasedValue);
             
-            Assert.IsTrue(parameter.Value.ContainsKey("MovieType"));
-            var movieTypeValue = parameter.Value["MovieType"];
-            Assert.IsInstanceOf<string>(movieTypeValue);
-            Assert.AreEqual("Action", movieTypeValue);
+                Assert.IsTrue(parameter.Value.ContainsKey("MovieType"));
+                var movieTypeValue = parameter.Value["MovieType"];
+                Assert.IsInstanceOf<string>(movieTypeValue);
+                Assert.AreEqual("Action", movieTypeValue);
+            }
+            finally 
+            {
+                AutoMappingUtils.Reset();
+            }
         }
     }
 }

@@ -13,9 +13,10 @@ namespace Neo4jMapper
             var parameters = new Neo4jParameters()
                 .WithValue("p1", nodeId);
 
-            var resultCursor = await asyncSession.RunAsync(Constants.Statement.GetNode, parameters);
+            var resultCursor = await asyncSession.RunAsync(Constants.Statement.GetNode, parameters)
+                .ConfigureAwait(false);
 
-            return await resultCursor.MapSingleAsync<TEntity>();
+            return await resultCursor.MapSingleAsync<TEntity>().ConfigureAwait(false);
         }
 
         public static async Task<TEntity> GetNodeAsync<TEntity>(
@@ -25,9 +26,10 @@ namespace Neo4jMapper
             var parameters = new Neo4jParameters()
                 .WithValue("p1", nodeId);
 
-            var resultCursor = await asyncTransaction.RunAsync(Constants.Statement.GetNode, parameters);
+            var resultCursor = await asyncTransaction.RunAsync(Constants.Statement.GetNode, parameters)
+                .ConfigureAwait(false);
 
-            return await resultCursor.MapSingleAsync<TEntity>();
+            return await resultCursor.MapSingleAsync<TEntity>().ConfigureAwait(false);
         }
 
         public static async Task<IResultCursor> SetNodeAsync<TEntity>(
@@ -42,7 +44,8 @@ namespace Neo4jMapper
                 .WithValue("p1", nodeId)
                 .WithEntity("p2", entity);
 
-            return await asyncSession.RunAsync(Constants.Statement.SetNode, parameters);
+            return await asyncSession.RunAsync(Constants.Statement.SetNode, parameters)
+                .ConfigureAwait(false);
         }
 
         public static async Task<IResultCursor> SetNodeAsync<TEntity>(
@@ -57,7 +60,8 @@ namespace Neo4jMapper
                 .WithValue("p1", nodeId)
                 .WithEntity("p2", entity);
 
-            return await asyncTransaction.RunAsync(Constants.Statement.SetNode, parameters);
+            return await asyncTransaction.RunAsync(Constants.Statement.SetNode, parameters)
+                .ConfigureAwait(false);
         }
     }
 }

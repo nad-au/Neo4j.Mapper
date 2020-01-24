@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Neo4j.Driver;
@@ -205,6 +204,7 @@ namespace UnitTests
         }
 
         [Test]
+        [NonParallelizable]
         public void Should_Convert_Enum_Type_To_String()
         {
             var entity = new MovieWithType

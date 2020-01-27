@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver" Version="1.7.2" />
+    <PackageReference Include="Neo4j.Driver" Version="4.0.0" />
+    <PackageReference Include="Neo4j.Driver.Simple" Version="4.0.0" />
   </ItemGroup>
 
 </Project>

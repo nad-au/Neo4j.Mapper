@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using IntegrationTests.Models;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
 

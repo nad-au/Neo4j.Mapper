@@ -1,6 +1,6 @@
-﻿using Neo4j.Driver.V1;
+﻿using Neo4j.Driver;
 using NUnit.Framework;
-using Queries;
+using Query = Queries.Query;
 
 namespace IntegrationTests
 {
@@ -21,6 +21,5 @@ namespace IntegrationTests
             Session.Run(Query.DeleteMovies);
             Session.Dispose();
         }
-
     }
 }

@@ -2,19 +2,20 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Title>Neo4jMapper</Title>
     <Authors>Neil Dobson</Authors>
     <Company>Barnardos Australia</Company>
     <Description>A library to simplify mapping of cypher results onto your models</Description>
     <PackageProjectUrl>https://github.com/barnardos-au/Neo4jMapper</PackageProjectUrl>
     <PackageTags>neo4j cypher mapping</PackageTags>
-    <Copyright>Copyright ©2019 Barnardos Australia</Copyright>
+    <Copyright>Copyright ©2020 Barnardos Australia</Copyright>
     <PackageIcon>barnardos.png</PackageIcon>
     <RepositoryUrl>https://github.com/barnardos-au/Neo4jMapper</RepositoryUrl>
     <AssemblyName>Neo4jMapper</AssemblyName>
     <PackageId>Neo4jMapper.Signed</PackageId>
     <RootNamespace>Neo4jMapper</RootNamespace>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,7 +23,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Neo4jMapper\AsyncEnumerableExtensions.cs" Link="AsyncEnumerableExtensions.cs" />
+    <Compile Include="..\Neo4jMapper\AsyncSessionExtensions.cs" Link="AsyncSessionExtensions.cs" />
     <Compile Include="..\Neo4jMapper\CollectionMapper.cs" Link="CollectionMapper.cs" />
+    <Compile Include="..\Neo4jMapper\Constants.cs" Link="Constants.cs" />
     <Compile Include="..\Neo4jMapper\DictionaryExtensions.cs" Link="DictionaryExtensions.cs" />
     <Compile Include="..\Neo4jMapper\EntityAccessor.cs" Link="EntityAccessor.cs" />
     <Compile Include="..\Neo4jMapper\EntityExtensions.cs" Link="EntityExtensions.cs" />
@@ -30,19 +34,19 @@
     <Compile Include="..\Neo4jMapper\Neo4jParameters.cs" Link="Neo4jParameters.cs" />
     <Compile Include="..\Neo4jMapper\NodeIdAttribute.cs" Link="NodeIdAttribute.cs" />
     <Compile Include="..\Neo4jMapper\RecordExtensions.cs" Link="RecordExtensions.cs" />
+    <Compile Include="..\Neo4jMapper\ResultCursorExtensions.cs" Link="ResultCursorExtensions.cs" />
     <Compile Include="..\Neo4jMapper\SessionExtensions.cs" Link="SessionExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\StatementResultCursorExtensions.cs" Link="StatementResultCursorExtensions.cs" />
     <Compile Include="..\Neo4jMapper\ValueMapper.cs" Link="ValueMapper.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver.Signed" Version="1.7.2" />
-    <PackageReference Include="ServiceStack.Text.Core" Version="5.7.0" />
+    <PackageReference Include="Neo4j.Driver.Simple.Signed" Version="4.0.0" />
+    <PackageReference Include="ServiceStack.Text.Core" Version="5.8.0" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -50,7 +54,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\Images\barnardos.png" Pack="true" PackagePath="\"/>
+    <None Include="..\Images\barnardos.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>

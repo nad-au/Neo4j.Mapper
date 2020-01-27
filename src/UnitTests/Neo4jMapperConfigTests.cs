@@ -1,5 +1,5 @@
 ﻿using System;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
 using ServiceStack;
@@ -68,6 +68,9 @@ namespace UnitTests
             var localDateToDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDate), typeof(DateTime));
             Assert.IsNotNull(localDateToDateTimeConverter);
 
+            var localDateToNullableDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDate), typeof(DateTime?));
+            Assert.IsNotNull(localDateToNullableDateTimeConverter);
+
             var dateTimeToLocalDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTime), typeof(LocalDate));
             Assert.IsNotNull(dateTimeToLocalDateTimeConverter);
         }
@@ -76,6 +79,9 @@ namespace UnitTests
         {
             var localTimeToTimeSpanConverter = AutoMappingUtils.GetConverter(typeof(LocalTime), typeof(TimeSpan));
             Assert.IsNotNull(localTimeToTimeSpanConverter);
+
+            var localTimeToNullableTimeSpanConverter = AutoMappingUtils.GetConverter(typeof(LocalTime), typeof(TimeSpan?));
+            Assert.IsNotNull(localTimeToNullableTimeSpanConverter);
 
             var timeSpanToLocalTimeConverter = AutoMappingUtils.GetConverter(typeof(TimeSpan), typeof(LocalTime));
             Assert.IsNotNull(timeSpanToLocalTimeConverter);
@@ -86,14 +92,20 @@ namespace UnitTests
             var zonedDateTimeToDateTimeOffsetConverter = AutoMappingUtils.GetConverter(typeof(ZonedDateTime), typeof(DateTimeOffset));
             Assert.IsNotNull(zonedDateTimeToDateTimeOffsetConverter);
 
-            var dateTimeOffsetToZonedDateTimeOffsetConverter = AutoMappingUtils.GetConverter(typeof(DateTimeOffset), typeof(ZonedDateTime));
-            Assert.IsNotNull(dateTimeOffsetToZonedDateTimeOffsetConverter);
+            var zonedDateTimeToNullableDateTimeOffsetConverter = AutoMappingUtils.GetConverter(typeof(ZonedDateTime), typeof(DateTimeOffset?));
+            Assert.IsNotNull(zonedDateTimeToNullableDateTimeOffsetConverter);
+
+            var dateTimeOffsetToZonedDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTimeOffset), typeof(ZonedDateTime));
+            Assert.IsNotNull(dateTimeOffsetToZonedDateTimeConverter);
         }
 
         private void AssertLocalDateTimeConvertersAreRegistered()
         {
             var localDateTimeToDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDateTime), typeof(DateTime));
             Assert.IsNotNull(localDateTimeToDateTimeConverter);
+
+            var localDateTimeToNullableDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDateTime), typeof(DateTime?));
+            Assert.IsNotNull(localDateTimeToNullableDateTimeConverter);
 
             var dateTimeToLocalDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTime), typeof(LocalDateTime));
             Assert.IsNotNull(dateTimeToLocalDateTimeConverter);

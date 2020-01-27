@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using NSubstitute;
 using NUnit.Framework;
@@ -23,7 +23,7 @@ namespace UnitTests
 
             public async IAsyncEnumerator<IRecord> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
             {
-                yield return await Task.FromResult(record);
+                yield return await Task.FromResult(record).ConfigureAwait(false);
             }
         }
 
@@ -34,7 +34,7 @@ namespace UnitTests
             record[0].Returns(1);
 
             var mockAsyncEnumerable = new MockAsyncEnumerable(record);
-            var result = await mockAsyncEnumerable.Map<int>().SingleAsync();
+            var result = await mockAsyncEnumerable.Map<int>().SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result);
         }
@@ -52,7 +52,7 @@ namespace UnitTests
             {
                 value1,
                 value2
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -73,7 +73,7 @@ namespace UnitTests
                 value1,
                 value2,
                 value3
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -97,7 +97,7 @@ namespace UnitTests
                 value2,
                 value3,
                 value4
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -124,7 +124,7 @@ namespace UnitTests
                 value3,
                 value4,
                 value5
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -155,7 +155,7 @@ namespace UnitTests
                 value4,
                 value5,
                 value6
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -189,7 +189,7 @@ namespace UnitTests
                 value5,
                 value6,
                 value7
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -226,7 +226,7 @@ namespace UnitTests
                 value6,
                 value7,
                 value8
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -266,7 +266,7 @@ namespace UnitTests
                 value7,
                 value8,
                 value9
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -309,7 +309,7 @@ namespace UnitTests
                 value8,
                 value9,
                 value10
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -355,7 +355,7 @@ namespace UnitTests
                 value9,
                 value10,
                 value11
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -405,7 +405,7 @@ namespace UnitTests
                 value10,
                 value11,
                 value12
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -458,7 +458,7 @@ namespace UnitTests
                 value11,
                 value12,
                 value13
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -514,7 +514,7 @@ namespace UnitTests
                 value12,
                 value13,
                 value14
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -573,7 +573,7 @@ namespace UnitTests
                 value13,
                 value14,
                 value15
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);
@@ -635,7 +635,7 @@ namespace UnitTests
                 value14,
                 value15,
                 value16
-            }).SingleAsync();
+            }).SingleAsync().ConfigureAwait(false);
 
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(2, result[1]);

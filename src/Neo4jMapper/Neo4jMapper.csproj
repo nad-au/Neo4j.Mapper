@@ -2,19 +2,20 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Title>Neo4jMapper</Title>
     <Authors>Neil Dobson</Authors>
     <Company>Barnardos Australia</Company>
     <Description>A library to simplify mapping of cypher results onto your models</Description>
     <PackageProjectUrl>https://github.com/barnardos-au/Neo4jMapper</PackageProjectUrl>
     <PackageTags>neo4j cypher mapping</PackageTags>
-    <Copyright>Copyright ©2019 Barnardos Australia</Copyright>
+    <Copyright>Copyright ©2020 Barnardos Australia</Copyright>
     <PackageIcon>barnardos.png</PackageIcon>
     <RepositoryUrl>https://github.com/barnardos-au/Neo4jMapper</RepositoryUrl>
     <AssemblyName>Neo4jMapper</AssemblyName>
     <PackageId>Neo4jMapper</PackageId>
     <RootNamespace>Neo4jMapper</RootNamespace>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,7 +23,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver" Version="4.0.0" />
     <PackageReference Include="Neo4j.Driver.Simple" Version="4.0.0" />
     <PackageReference Include="ServiceStack.Text.Core" Version="5.8.0" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
@@ -38,6 +38,7 @@
   
   <ItemGroup>
     <None Include="..\Images\barnardos.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>

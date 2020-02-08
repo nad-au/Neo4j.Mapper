@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <Title>Neo4jMapper</Title>
     <Authors>Neil Dobson</Authors>
     <Company>Barnardos Australia</Company>

@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
@@ -66,49 +67,61 @@ namespace UnitTests
         private void AssertLocalDateConvertersAreRegistered()
         {
             var localDateToDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDate), typeof(DateTime));
-            Assert.IsNotNull(localDateToDateTimeConverter);
+            localDateToDateTimeConverter.Should().NotBeNull();
 
             var localDateToNullableDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDate), typeof(DateTime?));
-            Assert.IsNotNull(localDateToNullableDateTimeConverter);
+            localDateToNullableDateTimeConverter.Should().NotBeNull();
 
             var dateTimeToLocalDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTime), typeof(LocalDate));
-            Assert.IsNotNull(dateTimeToLocalDateTimeConverter);
+            dateTimeToLocalDateTimeConverter.Should().NotBeNull();
+            
+            var nullableDateTimeToLocalDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTime?), typeof(LocalDate));
+            nullableDateTimeToLocalDateTimeConverter.Should().NotBeNull();
         }
 
         private void AssertLocalTimeConvertersAreRegistered()
         {
             var localTimeToTimeSpanConverter = AutoMappingUtils.GetConverter(typeof(LocalTime), typeof(TimeSpan));
-            Assert.IsNotNull(localTimeToTimeSpanConverter);
+            localTimeToTimeSpanConverter.Should().NotBeNull();
 
             var localTimeToNullableTimeSpanConverter = AutoMappingUtils.GetConverter(typeof(LocalTime), typeof(TimeSpan?));
-            Assert.IsNotNull(localTimeToNullableTimeSpanConverter);
+            localTimeToNullableTimeSpanConverter.Should().NotBeNull();
 
             var timeSpanToLocalTimeConverter = AutoMappingUtils.GetConverter(typeof(TimeSpan), typeof(LocalTime));
-            Assert.IsNotNull(timeSpanToLocalTimeConverter);
+            timeSpanToLocalTimeConverter.Should().NotBeNull();
+            
+            var nullableTimeSpanToLocalTimeConverter = AutoMappingUtils.GetConverter(typeof(TimeSpan?), typeof(LocalTime));
+            nullableTimeSpanToLocalTimeConverter.Should().NotBeNull();
         }
 
         private void AssertZonedDateTimeConvertersAreRegistered()
         {
             var zonedDateTimeToDateTimeOffsetConverter = AutoMappingUtils.GetConverter(typeof(ZonedDateTime), typeof(DateTimeOffset));
-            Assert.IsNotNull(zonedDateTimeToDateTimeOffsetConverter);
+            zonedDateTimeToDateTimeOffsetConverter.Should().NotBeNull();
 
             var zonedDateTimeToNullableDateTimeOffsetConverter = AutoMappingUtils.GetConverter(typeof(ZonedDateTime), typeof(DateTimeOffset?));
-            Assert.IsNotNull(zonedDateTimeToNullableDateTimeOffsetConverter);
+            zonedDateTimeToNullableDateTimeOffsetConverter.Should().NotBeNull();
 
             var dateTimeOffsetToZonedDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTimeOffset), typeof(ZonedDateTime));
-            Assert.IsNotNull(dateTimeOffsetToZonedDateTimeConverter);
+            dateTimeOffsetToZonedDateTimeConverter.Should().NotBeNull();
+            
+            var nullableDateTimeOffsetToZonedDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTimeOffset?), typeof(ZonedDateTime));
+            nullableDateTimeOffsetToZonedDateTimeConverter.Should().NotBeNull();
         }
 
         private void AssertLocalDateTimeConvertersAreRegistered()
         {
             var localDateTimeToDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDateTime), typeof(DateTime));
-            Assert.IsNotNull(localDateTimeToDateTimeConverter);
+            localDateTimeToDateTimeConverter.Should().NotBeNull();
 
             var localDateTimeToNullableDateTimeConverter = AutoMappingUtils.GetConverter(typeof(LocalDateTime), typeof(DateTime?));
-            Assert.IsNotNull(localDateTimeToNullableDateTimeConverter);
+            localDateTimeToNullableDateTimeConverter.Should().NotBeNull();
 
             var dateTimeToLocalDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTime), typeof(LocalDateTime));
-            Assert.IsNotNull(dateTimeToLocalDateTimeConverter);
+            dateTimeToLocalDateTimeConverter.Should().NotBeNull();
+            
+            var nullableDateTimeToLocalDateTimeConverter = AutoMappingUtils.GetConverter(typeof(DateTime?), typeof(LocalDateTime));
+            nullableDateTimeToLocalDateTimeConverter.Should().NotBeNull();
         }
     }
 }

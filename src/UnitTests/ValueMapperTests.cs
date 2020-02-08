@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using Neo4j.Driver;
 using Neo4jMapper;
 using NUnit.Framework;
@@ -17,8 +18,8 @@ namespace UnitTests
             var result = Assert.Throws<InvalidOperationException>(
                 () => ValueMapper.MapValue<IEnumerable<string>>(1));
 
-            Assert.AreEqual("The cypher value is not a list and cannot be mapped to target type: System.Collections.Generic.IEnumerable`1[System.String]",
-                result.Message);
+            result.Message.Should().Be(
+                "The cypher value is not a list and cannot be mapped to target type: System.Collections.Generic.IEnumerable`1[System.String]");
         }
 
         [Test]
@@ -27,8 +28,8 @@ namespace UnitTests
             var result = Assert.Throws<InvalidOperationException>(
                 () => ValueMapper.MapValue<int>(new[] { 1 }));
 
-            Assert.AreEqual("The cypher value is a list and cannot be mapped to target type: System.Int32",
-                result.Message);
+            result.Message.Should().Be(
+                "The cypher value is a list and cannot be mapped to target type: System.Int32");
         }
 
         [Test]
@@ -43,9 +44,9 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual(2019, entity.DateValue.Year);
-            Assert.AreEqual(1, entity.DateValue.Month);
-            Assert.AreEqual(12, entity.DateValue.Day);
+            entity.DateValue.Year.Should().Be(2019);
+            entity.DateValue.Month.Should().Be(1);
+            entity.DateValue.Day.Should().Be(12);
 
             AutoMappingUtils.Reset();
         }
@@ -63,7 +64,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual((DateTime)default, entity.DateValue);
+            entity.DateValue.Should().Be(default);
 
             AutoMappingUtils.Reset();
         }
@@ -80,10 +81,10 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNotNull(entity.NullableDateValue);
-            Assert.AreEqual(2019, entity.NullableDateValue.Value.Year);
-            Assert.AreEqual(1, entity.NullableDateValue.Value.Month);
-            Assert.AreEqual(12, entity.NullableDateValue.Value.Day);
+            entity.NullableDateValue.Should().NotBeNull();
+            entity.NullableDateValue.Value.Year.Should().Be(2019);
+            entity.NullableDateValue.Value.Month.Should().Be(1);
+            entity.NullableDateValue.Value.Day.Should().Be(12);
 
             AutoMappingUtils.Reset();
         }
@@ -101,7 +102,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNull(entity.NullableDateValue);
+            entity.NullableDateValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }
@@ -118,9 +119,9 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(2019, entity.DateValue.Year);
-            Assert.AreEqual(1, entity.DateValue.Month);
-            Assert.AreEqual(12, entity.DateValue.Day);
+            entity.DateValue.Year.Should().Be(2019);
+            entity.DateValue.Month.Should().Be(1);
+            entity.DateValue.Day.Should().Be(12);
 
             AutoMappingUtils.Reset();
         }
@@ -137,10 +138,9 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(2019, entity.NullableDateValue.Year);
-            Assert.AreEqual(2019, entity.NullableDateValue.Year);
-            Assert.AreEqual(1, entity.NullableDateValue.Month);
-            Assert.AreEqual(12, entity.NullableDateValue.Day);
+            entity.NullableDateValue.Year.Should().Be(2019);
+            entity.NullableDateValue.Month.Should().Be(1);
+            entity.NullableDateValue.Day.Should().Be(12);
 
             AutoMappingUtils.Reset();
         }
@@ -158,7 +158,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.IsNull(entity.NullableDateValue);
+            entity.NullableDateValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }
@@ -175,9 +175,9 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual(8, entity.TimeValue.Hours);
-            Assert.AreEqual(45, entity.TimeValue.Minutes);
-            Assert.AreEqual(34, entity.TimeValue.Seconds);
+            entity.TimeValue.Hours.Should().Be(8);
+            entity.TimeValue.Minutes.Should().Be(45);
+            entity.TimeValue.Seconds.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -195,7 +195,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual((TimeSpan)default, entity.TimeValue);
+            entity.TimeValue.Should().Be(default);
 
             AutoMappingUtils.Reset();
         }
@@ -212,10 +212,10 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNotNull(entity.NullableTimeValue);
-            Assert.AreEqual(8, entity.NullableTimeValue.Value.Hours);
-            Assert.AreEqual(45, entity.NullableTimeValue.Value.Minutes);
-            Assert.AreEqual(34, entity.NullableTimeValue.Value.Seconds);
+            entity.NullableTimeValue.Should().NotBeNull();
+            entity.NullableTimeValue.Value.Hours.Should().Be(8);
+            entity.NullableTimeValue.Value.Minutes.Should().Be(45);
+            entity.NullableTimeValue.Value.Seconds.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -233,7 +233,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNull(entity.NullableTimeValue);
+            entity.NullableTimeValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }
@@ -250,9 +250,9 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(8, entity.TimeValue.Hour);
-            Assert.AreEqual(45, entity.TimeValue.Minute);
-            Assert.AreEqual(34, entity.TimeValue.Second);
+            entity.TimeValue.Hour.Should().Be(8);
+            entity.TimeValue.Minute.Should().Be(45);
+            entity.TimeValue.Second.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -269,9 +269,9 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(8, entity.NullableTimeValue.Hour);
-            Assert.AreEqual(45, entity.NullableTimeValue.Minute);
-            Assert.AreEqual(34, entity.NullableTimeValue.Second);
+            entity.NullableTimeValue.Hour.Should().Be(8);
+            entity.NullableTimeValue.Minute.Should().Be(45);
+            entity.NullableTimeValue.Second.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -289,7 +289,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.IsNull(entity.NullableTimeValue);
+            entity.NullableTimeValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }
@@ -306,13 +306,13 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual(2019, entity.DateTimeOffsetValue.Year);
-            Assert.AreEqual(1, entity.DateTimeOffsetValue.Month);
-            Assert.AreEqual(12, entity.DateTimeOffsetValue.Day);
-            Assert.AreEqual(8, entity.DateTimeOffsetValue.Hour);
-            Assert.AreEqual(45, entity.DateTimeOffsetValue.Minute);
-            Assert.AreEqual(34, entity.DateTimeOffsetValue.Second);
-            Assert.AreEqual(0, entity.DateTimeOffsetValue.Offset.Seconds);
+            entity.DateTimeOffsetValue.Year.Should().Be(2019);
+            entity.DateTimeOffsetValue.Month.Should().Be(1);
+            entity.DateTimeOffsetValue.Day.Should().Be(12);
+            entity.DateTimeOffsetValue.Hour.Should().Be(8);
+            entity.DateTimeOffsetValue.Minute.Should().Be(45);
+            entity.DateTimeOffsetValue.Second.Should().Be(34);
+            entity.DateTimeOffsetValue.Offset.Seconds.Should().Be(0);
 
             AutoMappingUtils.Reset();
         }
@@ -330,7 +330,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual((DateTimeOffset)default, entity.DateTimeOffsetValue);
+            entity.DateTimeOffsetValue.Should().Be(default);
 
             AutoMappingUtils.Reset();
         }
@@ -347,14 +347,14 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNotNull(entity.NullableDateTimeOffsetValue);
-            Assert.AreEqual(2019, entity.NullableDateTimeOffsetValue.Value.Year);
-            Assert.AreEqual(1, entity.NullableDateTimeOffsetValue.Value.Month);
-            Assert.AreEqual(12, entity.NullableDateTimeOffsetValue.Value.Day);
-            Assert.AreEqual(8, entity.NullableDateTimeOffsetValue.Value.Hour);
-            Assert.AreEqual(45, entity.NullableDateTimeOffsetValue.Value.Minute);
-            Assert.AreEqual(34, entity.NullableDateTimeOffsetValue.Value.Second);
-            Assert.AreEqual(0, entity.NullableDateTimeOffsetValue.Value.Offset.Seconds);
+            entity.NullableDateTimeOffsetValue.Should().NotBeNull();
+            entity.NullableDateTimeOffsetValue.Value.Year.Should().Be(2019);
+            entity.NullableDateTimeOffsetValue.Value.Month.Should().Be(1);
+            entity.NullableDateTimeOffsetValue.Value.Day.Should().Be(12);
+            entity.NullableDateTimeOffsetValue.Value.Hour.Should().Be(8);
+            entity.NullableDateTimeOffsetValue.Value.Minute.Should().Be(45);
+            entity.NullableDateTimeOffsetValue.Value.Second.Should().Be(34);
+            entity.NullableDateTimeOffsetValue.Value.Offset.Seconds.Should().Be(0);
 
             AutoMappingUtils.Reset();
         }
@@ -372,7 +372,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNull(entity.NullableDateTimeOffsetValue);
+            entity.NullableDateTimeOffsetValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }
@@ -389,13 +389,13 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(2019, entity.DateTimeOffsetValue.Year);
-            Assert.AreEqual(1, entity.DateTimeOffsetValue.Month);
-            Assert.AreEqual(12, entity.DateTimeOffsetValue.Day);
-            Assert.AreEqual(8, entity.DateTimeOffsetValue.Hour);
-            Assert.AreEqual(45, entity.DateTimeOffsetValue.Minute);
-            Assert.AreEqual(34, entity.DateTimeOffsetValue.Second);
-            Assert.AreEqual(Zone.Of(0), entity.DateTimeOffsetValue.Zone);
+            entity.DateTimeOffsetValue.Year.Should().Be(2019);
+            entity.DateTimeOffsetValue.Month.Should().Be(1);
+            entity.DateTimeOffsetValue.Day.Should().Be(12);
+            entity.DateTimeOffsetValue.Hour.Should().Be(8);
+            entity.DateTimeOffsetValue.Minute.Should().Be(45);
+            entity.DateTimeOffsetValue.Second.Should().Be(34);
+            entity.DateTimeOffsetValue.Zone.Should().Be(Zone.Of(0));
 
             AutoMappingUtils.Reset();
         }
@@ -412,13 +412,13 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(2019, entity.NullableDateTimeOffsetValue.Year);
-            Assert.AreEqual(1, entity.NullableDateTimeOffsetValue.Month);
-            Assert.AreEqual(12, entity.NullableDateTimeOffsetValue.Day);
-            Assert.AreEqual(8, entity.NullableDateTimeOffsetValue.Hour);
-            Assert.AreEqual(45, entity.NullableDateTimeOffsetValue.Minute);
-            Assert.AreEqual(34, entity.NullableDateTimeOffsetValue.Second);
-            Assert.AreEqual(Zone.Of(0), entity.NullableDateTimeOffsetValue.Zone);
+            entity.NullableDateTimeOffsetValue.Year.Should().Be(2019);
+            entity.NullableDateTimeOffsetValue.Month.Should().Be(1);
+            entity.NullableDateTimeOffsetValue.Day.Should().Be(12);
+            entity.NullableDateTimeOffsetValue.Hour.Should().Be(8);
+            entity.NullableDateTimeOffsetValue.Minute.Should().Be(45);
+            entity.NullableDateTimeOffsetValue.Second.Should().Be(34);
+            entity.NullableDateTimeOffsetValue.Zone.Should().Be(Zone.Of(0));
 
             AutoMappingUtils.Reset();
         }
@@ -436,7 +436,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.IsNull(entity.NullableDateTimeOffsetValue);
+            entity.NullableDateTimeOffsetValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }
@@ -453,12 +453,12 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual(2019, entity.DateTimeValue.Year);
-            Assert.AreEqual(1, entity.DateTimeValue.Month);
-            Assert.AreEqual(12, entity.DateTimeValue.Day);
-            Assert.AreEqual(8, entity.DateTimeValue.Hour);
-            Assert.AreEqual(45, entity.DateTimeValue.Minute);
-            Assert.AreEqual(34, entity.DateTimeValue.Second);
+            entity.DateTimeValue.Year.Should().Be(2019);
+            entity.DateTimeValue.Month.Should().Be(1);
+            entity.DateTimeValue.Day.Should().Be(12);
+            entity.DateTimeValue.Hour.Should().Be(8);
+            entity.DateTimeValue.Minute.Should().Be(45);
+            entity.DateTimeValue.Second.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -476,7 +476,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.AreEqual((DateTime)default, entity.DateTimeValue);
+            entity.DateTimeValue.Should().Be(default);
 
             AutoMappingUtils.Reset();
         }
@@ -493,13 +493,13 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNotNull(entity.NullableDateTimeValue);
-            Assert.AreEqual(2019, entity.NullableDateTimeValue.Value.Year);
-            Assert.AreEqual(1, entity.NullableDateTimeValue.Value.Month);
-            Assert.AreEqual(12, entity.NullableDateTimeValue.Value.Day);
-            Assert.AreEqual(8, entity.NullableDateTimeValue.Value.Hour);
-            Assert.AreEqual(45, entity.NullableDateTimeValue.Value.Minute);
-            Assert.AreEqual(34, entity.NullableDateTimeValue.Value.Second);
+            entity.NullableDateTimeValue.Should().NotBeNull();
+            entity.NullableDateTimeValue.Value.Year.Should().Be(2019);
+            entity.NullableDateTimeValue.Value.Month.Should().Be(1);
+            entity.NullableDateTimeValue.Value.Day.Should().Be(12);
+            entity.NullableDateTimeValue.Value.Hour.Should().Be(8);
+            entity.NullableDateTimeValue.Value.Minute.Should().Be(45);
+            entity.NullableDateTimeValue.Value.Second.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -517,7 +517,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithClrTypes>(map);
 
-            Assert.IsNull(entity.NullableDateTimeValue);
+            entity.NullableDateTimeValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }
@@ -534,12 +534,12 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(2019, entity.DateTimeValue.Year);
-            Assert.AreEqual(1, entity.DateTimeValue.Month);
-            Assert.AreEqual(12, entity.DateTimeValue.Day);
-            Assert.AreEqual(8, entity.DateTimeValue.Hour);
-            Assert.AreEqual(45, entity.DateTimeValue.Minute);
-            Assert.AreEqual(34, entity.DateTimeValue.Second);
+            entity.DateTimeValue.Year.Should().Be(2019);
+            entity.DateTimeValue.Month.Should().Be(1);
+            entity.DateTimeValue.Day.Should().Be(12);
+            entity.DateTimeValue.Hour.Should().Be(8);
+            entity.DateTimeValue.Minute.Should().Be(45);
+            entity.DateTimeValue.Second.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -556,12 +556,12 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.AreEqual(2019, entity.NullableDateTimeValue.Year);
-            Assert.AreEqual(1, entity.NullableDateTimeValue.Month);
-            Assert.AreEqual(12, entity.NullableDateTimeValue.Day);
-            Assert.AreEqual(8, entity.NullableDateTimeValue.Hour);
-            Assert.AreEqual(45, entity.NullableDateTimeValue.Minute);
-            Assert.AreEqual(34, entity.NullableDateTimeValue.Second);
+            entity.NullableDateTimeValue.Year.Should().Be(2019);
+            entity.NullableDateTimeValue.Month.Should().Be(1);
+            entity.NullableDateTimeValue.Day.Should().Be(12);
+            entity.NullableDateTimeValue.Hour.Should().Be(8);
+            entity.NullableDateTimeValue.Minute.Should().Be(45);
+            entity.NullableDateTimeValue.Second.Should().Be(34);
 
             AutoMappingUtils.Reset();
         }
@@ -579,7 +579,7 @@ namespace UnitTests
 
             var entity = ValueMapper.MapValue<EntityWithDriverTypes>(map);
 
-            Assert.IsNull(entity.NullableDateTimeValue);
+            entity.NullableDateTimeValue.Should().BeNull();
 
             AutoMappingUtils.Reset();
         }

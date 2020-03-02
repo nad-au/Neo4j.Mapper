@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
     <Title>Neo4jMapper</Title>
     <Authors>Neil Dobson</Authors>
     <Company>Barnardos Australia</Company>
@@ -41,7 +41,7 @@
 
   <ItemGroup>
     <PackageReference Include="Neo4j.Driver.Simple.Signed" Version="4.0.0" />
-    <PackageReference Include="ServiceStack.Text.Core" Version="5.8.0" />
+    <PackageReference Include="ServiceStack.Text" Version="5.8.0" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
   </ItemGroup>
   

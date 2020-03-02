@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper", "Neo4jMapper\Neo4jMapper.csproj", "{0FD19E45-1527-48BE-A3B0-E2602B640C44}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Signed", "Neo4jMapper.Signed\Neo4jMapper.Signed.csproj", "{AB821832-D8EA-4D50-BC78-4AF0F3D28E25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Core", "Neo4jMapper.Core\Neo4jMapper.Core.csproj", "{8A1EE7EB-0239-48E9-BD5C-B2882CB26345}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Core.Signed", "Neo4jMapper.Core.Signed\Neo4jMapper.Core.Signed.csproj", "{F79146E1-A6B7-43D2-9349-091CBFDC264B}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{5037BE8D-851D-436F-800B-A23EF66EA9D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{72217327-B6DC-49AF-8CF1-80A7F8093081}"
@@ -14,12 +20,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queries", "Queries\Queries.csproj", "{E75F8257-12D1-4A0A-9415-6B3CB5A551A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DB6FFD41-A536-42FC-95EB-F5026FAD1382}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Signed", "Neo4jMapper.Signed\Neo4jMapper.Signed.csproj", "{AB821832-D8EA-4D50-BC78-4AF0F3D28E25}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Core", "Neo4jMapper.Core\Neo4jMapper.Core.csproj", "{8A1EE7EB-0239-48E9-BD5C-B2882CB26345}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Core.Signed", "Neo4jMapper.Core.Signed\Neo4jMapper.Core.Signed.csproj", "{F79146E1-A6B7-43D2-9349-091CBFDC264B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

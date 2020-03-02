@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>1.0.11</Version>
+    <Version>1.0.12</Version>
     <Title>Neo4jMapper</Title>
     <Authors>Neil Dobson</Authors>
     <Company>Barnardos Australia</Company>
@@ -12,39 +12,21 @@
     <Copyright>Copyright ©2020 Barnardos Australia</Copyright>
     <PackageIcon>barnardos.png</PackageIcon>
     <RepositoryUrl>https://github.com/barnardos-au/Neo4jMapper</RepositoryUrl>
-    <AssemblyName>Neo4jMapper</AssemblyName>
     <PackageId>Neo4jMapper.Core</PackageId>
     <RootNamespace>Neo4jMapper</RootNamespace>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="..\Neo4jMapper\AsyncEnumerableExtensions.cs" Link="AsyncEnumerableExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\AsyncSessionExtensions.cs" Link="AsyncSessionExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\CollectionMapper.cs" Link="CollectionMapper.cs" />
-    <Compile Include="..\Neo4jMapper\Constants.cs" Link="Constants.cs" />
-    <Compile Include="..\Neo4jMapper\DictionaryExtensions.cs" Link="DictionaryExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\EntityAccessor.cs" Link="EntityAccessor.cs" />
-    <Compile Include="..\Neo4jMapper\EntityExtensions.cs" Link="EntityExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\Neo4jMapperConfig.cs" Link="Neo4jMapperConfig.cs" />
-    <Compile Include="..\Neo4jMapper\Neo4jParameters.cs" Link="Neo4jParameters.cs" />
-    <Compile Include="..\Neo4jMapper\NodeIdAttribute.cs" Link="NodeIdAttribute.cs" />
-    <Compile Include="..\Neo4jMapper\RecordExtensions.cs" Link="RecordExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\ResultCursorExtensions.cs" Link="ResultCursorExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\SessionExtensions.cs" Link="SessionExtensions.cs" />
-    <Compile Include="..\Neo4jMapper\ValueMapper.cs" Link="ValueMapper.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Neo4j.Driver.Simple" Version="4.0.0" />
     <PackageReference Include="ServiceStack.Text.Core" Version="5.8.0" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
   </ItemGroup>
-  
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
   </ItemGroup>
@@ -55,7 +37,7 @@
 
   <ItemGroup>
     <None Include="..\Images\barnardos.png" Pack="true" PackagePath="\" />
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

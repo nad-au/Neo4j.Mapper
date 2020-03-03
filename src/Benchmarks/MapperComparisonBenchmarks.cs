@@ -3,6 +3,7 @@ using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using Benchmarks.Models;
+using Neo4j.Driver;
 using Neo4jMapper;
 
 namespace Benchmarks
@@ -35,18 +36,7 @@ namespace Benchmarks
 
             return cypher.Results.ToList();
         }
-
-        [BenchmarkCategory("Movies"), Benchmark]
-        public List<Movie> Movies_N4JB()
-        {
-            var cypher = BoltGraphClient
-                .Cypher
-                .Match("(movie:Movie)")
-                .Return<Movie>("movie");
-
-            return cypher.Results.ToList();
-        }
-
+        
         #endregion
 
         #region Actors With Movies Starred In
@@ -86,26 +76,7 @@ namespace Benchmarks
                 return r.Person;
             }).ToList();
         }
-
-        [BenchmarkCategory("ActorsWithMoviesStarredIn"), Benchmark]
-        public List<Person> ActorsWithMoviesStarredIn_N4JB()
-        {
-            var cypher = BoltGraphClient
-                .Cypher
-                .Match("(person)-[:ACTED_IN]->(movie:Movie)")
-                .Return((person, movie) => new
-                {
-                    Person = person.As<Person>(),
-                    Movies = movie.CollectAs<Movie>()
-                });
-
-            return cypher.Results.Select(r =>
-            {
-                r.Person.MovesActedIn = r.Movies.ToList();
-                return r.Person;
-            }).ToList();
-        }
-
+        
         #endregion
     }
 }

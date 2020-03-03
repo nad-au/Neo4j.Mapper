@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsageGuide", "UsageGuide\Us
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples", "Examples\Examples.csproj", "{0B23523B-ED9B-4363-B2A5-B4AD007B2AEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neo4jMapper.Core", "Neo4jMapper.Core\Neo4jMapper.Core.csproj", "{A77A0785-E4B3-4AB8-9BEB-2AA36E6C2473}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{0B23523B-ED9B-4363-B2A5-B4AD007B2AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B23523B-ED9B-4363-B2A5-B4AD007B2AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B23523B-ED9B-4363-B2A5-B4AD007B2AEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A77A0785-E4B3-4AB8-9BEB-2AA36E6C2473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A77A0785-E4B3-4AB8-9BEB-2AA36E6C2473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A77A0785-E4B3-4AB8-9BEB-2AA36E6C2473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A77A0785-E4B3-4AB8-9BEB-2AA36E6C2473}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

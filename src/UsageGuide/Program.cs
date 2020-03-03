@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jMapper;
 using Queries;
 using ServiceStack.Text;
 using UsageGuide.Entities;
 using UsageGuide.Models;
+using Query = Queries.Query;
 
 namespace UsageGuide
 {
@@ -109,7 +110,7 @@ namespace UsageGuide
 
         private static async Task LoadMovies()
         {
-            await Bolt.NewSession(async session =>
+            await Bolt.NewAsyncSession(async session =>
             {
                 await session.RunAsync(Query.CreateMovies);
             });
@@ -117,7 +118,7 @@ namespace UsageGuide
 
         private static async Task DeleteMovies()
         {
-            await Bolt.NewSession(async session =>
+            await Bolt.NewAsyncSession(async session =>
             {
                 await session.RunAsync(Query.DeleteMovies);
             });
@@ -144,7 +145,7 @@ namespace UsageGuide
 
         static async Task<string> Example2()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (movie:Movie)
@@ -163,7 +164,7 @@ namespace UsageGuide
 
         static async Task<string> Example3()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (person:Person)
@@ -179,7 +180,7 @@ namespace UsageGuide
 
         static async Task<string> Example4()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (actor:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
@@ -201,7 +202,7 @@ namespace UsageGuide
 
         static async Task<string> Example5()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (actor:Person)
@@ -236,7 +237,7 @@ namespace UsageGuide
 
         static async Task<string> Example6()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (actor:Person {name: 'Cuba Gooding Jr.'})-[:ACTED_IN]->(movie:Movie)
@@ -266,7 +267,7 @@ namespace UsageGuide
         // Should fail
         static async Task<string> Example7()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"RETURN { temporalValue: datetime() } as map");
 
@@ -284,7 +285,7 @@ namespace UsageGuide
             
         static async Task<string> Example8()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"RETURN { temporalValue: datetime() } as map");
 
@@ -302,7 +303,7 @@ namespace UsageGuide
 
         static async Task<string> Example9()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var parameters = new Dictionary<string, object>
                 {
@@ -322,7 +323,7 @@ namespace UsageGuide
 
         static async Task<string> Example10()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var parameters = new Neo4jParameters
                 {
@@ -359,7 +360,7 @@ namespace UsageGuide
 
         static async Task<string> Example12()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var movie = new IMDBMovie
                 {
@@ -385,7 +386,7 @@ namespace UsageGuide
 
         static async Task<string> Example13()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var actorWithMovies = new Person
                 {
@@ -434,7 +435,7 @@ namespace UsageGuide
 
         static async Task<string> Example14()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (movie:Movie {released: $year})
@@ -463,7 +464,7 @@ namespace UsageGuide
 
         static async Task<string> Example15()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (movie:Movie {released: $year})

@@ -19,6 +19,16 @@ namespace Queries
             }
         }
 
+        public static async Task NewAsyncSession(Func<IAsyncSession, Task> statement)
+        {
+            using (var driver = GraphDatabase.Driver(Url))
+            {
+                var session = driver.AsyncSession();
+                await statement(session);
+                await session.CloseAsync();
+            }
+        }
+
         public static async Task<T> NewSession<T>(Func<ISession, Task<T>> statement)
         {
             using (var driver = GraphDatabase.Driver(Url))
@@ -27,6 +37,17 @@ namespace Queries
                 {
                     return await statement(session);
                 }
+            }
+        }
+        
+        public static async Task<T> NewAsyncSession<T>(Func<IAsyncSession, Task<T>> statement)
+        {
+            using (var driver = GraphDatabase.Driver(Url))
+            {
+                var session = driver.AsyncSession();
+                var result = await statement(session);
+                await session.CloseAsync();
+                return result;
             }
         }
     }

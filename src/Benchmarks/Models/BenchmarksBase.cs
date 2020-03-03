@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using BenchmarkDotNet.Attributes;
-using Neo4j.Driver.V1;
+using Neo4j.Driver;
 using Neo4jClient;
-using Queries;
+using Query = Queries.Query;
 
 namespace Benchmarks.Models
 {
@@ -12,7 +12,6 @@ namespace Benchmarks.Models
     {
         protected IDriver Driver { get; private set; }
         protected GraphClient GraphClient { get; private set; }
-        protected BoltGraphClient BoltGraphClient { get; private set; }
 
         [GlobalSetup]
         public void Setup()
@@ -26,9 +25,6 @@ namespace Benchmarks.Models
 
             GraphClient = new GraphClient(new Uri("http://localhost:7474/db/data"));
             GraphClient.Connect();
-
-            BoltGraphClient = new BoltGraphClient(new Uri("bolt://localhost:7687"));
-            BoltGraphClient.Connect();
         }
 
         [GlobalCleanup]
@@ -41,7 +37,6 @@ namespace Benchmarks.Models
 
             Driver.Dispose();
             GraphClient.Dispose();
-            BoltGraphClient.Dispose();
         }
     }
 }

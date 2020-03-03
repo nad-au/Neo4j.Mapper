@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Neo4j.Driver" Version="4.0.0" />
     <PackageReference Include="Neo4j.Driver.Simple" Version="4.0.0" />
   </ItemGroup>
 

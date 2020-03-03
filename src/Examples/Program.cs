@@ -80,7 +80,7 @@ namespace Examples
 
         private static async Task LoadBondMovies()
         {
-            await Bolt.NewSession(async session =>
+            await Bolt.NewAsyncSession(async session =>
             {
                 var queryParts = Query.CreateBond.Split(';');
                 foreach (var queryPart in queryParts)
@@ -92,7 +92,7 @@ namespace Examples
 
         private static async Task DeleteBondMovies()
         {
-            await Bolt.NewSession(async session =>
+            await Bolt.NewAsyncSession(async session =>
             {
                 await session.RunAsync(Query.DeleteBond);
             });
@@ -100,7 +100,7 @@ namespace Examples
 
         private static async Task<string> Top3BoxOfficeMovies()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (film:Film) 
@@ -123,7 +123,7 @@ namespace Examples
 
         private static async Task<string> MoviesByActor()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (people:People)-[:AS_BOND_IN]->(film:Film)
@@ -142,7 +142,7 @@ namespace Examples
 
         private static async Task<string> MichelleYeohMovie()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (people:People)-[:IS_BOND_GIRL_IN]->(film:Film) 
@@ -166,7 +166,7 @@ namespace Examples
 
         private static async Task<string> VehicleBrands()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (film:Film)-[:HAS_VEHICLE]->(vehicle:Vehicle)
@@ -188,7 +188,7 @@ namespace Examples
 
         private static async Task<string> Directors()
         {
-            return await Bolt.NewSession(async session =>
+            return await Bolt.NewAsyncSession(async session =>
             {
                 var cursor = await session.RunAsync(@"
                     MATCH (people:People)-[r:DIRECTOR_OF]->(film:Film)

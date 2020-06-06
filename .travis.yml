@@ -1,7 +1,7 @@
 dist: bionic
 sudo: required
 language: csharp
-mono: none
+mono: latest
 dotnet: 3.0.100
 env:
   global:

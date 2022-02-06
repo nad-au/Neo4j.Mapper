@@ -1,9 +1,6 @@
 # Neo4jMapper
-### Build Status
-[![Build Status](https://travis-ci.org/barnardos-au/Neo4jMapper.svg?branch=master)](https://travis-ci.org/barnardos-au/Neo4jMapper)
-[![Build status](https://ci.appveyor.com/api/projects/status/lm9w5ro0735kyi45/branch/master?svg=true)](https://ci.appveyor.com/project/neildobson-au/neo4jmapper/branch/master)
 ### What is Neo4jMapper?
-A .NET Standard 2.0 library to simplify mapping of cypher values onto your models.
+A .NET6.0 library to simplify mapping of cypher values onto your models.
 ### Minimum Viable Snippet
 ```csharp
 var cursor = await Session.RunAsync(@"
@@ -45,7 +42,5 @@ If you are developing .NET Core projects and you are using the command line tool
 ````powershell
 dotnet add package Neo4jMapper
 ````
-### Working with Neo4jMapper
-See [neo4jmapper.tk](https://www.neo4jmapper.tk/) for comprehensive usage information.
 ### Obtaining Help & Support
 For general usage help please ask a question on [StackOverflow](https://stackoverflow.com/questions/tagged/neo4jmapper). To report a bug, please raise an issue. To help make this software even better, please fork the repository, add your changes and raise a pull request.

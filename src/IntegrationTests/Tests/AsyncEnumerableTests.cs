@@ -10,7 +10,7 @@ namespace IntegrationTests.Tests
 {
     [TestFixture]
     [NonParallelizable]
-    public class AsyncEnumerableTests : AsyncMoviesFixtureBase
+    public class AsyncEnumerableTests : MoviesFixtureBase
     {
         [Test]
         public async Task Should_Map_Cypher_Map_With_Inner_Item()

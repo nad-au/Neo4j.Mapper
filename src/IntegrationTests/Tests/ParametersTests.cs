@@ -11,20 +11,6 @@ namespace IntegrationTests.Tests
     [NonParallelizable]
     public class ParametersTests : TestFixtureBase
     {
-        protected IAsyncSession Session;
-
-        [SetUp]
-        public void SetUp()
-        {
-            Session = Driver.AsyncSession();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            Session.CloseAsync();
-        }
-
         [Test]
         public async Task Should_Create_New_Actor_From_Entity_Parameter()
         {

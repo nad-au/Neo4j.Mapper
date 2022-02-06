@@ -10,7 +10,7 @@ namespace IntegrationTests.Tests
 {
     [TestFixture]
     [NonParallelizable]
-    public class AsyncBasicTests : AsyncMoviesFixtureBase
+    public class AsyncBasicTests : MoviesFixtureBase
     {
         [Test]
         public async Task Should_Map_Person_Nodes()

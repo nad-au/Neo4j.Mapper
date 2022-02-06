@@ -8,7 +8,7 @@ namespace IntegrationTests.Tests
 {
     [TestFixture]
     [NonParallelizable]
-    public class AsyncSessionExtensionsTests : AsyncMoviesFixtureBase
+    public class AsyncSessionExtensionsTests : MoviesFixtureBase
     {
         [Test]
         public async Task GetNodeAsync_Should_Populate_Node_Id()

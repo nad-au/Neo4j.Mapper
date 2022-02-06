@@ -1,4 +1,4 @@
-﻿using Neo4j.Driver;
+﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using Query = Queries.Query;
 
@@ -6,20 +6,11 @@ namespace IntegrationTests
 {
     public abstract class MoviesFixtureBase : TestFixtureBase
     {
-        protected ISession Session;
-
         [SetUp]
-        protected void SetUp()
+        protected override async Task SetUp()
         {
-            Session = Driver.Session();
-            Session.Run(Query.CreateMovies);
-        }
-
-        [TearDown]
-        protected void TearDown()
-        {
-            Session.Run(Query.DeleteMovies);
-            Session.Dispose();
+            await base.SetUp();
+            await Session.RunAsync(Query.CreateMovies);
         }
     }
 }

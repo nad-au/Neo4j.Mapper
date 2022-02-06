@@ -10,7 +10,7 @@ namespace Queries
 
         public static async Task NewSession(Func<ISession, Task> statement)
         {
-            using (var driver = GraphDatabase.Driver(Url))
+            using (var driver = GraphDatabase.Driver(Url, AuthTokens.Basic("neo4j", "s3cr3t")))
             {
                 using (var session = driver.Session())
                 {
@@ -21,7 +21,7 @@ namespace Queries
 
         public static async Task NewAsyncSession(Func<IAsyncSession, Task> statement)
         {
-            using (var driver = GraphDatabase.Driver(Url))
+            using (var driver = GraphDatabase.Driver(Url, AuthTokens.Basic("neo4j", "s3cr3t")))
             {
                 var session = driver.AsyncSession();
                 await statement(session);
@@ -31,7 +31,7 @@ namespace Queries
 
         public static async Task<T> NewSession<T>(Func<ISession, Task<T>> statement)
         {
-            using (var driver = GraphDatabase.Driver(Url))
+            using (var driver = GraphDatabase.Driver(Url, AuthTokens.Basic("neo4j", "s3cr3t")))
             {
                 using (var session = driver.Session())
                 {
@@ -42,7 +42,7 @@ namespace Queries
         
         public static async Task<T> NewAsyncSession<T>(Func<IAsyncSession, Task<T>> statement)
         {
-            using (var driver = GraphDatabase.Driver(Url))
+            using (var driver = GraphDatabase.Driver(Url, AuthTokens.Basic("neo4j", "s3cr3t")))
             {
                 var session = driver.AsyncSession();
                 var result = await statement(session);

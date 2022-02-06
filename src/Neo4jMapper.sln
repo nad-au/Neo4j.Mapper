@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Core", "Neo4jMapper.Core\Neo4jMapper.Core.csproj", "{4C4F75CF-E69E-41F1-BB14-B73A5C752135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper", "Neo4jMapper\Neo4jMapper.csproj", "{4C4F75CF-E69E-41F1-BB14-B73A5C752135}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper", "Neo4jMapper\Neo4jMapper.csproj", "{B3E5F899-8CD2-4AD6-BE2B-92A6C0B5F45C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Core.Signed", "Neo4jMapper.Core.Signed\Neo4jMapper.Core.Signed.csproj", "{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Signed", "Neo4jMapper.Signed\Neo4jMapper.Signed.csproj", "{48A4EAB7-6C67-4393-8761-B3FBB6DA03F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Signed", "Neo4jMapper.Signed\Neo4jMapper.Signed.csproj", "{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F62B7434-B5BC-40C2-BC42-6B8E7A85D681}"
 EndProject
@@ -31,18 +27,10 @@ Global
 		{4C4F75CF-E69E-41F1-BB14-B73A5C752135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C4F75CF-E69E-41F1-BB14-B73A5C752135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C4F75CF-E69E-41F1-BB14-B73A5C752135}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3E5F899-8CD2-4AD6-BE2B-92A6C0B5F45C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3E5F899-8CD2-4AD6-BE2B-92A6C0B5F45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3E5F899-8CD2-4AD6-BE2B-92A6C0B5F45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3E5F899-8CD2-4AD6-BE2B-92A6C0B5F45C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48A4EAB7-6C67-4393-8761-B3FBB6DA03F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48A4EAB7-6C67-4393-8761-B3FBB6DA03F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48A4EAB7-6C67-4393-8761-B3FBB6DA03F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48A4EAB7-6C67-4393-8761-B3FBB6DA03F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31632B7C-A213-4AAB-AC38-F63A7A2D11DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31632B7C-A213-4AAB-AC38-F63A7A2D11DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31632B7C-A213-4AAB-AC38-F63A7A2D11DE}.Release|Any CPU.ActiveCfg = Release|Any CPU

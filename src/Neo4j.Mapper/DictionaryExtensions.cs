@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     public static class DictionaryExtensions
     {

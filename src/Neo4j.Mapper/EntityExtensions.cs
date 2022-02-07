@@ -2,7 +2,7 @@
 using System.Linq;
 using ServiceStack;
 
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     public static class EntityExtensions
     {

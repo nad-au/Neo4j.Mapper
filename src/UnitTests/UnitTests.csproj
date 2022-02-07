@@ -4,7 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>UnitTests</AssemblyName>
     <RootNamespace>UnitTests</RootNamespace>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Neo4jMapper\Neo4jMapper.csproj" />
+    <ProjectReference Include="..\Neo4j.Mapper\Neo4j.Mapper.csproj" />
   </ItemGroup>
 
 </Project>

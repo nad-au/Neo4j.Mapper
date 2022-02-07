@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using Neo4j.Driver;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NUnit.Framework;
 using ServiceStack;
 using UnitTests.Models;
@@ -35,7 +35,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalDate_To_DateTime()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -54,7 +54,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Null_LocalDate_To_DateTime_Default()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
             LocalDate localDate = null;
 
             var map = new Dictionary<string, object>
@@ -72,7 +72,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalDate_To_Nullable_DateTime()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -92,7 +92,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalDate_To_Nullable_DateTime_As_Null()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
             LocalDate localDate = null;
 
             var map = new Dictionary<string, object>
@@ -110,7 +110,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_DateTime_To_LocalDate()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -129,7 +129,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_DateTime_To_LocalDate()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -148,7 +148,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_DateTime_To_LocalDate_As_Null()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
             DateTime? dateTime = null;
 
             var map = new Dictionary<string, object>
@@ -166,7 +166,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalTime_To_TimeSpan()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -185,7 +185,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Null_LocalTime_To_TimeSpan_Default()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
             LocalTime localTime = null;
 
             var map = new Dictionary<string, object>
@@ -203,7 +203,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalTime_To_Nullable_TimeSpan()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -223,7 +223,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalTime_To_Nullable_TimeSpan_As_Null()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
             LocalTime localTime = null;
 
             var map = new Dictionary<string, object>
@@ -241,7 +241,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_TimeSpan_To_LocalTime()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -260,7 +260,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_TimeSpan_To_LocalTime()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -279,7 +279,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_TimeSpan_To_LocalTime_As_Null()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
             TimeSpan? timeSpan = null;
 
             var map = new Dictionary<string, object>
@@ -297,7 +297,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_ZonedDateTime_To_DateTimeOffset()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -320,7 +320,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Null_ZonedDateTime_To_DateTimeOffset_Default()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
             ZonedDateTime zonedDateTime = null;
 
             var map = new Dictionary<string, object>
@@ -338,7 +338,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_ZonedDateTime_To_Nullable_DateTimeOffset()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -362,7 +362,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_ZonedDateTime_To_Nullable_DateTimeOffset_As_Null()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
             ZonedDateTime zonedDateTime = null;
 
             var map = new Dictionary<string, object>
@@ -380,7 +380,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_DateTimeOffset_To_ZonedDateTime()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -403,7 +403,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_DateTimeOffset_To_ZonedDateTime()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -426,7 +426,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_DateTimeOffset_To_ZonedDateTime_As_Null()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
             DateTimeOffset? dateTimeOffset = null;
 
             var map = new Dictionary<string, object>
@@ -444,7 +444,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalDateTime_To_DateTime()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -466,7 +466,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalDateTime_To_DateTime_Default()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
             LocalDateTime localDateTime = null;
 
             var map = new Dictionary<string, object>
@@ -484,7 +484,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalDateTime_To_Nullable_DateTime()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -507,7 +507,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_LocalDateTime_To_Nullable_DateTime_As_Null()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
             LocalDateTime localDateTime = null;
 
             var map = new Dictionary<string, object>
@@ -525,7 +525,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_DateTime_To_LocalDateTime()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -547,7 +547,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_DateTime_To_LocalDateTime()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
 
             var map = new Dictionary<string, object>
             {
@@ -569,7 +569,7 @@ namespace UnitTests
         [Test]
         public void Should_Convert_Nullable_DateTime_To_LocalDateTime_As_Null()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
             DateTime? dateTime = null;
 
             var map = new Dictionary<string, object>

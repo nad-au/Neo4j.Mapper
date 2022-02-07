@@ -1,4 +1,4 @@
-﻿using Neo4jMapper;
+﻿using Neo4j.Mapper;
 using NUnit.Framework;
 
 namespace UnitTests

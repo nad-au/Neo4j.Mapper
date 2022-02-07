@@ -1,2 +1,2 @@
-dotnet pack ./Neo4jMapper/Neo4jMapper.csproj -c Release
-dotnet pack ./Neo4jMapper.Signed/Neo4jMapper.Signed.csproj -c Release
+dotnet pack ./Neo4j.Mapper/Neo4j.Mapper.csproj -c Release
+dotnet pack ./Neo4j.Mapper.Signed/Neo4j.Mapper.Signed.csproj -c Release

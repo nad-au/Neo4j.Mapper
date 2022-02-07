@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using Neo4j.Driver;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NUnit.Framework;
 using ServiceStack;
 using UnitTests.Models;

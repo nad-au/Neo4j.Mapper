@@ -28,7 +28,6 @@ namespace IntegrationTests
         protected virtual async Task SetUp()
         {
             await Session.RunAsync("MATCH (n) DETACH DELETE n");
-            await Session.RunAsync("MERGE (:Neo4jMapperTest)");
         }
 
     }

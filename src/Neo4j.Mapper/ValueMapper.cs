@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Neo4j.Driver;
 using ServiceStack;
 
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     public static class ValueMapper
     {

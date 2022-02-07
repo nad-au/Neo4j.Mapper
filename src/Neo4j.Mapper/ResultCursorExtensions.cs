@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Neo4j.Driver;
 
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     public static class ResultCursorExtensions
     {

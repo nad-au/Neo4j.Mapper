@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using Neo4j.Driver;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NUnit.Framework;
 using ServiceStack;
 
@@ -9,12 +9,12 @@ namespace UnitTests
 {
     [TestFixture]
     // ReSharper disable once InconsistentNaming
-    public class Neo4jMapperConfigTests
+    public class MapperConfigTests
     {
         [Test]
         public void RegisterTypeConverters_Should_Register_All_Converters()
         {
-            Neo4jMapperConfig.RegisterTypeConverters();
+            MapperConfig.RegisterTypeConverters();
 
             AssertLocalDateConvertersAreRegistered();
             AssertLocalTimeConvertersAreRegistered();
@@ -27,7 +27,7 @@ namespace UnitTests
         [Test]
         public void RegisterLocalDateToDateTimeConverter_Should_Register_Converters()
         {
-            Neo4jMapperConfig.RegisterLocalDateToDateTimeConverter();
+            MapperConfig.RegisterLocalDateToDateTimeConverter();
 
             AssertLocalDateConvertersAreRegistered();
 
@@ -37,7 +37,7 @@ namespace UnitTests
         [Test]
         public void RegisterLocalTimeToTimeSpanConverter_Should_Register_Converters()
         {
-            Neo4jMapperConfig.RegisterLocalTimeToTimeSpanConverter();
+            MapperConfig.RegisterLocalTimeToTimeSpanConverter();
 
             AssertLocalTimeConvertersAreRegistered();
 
@@ -47,7 +47,7 @@ namespace UnitTests
         [Test]
         public void RegisterZonedDateTimeToDateTimeOffsetConverter_Should_Register_Converters()
         {
-            Neo4jMapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
+            MapperConfig.RegisterZonedDateTimeToDateTimeOffsetConverter();
 
             AssertZonedDateTimeConvertersAreRegistered();
 
@@ -57,7 +57,7 @@ namespace UnitTests
         [Test]
         public void RegisterLocalDateTimeToDateTimeConverter_Should_Register_Converters()
         {
-            Neo4jMapperConfig.RegisterLocalDateTimeToDateTimeConverter();
+            MapperConfig.RegisterLocalDateTimeToDateTimeConverter();
 
             AssertLocalDateTimeConvertersAreRegistered();
 

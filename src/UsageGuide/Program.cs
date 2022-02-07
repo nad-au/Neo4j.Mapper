@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Neo4j.Driver;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using Queries;
 using ServiceStack.Text;
 using UsageGuide.Entities;
@@ -96,9 +96,6 @@ namespace UsageGuide
         private static void ShowMenu()
         {
             Console.Clear();
-            Console.WriteLine("Usage Guide");
-            Console.WriteLine("https://www.neo4jmapper.tk/guide.html");
-            Console.WriteLine("===");
             Console.WriteLine("Please select an option:");
             Console.WriteLine("A. Load Movies");
             Console.WriteLine("B. Delete Movies");

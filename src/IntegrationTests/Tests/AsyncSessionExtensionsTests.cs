@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
 using IntegrationTests.Models;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NUnit.Framework;
 
 namespace IntegrationTests.Tests

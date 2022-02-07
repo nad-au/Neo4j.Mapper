@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper", "Neo4jMapper\Neo4jMapper.csproj", "{4C4F75CF-E69E-41F1-BB14-B73A5C752135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4j.Mapper", "Neo4j.Mapper\Neo4j.Mapper.csproj", "{4C4F75CF-E69E-41F1-BB14-B73A5C752135}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4jMapper.Signed", "Neo4jMapper.Signed\Neo4jMapper.Signed.csproj", "{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo4j.Mapper.Signed", "Neo4j.Mapper.Signed\Neo4j.Mapper.Signed.csproj", "{CE17BFA0-B381-4BB1-9CDB-FB6FED57107E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F62B7434-B5BC-40C2-BC42-6B8E7A85D681}"
 EndProject

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     // ReSharper disable once InconsistentNaming
     public class Neo4jParameters : Dictionary<string, object>

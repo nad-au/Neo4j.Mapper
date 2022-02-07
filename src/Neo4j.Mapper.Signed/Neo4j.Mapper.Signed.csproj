@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>2.0.0</Version>
+    <Title>Neo4j.Mapper</Title>
+    <Authors>Neil Dobson</Authors>
+    <Description>A library to simplify mapping of cypher results onto your models</Description>
+    <PackageProjectUrl>https://github.com/neildobson-au/Neo4j.Mapper</PackageProjectUrl>
+    <PackageTags>neo4j cypher mapping</PackageTags>
+    <RepositoryUrl>https://github.com/neildobson-au/Neo4j.Mapper</RepositoryUrl>
+    <AssemblyName>Neo4j.Mapper</AssemblyName>
+    <PackageId>Neo4j.Mapper.Signed</PackageId>
+    <RootNamespace>Neo4j.Mapper</RootNamespace>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\Neo4j.Mapper\AsyncEnumerableExtensions.cs">
+      <Link>AsyncEnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\AsyncSessionExtensions.cs">
+      <Link>AsyncSessionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\CollectionMapper.cs">
+      <Link>CollectionMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\Constants.cs">
+      <Link>Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\DictionaryExtensions.cs">
+      <Link>DictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\EntityAccessor.cs">
+      <Link>EntityAccessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\EntityExtensions.cs">
+      <Link>EntityExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\MapperConfig.cs">
+      <Link>MapperConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\Neo4jParameters.cs">
+      <Link>Neo4jParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\NodeIdAttribute.cs">
+      <Link>NodeIdAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\RecordExtensions.cs">
+      <Link>RecordExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\ResultCursorExtensions.cs">
+      <Link>ResultCursorExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Neo4j.Mapper\ValueMapper.cs">
+      <Link>ValueMapper.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Neo4j.Driver.Simple.Signed" Version="4.4.0" />
+    <PackageReference Include="ServiceStack.Text" Version="6.0.2" />
+    <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

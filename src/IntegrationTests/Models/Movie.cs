@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization;
-using Neo4jMapper;
+using Neo4j.Mapper;
 
 namespace IntegrationTests.Models
 {

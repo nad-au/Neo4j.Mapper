@@ -2,10 +2,10 @@
 using Neo4j.Driver;
 using ServiceStack;
 
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     // ReSharper disable once InconsistentNaming
-    public static class Neo4jMapperConfig
+    public static class MapperConfig
     {
         public static void RegisterTypeConverters()
         {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using IntegrationTests.Models;
-using Neo4j.Driver;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NUnit.Framework;
 
 namespace IntegrationTests.Tests
@@ -11,32 +11,29 @@ namespace IntegrationTests.Tests
     [NonParallelizable]
     public class TemporalTests : TestFixtureBase
     {
-        protected ISession Session;
-
         [SetUp]
-        public void SetUp()
+        protected override async Task SetUp()
         {
-            Session = Driver.Session();
-            Session.Run("CREATE (t:TimeStamp {name: 'Worker', when: dateTime()})");
+            await base.SetUp();
+            await Session.RunAsync("CREATE (t:TimeStamp {name: 'Worker', when: dateTime()})");
         }
 
         [TearDown]
-        public void TearDown()
+        protected async Task TearDown()
         {
-            Session.Run("MATCH (t:TimeStamp) DELETE (t)");
-            Session.Dispose();
+            await Session.RunAsync("MATCH (t:TimeStamp) DELETE (t)");
         }
 
         [Test]
-        public void Should_Map_Temporal_Value()
+        public async Task Should_Map_Temporal_Value()
         {
             var now = DateTime.UtcNow;
 
-            var result = Session.Run(@"
+            var result = await Session.RunAsync(@"
                 MATCH (timestamp:TimeStamp)
                 RETURN timestamp");
 
-            var timeStamps = result.Map<TimeStamp>().ToList();
+            var timeStamps = await result.MapAsync<TimeStamp>();
 
             Assert.AreEqual(1, timeStamps.Count);
 

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Neo4j.Driver;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NSubstitute;
 using NUnit.Framework;
 

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>2.0.0</Version>
+    <Title>Neo4j.Mapper</Title>
+    <Authors>Neil Dobson</Authors>
+    <Description>A library to simplify mapping of cypher results onto your models</Description>
+    <PackageProjectUrl>https://github.com/neildobson-au/Neo4j.Mapper</PackageProjectUrl>
+    <PackageTags>neo4j cypher mapping</PackageTags>
+    <RepositoryUrl>https://github.com/neildobson-au/Neo4j.Mapper</RepositoryUrl>
+    <PackageId>Neo4j.Mapper</PackageId>
+    <RootNamespace>Neo4j.Mapper</RootNamespace>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Neo4j.Driver.Simple" Version="4.4.0" />
+    <PackageReference Include="ServiceStack.Text" Version="6.0.2" />
+    <PackageReference Include="System.Interactive.Async" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

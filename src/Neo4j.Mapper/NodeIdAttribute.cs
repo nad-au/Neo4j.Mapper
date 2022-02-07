@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     public class NodeIdAttribute : Attribute
     {

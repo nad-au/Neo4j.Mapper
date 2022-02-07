@@ -1,4 +1,4 @@
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     internal static class Constants
     {

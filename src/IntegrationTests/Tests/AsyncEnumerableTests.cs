@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationTests.Models;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NUnit.Framework;
 
 namespace IntegrationTests.Tests
 {
     [TestFixture]
     [NonParallelizable]
-    public class AsyncEnumerableTests : AsyncMoviesFixtureBase
+    public class AsyncEnumerableTests : MoviesFixtureBase
     {
         [Test]
         public async Task Should_Map_Cypher_Map_With_Inner_Item()

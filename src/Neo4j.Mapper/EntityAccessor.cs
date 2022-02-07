@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("UnitTests")]
-namespace Neo4jMapper
+namespace Neo4j.Mapper
 {
     internal static class EntityAccessor
     {

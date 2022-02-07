@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Neo4j.Driver;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NSubstitute;
 using NUnit.Framework;
 

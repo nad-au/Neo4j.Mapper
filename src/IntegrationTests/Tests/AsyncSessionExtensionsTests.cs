@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
 using IntegrationTests.Models;
-using Neo4jMapper;
+using Neo4j.Mapper;
 using NUnit.Framework;
 
 namespace IntegrationTests.Tests
 {
     [TestFixture]
     [NonParallelizable]
-    public class AsyncSessionExtensionsTests : AsyncMoviesFixtureBase
+    public class AsyncSessionExtensionsTests : MoviesFixtureBase
     {
         [Test]
         public async Task GetNodeAsync_Should_Populate_Node_Id()
